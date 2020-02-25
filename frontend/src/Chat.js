@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import io from 'socket.io-client'
-import uuid from 'uuid/v4'
 import {userSendMessage} from "./redux/actions/user";
 import {useDispatch} from "react-redux";
 
-const myId = uuid();
 const socket = io('http://localhost:8080');
 socket.on('connect', () => console.log('[IO] Connect => A new connection has been established'));
 
@@ -21,14 +19,8 @@ function Chat(){
 
     const handleFormSubmit = event => {
         event.preventDefault();
-
-		dispatch(userSendMessage(message));
-
         if (message.trim()) {
-            socket.emit('chat.message', {
-                id: myId,
-                message
-            });
+			dispatch(userSendMessage(message));
             updateMessage('')
         }
 	};
@@ -43,10 +35,10 @@ function Chat(){
             <ul className="list">
                 { messages.map((m, index) => (
                     <li
-                        className={`list__item list__item--${m.id === myId ? 'mine' : 'other'}`}
+                        className={`list__item list__item--mine`}
                         key={index}
                     >
-                        <span className={`message message--${m.id === myId ? 'mine' : 'other'}`}>
+                        <span className={`message message--mine`}>
                             { m.message }
                         </span>
                     </li>
