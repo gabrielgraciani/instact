@@ -1,36 +1,43 @@
 import React, { useEffect, useState } from 'react'
 import io from 'socket.io-client'
 import uuid from 'uuid/v4'
+import {userSendMessage} from "./redux/actions/user";
+import {useDispatch} from "react-redux";
 
-const myId = uuid()
-const socket = io('http://localhost:8080')
-socket.on('connect', () => console.log('[IO] Connect => A new connection has been established'))
+const myId = uuid();
+const socket = io('http://localhost:8080');
+socket.on('connect', () => console.log('[IO] Connect => A new connection has been established'));
 
-const Chat = () => {
-    const [message, updateMessage] = useState('')
-    const [messages, updateMessages] = useState([])
+function Chat(){
+    const [message, updateMessage] = useState('');
+    const [messages, updateMessages] = useState([]);
 
     useEffect(() => {
         const handleNewMessage = newMessage =>
-            updateMessages([...messages, newMessage])
-        socket.on('chat.message', handleNewMessage)
+            updateMessages([...messages, newMessage]);
+        socket.on('chat.message', handleNewMessage);
         return () => socket.off('chat.message', handleNewMessage)
-    }, [messages])
+    }, [messages]);
 
     const handleFormSubmit = event => {
-        event.preventDefault()
+        event.preventDefault();
+
+		dispatch(userSendMessage(message));
+
         if (message.trim()) {
             socket.emit('chat.message', {
                 id: myId,
                 message
-            })
+            });
             updateMessage('')
         }
-    }
+	};
 
     const handleInputChange = event =>
-        updateMessage(event.target.value)
+        updateMessage(event.target.value);
 
+
+	const dispatch = useDispatch();
     return (
         <main className="container">
             <ul className="list">
