@@ -3,7 +3,9 @@ import * as actions from '../actions/user';
 export const initialState = {
 	nome: '',
 	message: '',
-	isSending: false
+	isSending: false,
+	isLoading: false,
+	list: []
 };
 
 export default function itemReducer(
@@ -23,6 +25,25 @@ export default function itemReducer(
 				...initialState,
 				...state,
 				isSending: false
+			};
+
+		case actions.USER_FETCH_MESSAGE:
+			return{
+				...initialState,
+				...state,
+				...payload,
+				isLoading: true
+			};
+
+		case actions.USER_FETCH_MESSAGE_SUCCESS:
+			return{
+				...initialState,
+				...state,
+				isLoading:false,
+				list: [
+					...state.list,
+					...payload.list
+				]
 			};
 
 		default:

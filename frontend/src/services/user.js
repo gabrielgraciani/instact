@@ -25,4 +25,20 @@ export default class user{
 			}
 		});
 	};
+
+	static getMessages = () => {
+		let message = [];
+		return new Promise((res, rej) => {
+			db.collection('chat').orderBy('createdAt', 'asc').get().then(querySnapshot => {
+				querySnapshot.forEach(doc => {
+					message.push({
+						id: doc.id,
+						...doc.data()
+					})
+				});
+
+				res({message});
+			}).catch(rej)
+		});
+	};
 }

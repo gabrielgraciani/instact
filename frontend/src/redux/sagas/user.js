@@ -16,15 +16,30 @@ function* userSendMessageWorker(data) {
 	}
 }
 
+function* userFetchMessageWorker() {
+	try {
+
+		const {message} = yield call(User.getMessages);
+		yield put(actions.userFetchMessageSuccess(message));
+
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
 function* userSendMessageWatcher() {
 	yield takeLatest(actions.USER_SEND_MESSAGE, userSendMessageWorker);
+}
+
+function* userFetchMessageWatcher() {
+	yield takeLatest(actions.USER_FETCH_MESSAGE, userFetchMessageWorker);
 }
 
 
 function* authWatcher() {
 	yield all([
 		userSendMessageWatcher(),
-
+		userFetchMessageWatcher()
 	]);
 }
 
