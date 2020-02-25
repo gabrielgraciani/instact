@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import io from 'socket.io-client'
-import {userSendMessage, userFetchMessage} from "./redux/actions/user";
+import {userSendMessage, userFetchMessage} from "../../redux/actions/user";
 import {useDispatch, useSelector} from "react-redux";
 
 const socket = io('http://localhost:8080');
