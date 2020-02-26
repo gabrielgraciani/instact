@@ -3,18 +3,25 @@ import LoginImage from 'assets/images/login.png';
 import Logo from 'assets/images/logo.png';
 import GooglePlay from 'assets/images/google-play.png';
 import AppleStore from 'assets/images/apple-store.png';
+//import CircularProgress from '@material-ui/core/CircularProgress';
+import {useDispatch, useSelector} from "react-redux";
+import {authSendCadastro} from "../../redux/actions/auth";
 
 function Login (){
 
 	const initialState = {
 		nome: '',
-		email_celular: '',
+		email: '',
 		nome_usuario: '',
 		senha: ''
 	};
 
 	const [login, setLogin] = useState(true);
 	const [values, setValues] = useState(initialState);
+
+	const dispatch = useDispatch();
+	const { isSaving } = useSelector(store => store.auth);
+	console.log('issaving', isSaving);
 
 	const handleChangeForm = () => {
 		setLogin(!login);
@@ -34,6 +41,7 @@ function Login (){
 	const handleRegister = (e) => {
 		e.preventDefault();
 		console.log(values);
+		dispatch(authSendCadastro(values));
 	};
 
 	return(
@@ -53,9 +61,9 @@ function Login (){
 						{login ? (
 							<div>
 								<form action="" onSubmit={handleSubmit}>
-									<input type="text" name="email_celular" value={values.email_celular} onChange={handleChange} placeholder="Telefone, nome de usuário ou email"/>
+									<input type="text" name="email" value={values.email} onChange={handleChange} placeholder="Telefone, nome de usuário ou email"/>
 									<input type="password" name="senha" value={values.senha} onChange={handleChange} placeholder="Senha"/>
-									<input type="submit" disabled={!values.email_celular} value="Entrar"/>
+									<input type="submit" disabled={!values.email} value="Entrar"/>
 								</form>
 
 								<div className="esqueci">
@@ -69,7 +77,7 @@ function Login (){
 								</div>
 
 								<form action="" onSubmit={handleRegister}>
-									<input type="text" name="email_celular" value={values.email_celular} onChange={handleChange} placeholder="Número do celular ou email"/>
+									<input type="text" name="email" value={values.email} onChange={handleChange} placeholder="Número do celular ou email"/>
 									<input type="text" name="nome" value={values.nome} onChange={handleChange} placeholder="Nome completo"/>
 									<input type="text" name="nome_usuario" value={values.nome_usuario} onChange={handleChange} placeholder="Nome de usuário"/>
 									<input type="password" name="senha" value={values.senha} onChange={handleChange} placeholder="Senha"/>
@@ -81,10 +89,6 @@ function Login (){
 								</div>
 							</div>
 						}
-
-
-
-
 					</div>
 
 					<div className="bloco bloco2">
