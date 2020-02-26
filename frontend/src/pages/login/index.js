@@ -6,11 +6,36 @@ import AppleStore from 'assets/images/apple-store.png';
 
 function Login (){
 
+	const initialState = {
+		nome: '',
+		email_celular: '',
+		nome_usuario: '',
+		senha: ''
+	};
+
 	const [login, setLogin] = useState(true);
+	const [values, setValues] = useState(initialState);
 
 	const handleChangeForm = () => {
 		setLogin(!login);
+		setValues(initialState);
 	};
+
+	const handleChange = (e) => setValues({
+		...values,
+		[e.target.name]: e.target.value
+	});
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log(values);
+	};
+
+	const handleRegister = (e) => {
+		e.preventDefault();
+		console.log(values);
+	};
+
 	return(
 		<div id="wrap_login">
 			<div className="indent">
@@ -27,10 +52,10 @@ function Login (){
 
 						{login ? (
 							<div>
-								<form action="">
-									<input type="text" placeholder="Telefone, nome de usuário ou email"/>
-									<input type="password" placeholder="Senha"/>
-									<input type="submit" disabled value="Entrar"/>
+								<form action="" onSubmit={handleSubmit}>
+									<input type="text" name="email_celular" value={values.email_celular} onChange={handleChange} placeholder="Telefone, nome de usuário ou email"/>
+									<input type="password" name="senha" value={values.senha} onChange={handleChange} placeholder="Senha"/>
+									<input type="submit" disabled={!values.email_celular} value="Entrar"/>
 								</form>
 
 								<div className="esqueci">
@@ -43,11 +68,11 @@ function Login (){
 									<h4>Cadastre-se para ver fotos e vídeos dos seus amigos.</h4>
 								</div>
 
-								<form action="">
-									<input type="text" placeholder="Número do celular ou email"/>
-									<input type="text" placeholder="Nome completo"/>
-									<input type="text" placeholder="Nome de usuário"/>
-									<input type="password" placeholder="Senha"/>
+								<form action="" onSubmit={handleRegister}>
+									<input type="text" name="email_celular" value={values.email_celular} onChange={handleChange} placeholder="Número do celular ou email"/>
+									<input type="text" name="nome" value={values.nome} onChange={handleChange} placeholder="Nome completo"/>
+									<input type="text" name="nome_usuario" value={values.nome_usuario} onChange={handleChange} placeholder="Nome de usuário"/>
+									<input type="password" name="senha" value={values.senha} onChange={handleChange} placeholder="Senha"/>
 									<input type="submit" value="Cadastre-se"/>
 								</form>
 

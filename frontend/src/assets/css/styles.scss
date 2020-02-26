@@ -63,7 +63,7 @@ p{font-size:21px;}
 				form{width:100%; display:flex; flex-direction:column;
 					input{width:100%; margin:0 0 6px; border:1px solid #dbdbdb; background:#fafafa; padding:9px 8px; color:#262626; outline:0; border-radius:2px;
 						&:focus{border:1px solid #666;}}
-					input[type='submit']{margin:7px 0 0 0; background:#3897f0; color:$white; font-size:14px; font-weight:500; border-radius:5px; padding:5px;
+					input[type='submit']{cursor:pointer; margin:7px 0 0 0; background:#3897f0; color:$white; font-size:14px; font-weight:500; border-radius:5px; padding:5px;
 						&:disabled{opacity:0.35}}
 				}
 				button{background:transparent; border:0; padding:0 5px; cursor:pointer; outline:0;}
