@@ -3,9 +3,10 @@ import LoginImage from 'assets/images/login.png';
 import Logo from 'assets/images/logo.png';
 import GooglePlay from 'assets/images/google-play.png';
 import AppleStore from 'assets/images/apple-store.png';
-//import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import {useDispatch, useSelector} from "react-redux";
 import {authSendCadastro} from "../../redux/actions/auth";
+import Error from 'components/error';
 
 function Login (){
 
@@ -20,7 +21,7 @@ function Login (){
 	const [values, setValues] = useState(initialState);
 
 	const dispatch = useDispatch();
-	const { isSaving } = useSelector(store => store.auth);
+	const { isSaving, error } = useSelector(store => store.auth);
 	console.log('issaving', isSaving);
 
 	const handleChangeForm = () => {
@@ -45,6 +46,7 @@ function Login (){
 	};
 
 	return(
+		<>
 		<div id="wrap_login">
 			<div className="indent">
 				<div className="col">
@@ -81,7 +83,13 @@ function Login (){
 									<input type="text" name="nome" value={values.nome} onChange={handleChange} placeholder="Nome completo"/>
 									<input type="text" name="nome_usuario" value={values.nome_usuario} onChange={handleChange} placeholder="Nome de usuário"/>
 									<input type="password" name="senha" value={values.senha} onChange={handleChange} placeholder="Senha"/>
-									<input type="submit" value="Cadastre-se"/>
+									{isSaving ? (
+										<div className="loading">
+											<CircularProgress size={20} />
+										</div>
+									) : (
+										<input type="submit" value="Cadastre-se"/>
+									)}
 								</form>
 
 								<div className="text">
@@ -122,6 +130,11 @@ function Login (){
 				</div>
 			</div>
 		</div>
+
+		{error && (
+			<Error />
+		)}
+		</>
 	)
 };
 

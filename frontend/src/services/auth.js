@@ -1,19 +1,23 @@
-import firebase from 'services/firebase';
+import firebase, {db} from 'services/firebase';
 
 export default class auth{
 	static registerUser = (nome, email, nome_usuario, senha) => {
 		return new Promise((res, rej) => {
-			firebase.auth().createUserWithEmailAndPassword(email, senha).then(function(user){
-				const userLogado = user.user;
-				userLogado.updateProfile({
-					displayName: nome,
+			try{
+				let newDoc = db.collection('users').doc();
+				newDoc.set({
+					nome,
+					email,
+					nome_usuario,
+					senha,
+					createdAt: firebase.firestore.FieldValue.serverTimestamp()
 				});
-				res(1);
-			}).catch(function(error) {
-				console.log(`erro ao cadastrar: , ${error.code}, ${error.message}`);
-				res(error.code);
 
-			});
-		})
+				const success = true;
+				res(success);
+			} catch(error){
+				console.log('erro', error);
+			}
+		});
 	};
 }

@@ -7,15 +7,17 @@ function* authSendCadastroWorker(data) {
 	try {
 		const {nome, email, nome_usuario, senha} = data.payload;
 
-		const teste = yield call(Auth.registerUser, nome, email, nome_usuario, senha);
-		console.log('teste', teste);
+		const success = yield call(Auth.registerUser, nome, email, nome_usuario, senha);
+		console.log('teste', success);
 
-
-		yield put (actions.authSendCadastroSuccess());
+		if(success){
+			yield put (actions.authSendCadastroSuccess());
+		}
 
 
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);
+		yield put(actions.authError(error));
 	}
 }
 
