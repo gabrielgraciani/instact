@@ -10,7 +10,7 @@ export default class auth{
 					email,
 					nome_usuario,
 					senha,
-					createdAt: firebase.firestore.FieldValue.serverTimestamp()
+					createdAt: firebase.firestore.FieldValuee.serverTimestamp()
 				});
 
 				const success = true;

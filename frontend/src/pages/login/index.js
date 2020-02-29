@@ -136,7 +136,7 @@ function Login (){
 			<Error />
 		)}
 		</>
-	)
-};
+	);
+}
 
 export default Login;

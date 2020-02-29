@@ -1,11 +1,22 @@
 import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
+import {useDispatch, useSelector} from "react-redux";
+import {classActiveSend} from "../../redux/actions/classActive";
 
 function Error(){
+
+	const dispatch = useDispatch();
+	const { active } = useSelector(store => store.classActive);
+
+	const handleChange = () => {
+		console.log('aqui');
+		dispatch(classActiveSend());
+	};
+
 	return(
-		<div id="wrap_error">
+		<div id="wrap_error" className={active ? 'active' : '' }>
 			<div className="indent">
-				<div className="close">
+				<div className="close" onClick={handleChange}>
 					<CloseIcon size={20} />
 				</div>
 				<div className="text">
