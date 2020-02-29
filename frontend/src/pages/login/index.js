@@ -22,7 +22,6 @@ function Login (){
 
 	const dispatch = useDispatch();
 	const { isSaving, error } = useSelector(store => store.auth);
-	console.log('issaving', isSaving);
 
 	const handleChangeForm = () => {
 		setLogin(!login);
@@ -36,13 +35,11 @@ function Login (){
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(values);
 		dispatch(authSendLogin(values));
 	};
 
 	const handleRegister = (e) => {
 		e.preventDefault();
-		console.log(values);
 		dispatch(authSendCadastro(values));
 	};
 
@@ -133,7 +130,7 @@ function Login (){
 		</div>
 
 		{error && (
-			<Error />
+			<Error msg={error} />
 		)}
 		</>
 	);

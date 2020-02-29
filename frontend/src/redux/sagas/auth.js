@@ -6,12 +6,13 @@ import Auth from '../../services/auth';
 function* authSendCadastroWorker(data) {
 	try {
 		const {nome, email, nome_usuario, senha} = data.payload;
-
 		const success = yield call(Auth.registerUser, nome, email, nome_usuario, senha);
-		console.log('teste', success);
 
 		if(success){
 			yield put (actions.authSendCadastroSuccess());
+
+			const {id, nome} = yield call(Auth.loginUser, email, senha);
+			yield put(actions.authSendLoginSuccess(id, nome, false));
 		}
 
 
@@ -24,7 +25,6 @@ function* authSendCadastroWorker(data) {
 function* authSendLoginWorker(data){
 	try{
 		const {email, senha} = data.payload;
-
 		const {id, nome, empty} = yield call(Auth.loginUser, email, senha);
 
 		if(empty){
@@ -33,10 +33,6 @@ function* authSendLoginWorker(data){
 		}else{
 			yield put(actions.authSendLoginSuccess(id, nome, false));
 		}
-
-
-
-
 	} catch (error){
 		//console.log(`Erro ${error}, tente novamente mais tarde`);
 		yield put(actions.authError(error));

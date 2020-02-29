@@ -4,17 +4,25 @@ export default class auth{
 	static registerUser = (nome, email, nome_usuario, senha) => {
 		return new Promise((res, rej) => {
 			try{
-				let newDoc = db.collection('users').doc();
-				newDoc.set({
-					nome,
-					email,
-					nome_usuario,
-					senha,
-					createdAt: firebase.firestore.FieldValuee.serverTimestamp()
-				});
+				let usersRef = db.collection('users');
 
-				const success = true;
-				res(success);
+				usersRef.where('email', '==', email).get().then(function(querySnapshot) {
+					if(querySnapshot.empty){
+						let newDoc = db.collection('users').doc();
+						newDoc.set({
+							nome,
+							email,
+							nome_usuario,
+							senha,
+							createdAt: firebase.firestore.FieldValue.serverTimestamp()
+						});
+
+						const success = true;
+						res(success);
+					}else{
+						rej('E-mail já cadastrado, tente utilizando outro, ou faça login.');
+					}
+				});
 			} catch(error){
 				console.log('erro', error);
 				rej(error);
@@ -39,13 +47,11 @@ export default class auth{
 							res({id, nome});
 						})
 					}
-				})
-
-
+				});
 			} catch(error){
 				console.log('erro', error);
 				rej(error);
 			}
-		})
+		});
 	};
 }
