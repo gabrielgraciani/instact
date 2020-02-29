@@ -22,7 +22,7 @@ function Login (){
 	const [animatePlaceholder, setAnimatePlaceholder] = useState(false);
 
 	const dispatch = useDispatch();
-	const { isSaving, error } = useSelector(store => store.auth);
+	const { isSaving, error, loading, empty } = useSelector(store => store.auth);
 
 	const handleChangeForm = () => {
 		setLogin(!login);
@@ -73,7 +73,16 @@ function Login (){
 										<label htmlFor="senha" className={animatePlaceholder ? 'active' : ''}>Senha</label>
 										<input type="password" name="senha" value={values.senha} onChange={handleChange}/>
 									</div>
-									<input type="submit" disabled={!values.email} value="Entrar"/>
+									{loading ? (
+										<div className="loading">
+											<CircularProgress size={20} />
+										</div>
+									) : (
+										<input type="submit" disabled={!values.email} value="Entrar"/>
+									)}
+									{empty && (
+										<span className="error">E-mail ou senha incorretos.</span>
+									)}
 								</form>
 
 								<div className="esqueci">
