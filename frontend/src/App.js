@@ -55,7 +55,7 @@ function App({location}){
 				</Suspense>
 			</div>
 
-			<Footer />
+			<Footer location={location} />
 		</div>
 		</>
 	);
