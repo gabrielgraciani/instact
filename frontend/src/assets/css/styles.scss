@@ -62,11 +62,11 @@ p{font-size:21px;}
 			.bloco{width:100%; background:$white; border:1px solid #dbdbdb; padding:30px 40px 20px; text-align:center; margin:0 0 10px 0;
 				&:nth-last-child(2){margin:0;}
 				form{width:100%; display:flex; flex-direction:column;
-					.item{position:relative;
-						label{ position: absolute; left: 8px; top: 10px; color: #262626; transition: transform 150ms ease-out, font-size 150ms }
-						label.active{transform: translateY(-65%); font-size:10px;}
+					.item{position:relative; margin:0 0 6px;
+						label{ position: absolute; padding:7px 8px; width:100%; height:100%; left:0; top:0; text-align:left; color: #262626; transition: transform 150ms ease-out, font-size 150ms }
+						label.active{transform: translateY(-15%); font-size:10px;}
 					}
-					input{width:100%; margin:0 0 6px; border:1px solid #dbdbdb; background:transparent; position:relative; z-index:9; padding:9px 8px; color:#262626; outline:0; border-radius:2px;
+					input{width:100%; border:1px solid #dbdbdb; background:transparent; position:relative; z-index:9; padding:9px 8px; color:#262626; outline:0; border-radius:2px;
 						&:focus{border:1px solid #666;}}
 					input[type='submit']{cursor:pointer; margin:7px 0 0 0; background:#3897f0; color:$white; font-size:14px; font-weight:500; border-radius:5px; padding:5px;
 						&:disabled{opacity:0.35}}
