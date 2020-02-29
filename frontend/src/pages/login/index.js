@@ -19,6 +19,7 @@ function Login (){
 
 	const [login, setLogin] = useState(true);
 	const [values, setValues] = useState(initialState);
+	const [animatePlaceholder, setAnimatePlaceholder] = useState(false);
 
 	const dispatch = useDispatch();
 	const { isSaving, error } = useSelector(store => store.auth);
@@ -28,10 +29,13 @@ function Login (){
 		setValues(initialState);
 	};
 
-	const handleChange = (e) => setValues({
-		...values,
-		[e.target.name]: e.target.value
-	});
+	const handleChange = (e) => {
+		setAnimatePlaceholder(true);
+		setValues({
+			...values,
+			[e.target.name]: e.target.value
+		});
+	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -61,8 +65,14 @@ function Login (){
 						{login ? (
 							<div>
 								<form action="" onSubmit={handleSubmit}>
-									<input type="text" name="email" value={values.email} onChange={handleChange} placeholder="Telefone, nome de usuário ou email"/>
-									<input type="password" name="senha" value={values.senha} onChange={handleChange} placeholder="Senha"/>
+									<div className="item">
+										<label htmlFor="email" className={animatePlaceholder ? 'active' : ''}>E-mail</label>
+										<input type="text" name="email" value={values.email} onChange={handleChange}/>
+									</div>
+									<div className="item">
+										<label htmlFor="senha" className={animatePlaceholder ? 'active' : ''}>Senha</label>
+										<input type="password" name="senha" value={values.senha} onChange={handleChange}/>
+									</div>
 									<input type="submit" disabled={!values.email} value="Entrar"/>
 								</form>
 
@@ -77,10 +87,22 @@ function Login (){
 								</div>
 
 								<form action="" onSubmit={handleRegister}>
-									<input type="text" name="email" value={values.email} onChange={handleChange} placeholder="Número do celular ou email"/>
-									<input type="text" name="nome" value={values.nome} onChange={handleChange} placeholder="Nome completo"/>
-									<input type="text" name="nome_usuario" value={values.nome_usuario} onChange={handleChange} placeholder="Nome de usuário"/>
-									<input type="password" name="senha" value={values.senha} onChange={handleChange} placeholder="Senha"/>
+									<div className="item">
+										<label htmlFor="email" className={animatePlaceholder ? 'active' : ''}>E-mail</label>
+										<input type="text" name="email" value={values.email} onChange={handleChange} />
+									</div>
+									<div className="item">
+										<label htmlFor="nome" className={animatePlaceholder ? 'active' : ''}>Nome completo</label>
+										<input type="text" name="nome" value={values.nome} onChange={handleChange} />
+									</div>
+									<div className="item">
+										<label htmlFor="nome_usuario" className={animatePlaceholder ? 'active' : ''}>Nome de usuário</label>
+										<input type="text" name="nome_usuario" value={values.nome_usuario} onChange={handleChange} />
+									</div>
+									<div className="item">
+										<label htmlFor="senha" className={animatePlaceholder ? 'active' : ''}>Senha</label>
+										<input type="password" name="senha" value={values.senha} onChange={handleChange} />
+									</div>
 									{isSaving ? (
 										<div className="loading">
 											<CircularProgress size={20} />
