@@ -10,7 +10,7 @@ export default class auth{
 					email,
 					nome_usuario,
 					senha,
-					createdAt: firebase.firestore.FieldValuee.serverTimestamp()
+					createdAt: firebase.firestore.FieldValue.serverTimestamp()
 				});
 
 				const success = true;
@@ -20,5 +20,32 @@ export default class auth{
 				rej(error);
 			}
 		});
+	};
+
+
+	static loginUser = (email, senha) => {
+		return new Promise((res, rej) => {
+			try{
+				let usersRef = db.collection('users');
+
+				usersRef.where('email', '==', email).where('senha', '==', senha).get().then(function(querySnapshot) {
+					if(querySnapshot.empty){
+						const empty = true;
+						res({empty});
+					}else{
+						querySnapshot.forEach(function(doc) {
+							const id = doc.id;
+							const nome = doc.data().nome;
+							res({id, nome});
+						})
+					}
+				})
+
+
+			} catch(error){
+				console.log('erro', error);
+				rej(error);
+			}
+		})
 	};
 }

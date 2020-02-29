@@ -5,7 +5,7 @@ import GooglePlay from 'assets/images/google-play.png';
 import AppleStore from 'assets/images/apple-store.png';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {useDispatch, useSelector} from "react-redux";
-import {authSendCadastro} from "../../redux/actions/auth";
+import {authSendCadastro, authSendLogin} from "../../redux/actions/auth";
 import Error from 'components/error';
 
 function Login (){
@@ -37,6 +37,7 @@ function Login (){
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		console.log(values);
+		dispatch(authSendLogin(values));
 	};
 
 	const handleRegister = (e) => {

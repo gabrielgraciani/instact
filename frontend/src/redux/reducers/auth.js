@@ -2,11 +2,15 @@ import * as actions from '../actions/auth';
 
 export const initialState = {
 	nome: '',
-	email_celular: '',
+	email: '',
 	nome_usuario: '',
 	senha: '',
 	isSaving: false,
-	error: false
+	error: false,
+	loading: false,
+	id: '',
+	empty: false,
+	logout: false
 };
 
 
@@ -35,6 +39,21 @@ export default function authReducer(
 				...state,
 				isSaving: false,
 				error: payload.error
+			};
+
+		case actions.AUTH_SEND_LOGIN:
+			return{
+				...initialState,
+				...state,
+				loading: true
+			};
+
+		case actions.AUTH_SEND_LOGIN_SUCCESS:
+			return{
+				loading: false,
+				id: payload.id,
+				nome: payload.nome,
+				empty: payload.empty
 			};
 
 		default:
