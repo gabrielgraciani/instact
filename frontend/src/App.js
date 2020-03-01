@@ -47,7 +47,7 @@ function App({location}){
 		<div id="wrapper_body">
 			<Header location={location} handleLogout={handleLogout} />
 
-			<div id="wrapper_components">
+			<div id="wrapper_components" className={location.pathname === LOGIN ? 'active' : ''}>
 				<Suspense fallback={''}>
 					<Switch>
 						<Route path={LOGIN} component={Login} />
