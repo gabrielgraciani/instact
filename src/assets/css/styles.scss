@@ -218,11 +218,17 @@ p{font-size:21px;}
 					textarea{border:1px solid #dbdbdb; height:84px; background:transparent; padding:6px; width:100%; resize:vertical;}
 					input[type='submit']{width:60px; margin:20px 0 0 0; background:#3897f0; color:$white; font-size:14px; font-weight:bold; border:0; border-radius:5px}
 					input:disabled{opacity:0.3;}
+					svg{color:#262626; width:30px; height:30px;}
 				}
-				.col.col2{flex-grow:1; justify-content:flex-start; padding:0;
+				.col.col2{flex-grow:1; justify-content:flex-start; padding:0; flex-direction:column;
 					span{font-size:14px; color:#999; margin:15px 0 0 0;}
+					.nome{
+						span{color:#262626; font-size:20px;}
+					}
+					button{border:0; outline:0; background:transparent; font-size:14px; color:#3897f0; font-weight:bold;}
 				}
 			}
+			.item.imagem{align-items:center;}
 			.item:last-child{margin:0;}
 		}
 	}

@@ -1,4 +1,5 @@
 import React from 'react';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 function Edit(){
 	return(
@@ -14,12 +15,13 @@ function Edit(){
 				</div>
 
 				<div className="content">
-					<div className="item">
+					<div className="item imagem">
 						<div className="col">
-							<span>imagem</span>
+							<AccountCircleIcon />
 						</div>
 						<div className="col col2">
-							<input type="text" />
+							<div className="nome"><span>nome</span></div>
+							<button type="button">Alterar foto de perfil</button>
 						</div>
 					</div>
 					<div className="item">
