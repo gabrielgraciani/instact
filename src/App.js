@@ -27,11 +27,6 @@ function App({location}){
 		}
 	}, [id, nome, cookies, setCookie, setCookiesNome, cookies.id]);
 
-	const handleLogout = () => {
-		setCookie('id', '');
-		setCookiesNome('nome', '');
-	};
-
 	if(cookies.id){
 		if(location.pathname === LOGIN){
 			return <Redirect to={HOME} />
@@ -46,7 +41,7 @@ function App({location}){
 	return(
 		<>
 		<div id="wrapper_body">
-			<Header location={location} handleLogout={handleLogout} />
+			<Header location={location} />
 
 			<div id="wrapper_components" className={location.pathname === LOGIN ? 'active' : ''}>
 				<Suspense fallback={<LinearProgress color="secondary" />}>

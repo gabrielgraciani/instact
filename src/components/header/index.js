@@ -7,7 +7,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import HomeIcon from '@material-ui/icons/Home';
 import {Link} from 'react-router-dom';
 
-function Header({location, handleLogout}){
+function Header({location}){
 
 	const [hidden, setHidden] = useState(false);
 
@@ -43,7 +43,6 @@ function Header({location, handleLogout}){
 						</Link>
 					</div>
 				</div>
-				<li onClick={handleLogout}>Logout</li>
 			</div>
 		)}
 		</>
