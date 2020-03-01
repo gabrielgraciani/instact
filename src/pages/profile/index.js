@@ -3,9 +3,21 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import PostTeste from 'assets/images/post_teste.jpg';
+import Config from './config';
+import {useDispatch, useSelector} from "react-redux";
+import {classActiveSend} from "../../redux/actions/classActive";
 
-const Profile = () => (
-	<>
+function Profile(){
+
+	const dispatch = useDispatch();
+	const { active } = useSelector(store => store.classActive);
+
+	const handleChange = () => {
+		dispatch(classActiveSend());
+	};
+
+	return(
+		<>
 		<div id="wrap_profile">
 			<div className="indent">
 				<div className="head">
@@ -20,7 +32,7 @@ const Profile = () => (
 							<div className="edit">
 								Editar perfil
 							</div>
-							<div className="config">
+							<div className="config" onClick={handleChange}>
 								<SettingsIcon />
 							</div>
 						</div>
@@ -75,7 +87,13 @@ const Profile = () => (
 				</div>
 			</div>
 		</div>
-	</>
-);
+
+		{active && (
+			<Config />
+
+		)}
+		</>
+	);
+}
 
 export default Profile;

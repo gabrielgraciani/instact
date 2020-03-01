@@ -1,7 +1,7 @@
 import * as actions from '../actions/classActive';
 
 export const initialState = {
-	active: true
+	active: false
 };
 
 

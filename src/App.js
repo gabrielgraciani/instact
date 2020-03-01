@@ -5,6 +5,7 @@ import Header from 'components/header';
 import Footer from 'components/footer';
 import {useSelector} from "react-redux";
 import { useCookies } from 'react-cookie';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const Home = lazy(() => import('pages/index'));
 const Login = lazy(() => import('pages/login'));
@@ -48,7 +49,7 @@ function App({location}){
 			<Header location={location} handleLogout={handleLogout} />
 
 			<div id="wrapper_components" className={location.pathname === LOGIN ? 'active' : ''}>
-				<Suspense fallback={''}>
+				<Suspense fallback={<LinearProgress color="secondary" />}>
 					<Switch>
 						<Route path={LOGIN} component={Login} />
 						<Route path={PROFILE} component={Profile} />

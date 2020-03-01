@@ -13,7 +13,7 @@ function Error({msg}){
 	};
 
 	return(
-		<div id="wrap_error" className={active ? 'active' : '' }>
+		<div id="wrap_error" className={active ? '' : 'active' }>
 			<div className="indent">
 				<div className="close" onClick={handleChange}>
 					<CloseIcon size={20} />
