@@ -39,7 +39,7 @@ function Header({location, handleLogout}){
 						</Link>
 
 						<Link to={PROFILE}>
-							<AccountCircleIcon className={location.pathname === PROFILE ? 'active' : ''} />
+							<AccountCircleIcon className={location.pathname === PROFILE ? 'profile active' : ''} />
 						</Link>
 					</div>
 				</div>

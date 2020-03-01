@@ -60,6 +60,7 @@ p{font-size:21px;}
 		.menu{flex-grow:1; display:flex; justify-content:flex-end; align-items:center;
 			svg{margin:0 7px; color:transparent; stroke: #262626;}
 			svg.active{color:#262626;}
+			svg.profile{border:1px solid #262626; padding:1px; border-radius:50%;}
 		}
 	}
 }
