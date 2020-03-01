@@ -1,46 +1,18 @@
-/*
-import firebase, {db} from 'services/firebase';
-import io from 'socket.io-client'
-const socket = io('http://localhost:8080');
+import {db} from 'services/firebase';
 
 export default class user{
-	static saveMessage = (message) => {
+	static getUser = (id) => {
 		return new Promise((res, rej) => {
 			try{
-				let newDoc = db.collection('chat').doc();
-				const id = newDoc.id;
-				newDoc.set({
-					message,
-					createdAt: firebase.firestore.FieldValue.serverTimestamp()
-				});
+				let usersRef = db.collection('users');
 
-				socket.emit('chat.message', {
-					id,
-					message
-				});
-
-				const success = true;
-				res(success);
+				usersRef.doc(id).get().then(function(doc){
+					res(doc.data());
+				})
 			} catch(error){
 				console.log('erro', error);
+				rej(error);
 			}
-		});
-	};
-
-	static getMessages = () => {
-		let message = [];
-		return new Promise((res, rej) => {
-			db.collection('chat').orderBy('createdAt', 'asc').get().then(querySnapshot => {
-				querySnapshot.forEach(doc => {
-					message.push({
-						id: doc.id,
-						...doc.data()
-					})
-				});
-
-				res({message});
-			}).catch(rej)
-		});
-	};
+		})
+	}
 }
-*/

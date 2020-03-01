@@ -142,6 +142,7 @@ p{font-size:21px;}
 	}
 }
 
+#wrap_loading{width:100%; flex-grow:1; display:flex; align-items:center; justify-content:center;}
 #wrap_profile{width:100%; position:relative;
 	.indent{display:flex; flex-direction:column; padding:10px 0 0 0;
 		.head{width:100%; display:flex;

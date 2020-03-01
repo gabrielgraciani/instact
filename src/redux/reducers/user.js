@@ -2,48 +2,30 @@ import * as actions from '../actions/user';
 
 export const initialState = {
 	nome: '',
-	message: '',
-	isSending: false,
-	isLoading: false,
-	list: []
+	email: '',
+	loading: false,
+	userData: []
 };
 
-export default function itemReducer(
+
+export default function authReducer(
 	state = initialState,
 	{ type, payload }
 ) {
 	switch (type) {
-		case actions.USER_SEND_MESSAGE:
-			return{
+		case actions.USER_FETCH:
+			return {
 				...initialState,
 				...state,
-				isSending: true,
+				loading: true
 			};
 
-		case actions.USER_SEND_MESSAGE_SUCCESS:
-			return{
+		case actions.USER_FETCH_SUCCESS:
+			return {
 				...initialState,
 				...state,
-				isSending: false
-			};
-
-		case actions.USER_FETCH_MESSAGE:
-			return{
-				...initialState,
-				...state,
-				...payload,
-				isLoading: true
-			};
-
-		case actions.USER_FETCH_MESSAGE_SUCCESS:
-			return{
-				...initialState,
-				...state,
-				isLoading:false,
-				list: [
-					...state.list,
-					...payload.list
-				]
+				loading: false,
+				userData: payload.userData
 			};
 
 		default:
