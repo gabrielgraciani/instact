@@ -3,10 +3,11 @@ import LoginImage from 'assets/images/login.png';
 import Logo from 'assets/images/logo.png';
 import GooglePlay from 'assets/images/google-play.png';
 import AppleStore from 'assets/images/apple-store.png';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import {useDispatch, useSelector} from "react-redux";
 import {authSendCadastro, authSendLogin} from "../../redux/actions/auth";
 import Error from 'components/error';
+import LoginForm from './login';
+import RegisterForm from './register';
 
 function Login (){
 
@@ -63,68 +64,20 @@ function Login (){
 						</div>
 
 						{login ? (
-							<div>
-								<form action="" onSubmit={handleSubmit}>
-									<div className="item">
-										<label htmlFor="email" className={animatePlaceholder ? 'active' : ''}>E-mail</label>
-										<input type="text" name="email" value={values.email} onChange={handleChange}/>
-									</div>
-									<div className="item">
-										<label htmlFor="senha" className={animatePlaceholder ? 'active' : ''}>Senha</label>
-										<input type="password" name="senha" value={values.senha} onChange={handleChange}/>
-									</div>
-									{loading ? (
-										<div className="loading">
-											<CircularProgress size={20} />
-										</div>
-									) : (
-										<input type="submit" disabled={!values.email} value="Entrar"/>
-									)}
-									{empty && (
-										<span className="error">E-mail ou senha incorretos.</span>
-									)}
-								</form>
-
-								<div className="esqueci">
-									<span>Esqueceu a senha?</span>
-								</div>
-							</div>
+							<LoginForm animatePlaceholder={animatePlaceholder}
+									   empty={empty}
+									   handleChange={handleChange}
+									   handleSubmit={handleSubmit}
+									   loading={loading}
+									   values={values}
+						    />
 						) :
-							<div>
-								<div className="title">
-									<h4>Cadastre-se para ver fotos e vídeos dos seus amigos.</h4>
-								</div>
-
-								<form action="" onSubmit={handleRegister}>
-									<div className="item">
-										<label htmlFor="email" className={animatePlaceholder ? 'active' : ''}>E-mail</label>
-										<input type="text" name="email" value={values.email} onChange={handleChange} />
-									</div>
-									<div className="item">
-										<label htmlFor="nome" className={animatePlaceholder ? 'active' : ''}>Nome completo</label>
-										<input type="text" name="nome" value={values.nome} onChange={handleChange} />
-									</div>
-									<div className="item">
-										<label htmlFor="nome_usuario" className={animatePlaceholder ? 'active' : ''}>Nome de usuário</label>
-										<input type="text" name="nome_usuario" value={values.nome_usuario} onChange={handleChange} />
-									</div>
-									<div className="item">
-										<label htmlFor="senha" className={animatePlaceholder ? 'active' : ''}>Senha</label>
-										<input type="password" name="senha" value={values.senha} onChange={handleChange} />
-									</div>
-									{isSaving ? (
-										<div className="loading">
-											<CircularProgress size={20} />
-										</div>
-									) : (
-										<input type="submit" value="Cadastre-se"/>
-									)}
-								</form>
-
-								<div className="text">
-									<span>Ao se cadastrar, você concorda com nossos <strong>Termos, Política de Dados e Política de Cookies.</strong></span>
-								</div>
-							</div>
+							<RegisterForm animatePlaceholder={animatePlaceholder}
+										  handleChange={handleChange}
+										  handleRegister={handleRegister}
+										  isSaving={isSaving}
+										  values={values}
+							/>
 						}
 					</div>
 
