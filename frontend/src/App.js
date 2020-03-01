@@ -1,6 +1,6 @@
 import React, {lazy, Suspense, useEffect} from 'react'
 import {Route, Switch, Redirect} from 'react-router-dom';
-import {LOGIN, HOME} from './routes';
+import {LOGIN, HOME, PROFILE} from './routes';
 import Header from 'components/header';
 import Footer from 'components/footer';
 import {useSelector} from "react-redux";
@@ -8,6 +8,7 @@ import { useCookies } from 'react-cookie';
 
 const Home = lazy(() => import('pages/index'));
 const Login = lazy(() => import('pages/login'));
+const Profile = lazy(() => import('pages/profile'));
 
 
 function App({location}){
@@ -50,6 +51,7 @@ function App({location}){
 				<Suspense fallback={''}>
 					<Switch>
 						<Route path={LOGIN} component={Login} />
+						<Route path={PROFILE} component={Profile} />
 						<Route component={Home} />
 					</Switch>
 				</Suspense>
