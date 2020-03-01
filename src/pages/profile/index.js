@@ -23,11 +23,11 @@ function Profile(){
 	// eslint-disable-next-line
 	const [cookies, setCookie] = useCookies(['id']);
 
+	console.log('userdata', userData);
+
 	useEffect(() => {
-		if(userData.length === 0 ){
 			dispatch(userFetch(cookies.id));
-		}
-	}, [cookies.id, dispatch, userData.length]);
+	}, [cookies.id, dispatch]);
 
 	return(
 		<>
