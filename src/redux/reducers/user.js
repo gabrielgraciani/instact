@@ -17,7 +17,8 @@ export default function authReducer(
 			return {
 				...initialState,
 				...state,
-				loading: true
+				loading: true,
+				userData: []
 			};
 
 		case actions.USER_FETCH_SUCCESS:
