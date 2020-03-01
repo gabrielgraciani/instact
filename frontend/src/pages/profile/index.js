@@ -2,6 +2,7 @@ import React from 'react';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import GridOnIcon from '@material-ui/icons/GridOn';
+import PostTeste from 'assets/images/post_teste.jpg';
 
 const Profile = () => (
 	<>
@@ -51,6 +52,26 @@ const Profile = () => (
 				<div className="item">
 					<GridOnIcon />
 					<span>PUBLICAÇÕES</span>
+				</div>
+			</div>
+		</div>
+
+		<div id="wrap_posts">
+			<div className="indent">
+				<div className="item">
+					<img src={PostTeste} alt="teste"/>
+				</div>
+				<div className="item">
+					<img src={PostTeste} alt="teste"/>
+				</div>
+				<div className="item">
+					<img src={PostTeste} alt="teste"/>
+				</div>
+				<div className="item">
+					<img src={PostTeste} alt="teste"/>
+				</div>
+				<div className="item">
+					<img src={PostTeste} alt="teste"/>
 				</div>
 			</div>
 		</div>

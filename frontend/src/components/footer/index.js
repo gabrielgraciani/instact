@@ -10,6 +10,11 @@ function Footer({location}){
 			setHidden(true);
 		} catch(error){}
 	}
+	else{
+		try{
+			setHidden(false);
+		} catch(error){}
+	}
 
 	return(
 		<>
