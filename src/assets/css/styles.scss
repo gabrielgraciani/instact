@@ -45,6 +45,7 @@ p{font-size:21px;}
 #wrapper_body{min-height:100vh; display:flex; flex-direction:column;}
 #wrapper_components{flex-grow:1; display:flex; flex-direction:column; justify-content:flex-start;}
 #wrapper_components.active{justify-content:center;}
+#wrap_loading_login{width:100%; flex-grow:1;}
 
 .indent{width:90%; max-width:935px; margin:0 auto;}
 

@@ -42,9 +42,8 @@ function App({location}){
 		<>
 		<div id="wrapper_body">
 			<Header location={location} />
-
 			<div id="wrapper_components" className={location.pathname === LOGIN ? 'active' : ''}>
-				<Suspense fallback={<LinearProgress color="secondary" />}>
+				<Suspense fallback={<div id="wrap_loading_login"><LinearProgress color="secondary" /></div>}>
 					<Switch>
 						<Route path={LOGIN} component={Login} />
 						<Route path={PROFILE} component={Profile} />
