@@ -9,7 +9,8 @@ import {userFetch} from "../../redux/actions/user";
 import { useCookies } from 'react-cookie';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Config from 'components/profile/config';
-import Edit from 'components/profile/edit';
+import {Link} from 'react-router-dom';
+import {EDIT} from '../../routes';
 
 function Profile(){
 
@@ -32,9 +33,6 @@ function Profile(){
 
 	return(
 		<>
-		<Edit />
-
-
 		{loading ? (
 			<div id="wrap_loading">
 				<CircularProgress size={100} />
@@ -56,9 +54,11 @@ function Profile(){
 									<div className="user">
 										<h4>{userData.nome_usuario}</h4>
 									</div>
-									<div className="edit">
-										Editar perfil
-									</div>
+									<Link to={EDIT}>
+										<div className="edit">
+											Editar perfil
+										</div>
+									</Link>
 									<div className="config" onClick={handleChange}>
 										<SettingsIcon />
 									</div>
