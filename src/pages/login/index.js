@@ -6,8 +6,8 @@ import AppleStore from 'assets/images/apple-store.png';
 import {useDispatch, useSelector} from "react-redux";
 import {authSendCadastro, authSendLogin} from "../../redux/actions/auth";
 import Error from 'components/error';
-import LoginForm from './login';
-import RegisterForm from './register';
+import LoginForm from 'components/login/login';
+import RegisterForm from 'components/login/register';
 
 function Login (){
 

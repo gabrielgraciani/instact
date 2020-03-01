@@ -3,7 +3,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import PostTeste from 'assets/images/post_teste.jpg';
-import Config from './config';
+import Config from 'components/profile/config';
 import {useDispatch, useSelector} from "react-redux";
 import {classActiveSend} from "../../redux/actions/classActive";
 import {userFetch} from "../../redux/actions/user";
