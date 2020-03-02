@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import LoginImage from 'assets/images/login.png';
 import Logo from 'assets/images/logo.png';
 import GooglePlay from 'assets/images/google-play.png';
@@ -30,13 +30,13 @@ function Login (){
 		setValues(initialState);
 	};
 
-	const handleChange = (e) => {
-		setAnimatePlaceholder(true);
+	const handleChange = useCallback((e) => {
+		console.log('e', e.currentTarget);
 		setValues({
 			...values,
 			[e.target.name]: e.target.value
 		});
-	};
+	}, [values]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -64,8 +64,7 @@ function Login (){
 						</div>
 
 						{login ? (
-							<LoginForm animatePlaceholder={animatePlaceholder}
-									   empty={empty}
+							<LoginForm empty={empty}
 									   handleChange={handleChange}
 									   handleSubmit={handleSubmit}
 									   loading={loading}

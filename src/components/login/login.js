@@ -2,11 +2,11 @@ import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Input from 'components/input';
 
-const LoginForm = ({ animatePlaceholder, empty, handleChange, handleSubmit, loading, values }) => (
+const LoginForm = ({ empty, handleChange, handleSubmit, loading, values }) => (
 	<div>
 		<form action="" onSubmit={handleSubmit}>
-			<Input type="text" label="E-mail" name="email" value={values.email} />
-			<Input type="password" label="Senha" name="senha" value={values.senha} />
+			<Input type="text" label="E-mail" name="email" handleChange={handleChange} value={values.email} />
+			<Input type="password" label="Senha" name="senha" handleChange={handleChange} value={values.senha} />
 
 			{/*<div className="item">
 				<label htmlFor="email" className={animatePlaceholder ? 'active' : ''}>E-mail</label>
