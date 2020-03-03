@@ -7,15 +7,6 @@ const LoginForm = ({ empty, handleChange, handleSubmit, loading, values }) => (
 		<form action="" onSubmit={handleSubmit}>
 			<Input type="text" label="E-mail" name="email" handleChange={handleChange} value={values.email} />
 			<Input type="password" label="Senha" name="senha" handleChange={handleChange} value={values.senha} />
-
-			{/*<div className="item">
-				<label htmlFor="email" className={animatePlaceholder ? 'active' : ''}>E-mail</label>
-				<input type="text" name="email" value={values.email} onChange={handleChange}/>
-			</div>
-			<div className="item">
-				<label htmlFor="senha" className={animatePlaceholder ? 'active' : ''}>Senha</label>
-				<input type="password" name="senha" value={values.senha} onChange={handleChange}/>
-			</div>*/}
 			{loading ? (
 				<div className="loading">
 					<CircularProgress size={20} />

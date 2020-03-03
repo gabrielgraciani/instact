@@ -20,7 +20,6 @@ function Login (){
 
 	const [login, setLogin] = useState(true);
 	const [values, setValues] = useState(initialState);
-	const [animatePlaceholder, setAnimatePlaceholder] = useState(false);
 
 	const dispatch = useDispatch();
 	const { isSaving, error, loading, empty } = useSelector(store => store.auth);
@@ -71,8 +70,7 @@ function Login (){
 									   values={values}
 						    />
 						) :
-							<RegisterForm animatePlaceholder={animatePlaceholder}
-										  handleChange={handleChange}
+							<RegisterForm handleChange={handleChange}
 										  handleRegister={handleRegister}
 										  isSaving={isSaving}
 										  values={values}

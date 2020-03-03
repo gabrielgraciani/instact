@@ -1,29 +1,18 @@
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Input from 'components/input';
 
-const RegisterForm = ({animatePlaceholder, handleChange, handleRegister, isSaving, values}) => (
+const RegisterForm = ({handleChange, handleRegister, isSaving, values}) => (
 	<>
 		<div className="title">
 			<h4>Cadastre-se para ver fotos e vídeos dos seus amigos.</h4>
 		</div>
 
 		<form action="" onSubmit={handleRegister}>
-			<div className="item">
-				<label htmlFor="email" className={animatePlaceholder ? 'active' : ''}>E-mail</label>
-				<input type="text" name="email" value={values.email} onChange={handleChange} />
-			</div>
-			<div className="item">
-				<label htmlFor="nome" className={animatePlaceholder ? 'active' : ''}>Nome completo</label>
-				<input type="text" name="nome" value={values.nome} onChange={handleChange} />
-			</div>
-			<div className="item">
-				<label htmlFor="nome_usuario" className={animatePlaceholder ? 'active' : ''}>Nome de usuário</label>
-				<input type="text" name="nome_usuario" value={values.nome_usuario} onChange={handleChange} />
-			</div>
-			<div className="item">
-				<label htmlFor="senha" className={animatePlaceholder ? 'active' : ''}>Senha</label>
-				<input type="password" name="senha" value={values.senha} onChange={handleChange} />
-			</div>
+			<Input type="text" label="E-mail" name="email" handleChange={handleChange} value={values.email} />
+			<Input type="text" label="Nome completo" name="nome" handleChange={handleChange} value={values.nome} />
+			<Input type="text" label="Nome de usuário" name="nome_usuario" handleChange={handleChange} value={values.nome_usuario} />
+			<Input type="password" label="Senha" name="senha" handleChange={handleChange} value={values.senha} />
 			{isSaving ? (
 				<div className="loading">
 					<CircularProgress size={20} />
