@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {LOGIN, HOME, PROFILE} from '../../routes';
 import LogoSmall from 'assets/images/logo-small.png';
 import SearchIcon from '@material-ui/icons/Search';
@@ -11,11 +11,16 @@ function Header({location}){
 
 	const [hidden, setHidden] = useState(false);
 
-	if(location.pathname === LOGIN){
-		try{
-			setHidden(true);
-		} catch(error){}
-	}
+	useEffect(() => {
+		if(location.pathname === LOGIN){
+				setHidden(true);
+		}
+		else{
+			setHidden(false);
+		}
+	}, [location]);
+
+
 
 	return(
 		<>
