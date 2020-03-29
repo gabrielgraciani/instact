@@ -10,7 +10,7 @@ export default class auth{
 			return response.data.success;
 
 		} catch (err) {
-			return false;
+			return err.response.data.message;
 		}
 
 	};
