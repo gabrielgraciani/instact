@@ -21,22 +21,16 @@ export default function authReducer(
 	switch (type) {
 		case actions.AUTH_SEND_CADASTRO:
 			return {
-				...initialState,
-				...state,
 				isSaving: true,
 			};
 
 		case actions.AUTH_SEND_CADASTRO_SUCCESS:
 			return {
-				...initialState,
-				...state,
 				isSaving: false
 			};
 
 		case actions.AUTH_ERROR:
 			return {
-				...initialState,
-				...state,
 				isSaving: false,
 				error: payload.error
 			};

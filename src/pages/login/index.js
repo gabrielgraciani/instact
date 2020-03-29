@@ -5,7 +5,6 @@ import GooglePlay from 'assets/images/google-play.png';
 import AppleStore from 'assets/images/apple-store.png';
 import {useDispatch, useSelector} from "react-redux";
 import {authSendCadastro, authSendLogin} from "../../redux/actions/auth";
-import Error from 'components/error';
 import LoginForm from 'components/login/login';
 import RegisterForm from 'components/login/register';
 
@@ -67,12 +66,14 @@ function Login (){
 									   handleSubmit={handleSubmit}
 									   loading={loading}
 									   values={values}
+									   error={error}
 						    />
 						) :
 							<RegisterForm handleChange={handleChange}
 										  handleRegister={handleRegister}
 										  isSaving={isSaving}
 										  values={values}
+										  error={error}
 							/>
 						}
 					</div>
@@ -109,9 +110,6 @@ function Login (){
 			</div>
 		</div>
 
-		{error && (
-			<Error msg={error} />
-		)}
 		</>
 	);
 }
