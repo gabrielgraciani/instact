@@ -29,6 +29,9 @@ function* authSendLoginWorker(data){
 
 		if(response.id){
 			yield put(actions.authSendLoginSuccess(response.id, response.name));
+
+			localStorage.setItem('id', response.id);
+			localStorage.setItem('name', response.name);
 		}
 		else{
 			yield put(actions.authError(response));
