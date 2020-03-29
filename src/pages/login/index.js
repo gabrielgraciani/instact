@@ -12,10 +12,10 @@ import RegisterForm from 'components/login/register';
 function Login (){
 
 	const initialState = {
-		nome: '',
+		name: '',
 		email: '',
-		nome_usuario: '',
-		senha: ''
+		username: '',
+		password: ''
 	};
 
 	const [login, setLogin] = useState(true);
@@ -30,7 +30,6 @@ function Login (){
 	};
 
 	const handleChange = useCallback((e) => {
-		console.log('e', e.currentTarget);
 		setValues({
 			...values,
 			[e.target.name]: e.target.value

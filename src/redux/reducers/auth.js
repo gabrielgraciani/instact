@@ -1,10 +1,10 @@
 import * as actions from '../actions/auth';
 
 export const initialState = {
-	nome: '',
+	name: '',
 	email: '',
-	nome_usuario: '',
-	senha: '',
+	username: '',
+	password: '',
 	isSaving: false,
 	error: false,
 	loading: false,

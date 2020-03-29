@@ -10,9 +10,9 @@ const RegisterForm = ({handleChange, handleRegister, isSaving, values}) => (
 
 		<form action="" onSubmit={handleRegister}>
 			<Input type="text" label="E-mail" name="email" handleChange={handleChange} value={values.email} />
-			<Input type="text" label="Nome completo" name="nome" handleChange={handleChange} value={values.nome} />
-			<Input type="text" label="Nome de usuário" name="nome_usuario" handleChange={handleChange} value={values.nome_usuario} />
-			<Input type="password" label="Senha" name="senha" handleChange={handleChange} value={values.senha} />
+			<Input type="text" label="Nome completo" name="name" handleChange={handleChange} value={values.nome} />
+			<Input type="text" label="Nome de usuário" name="username" handleChange={handleChange} value={values.username} />
+			<Input type="password" label="Senha" name="password" handleChange={handleChange} value={values.password} />
 			{isSaving ? (
 				<div className="loading">
 					<CircularProgress size={20} />
