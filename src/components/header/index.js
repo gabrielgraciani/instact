@@ -9,7 +9,7 @@ import {Link} from 'react-router-dom';
 
 function Header({location}){
 
-	const [hidden, setHidden] = useState(false);
+	const [hidden, setHidden] = useState(true);
 
 	useEffect(() => {
 		if(location.pathname === LOGIN){
