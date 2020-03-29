@@ -2,20 +2,17 @@ import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Input from 'components/input';
 
-const LoginForm = ({ empty, handleChange, handleSubmit, loading, values, error }) => (
+const LoginForm = ({ handleChange, handleSubmit, loading, values, error }) => (
 	<div>
 		<form action="" onSubmit={handleSubmit}>
 			<Input type="text" label="E-mail" name="email" handleChange={handleChange} value={values.email} />
-			<Input type="password" label="Senha" name="senha" handleChange={handleChange} value={values.senha} />
+			<Input type="password" label="Senha" name="password" handleChange={handleChange} value={values.password} />
 			{loading ? (
 				<div className="loading">
 					<CircularProgress size={20} />
 				</div>
 			) : (
 				<input type="submit" disabled={!values.email} value="Entrar"/>
-			)}
-			{empty && (
-				<span className="error">E-mail ou senha incorretos.</span>
 			)}
 		</form>
 

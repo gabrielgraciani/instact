@@ -11,8 +11,6 @@ function* authSendCadastroWorker(data) {
 
 		if(response === true){
 			yield put (actions.authSendCadastroSuccess());
-			/*const {id, nome} = yield call(Auth.loginUser, email, senha);
-			yield put(actions.authSendLoginSuccess(id, nome, false));*/
 		}
 		else{
 			yield put(actions.authError(response));
@@ -26,17 +24,17 @@ function* authSendCadastroWorker(data) {
 
 function* authSendLoginWorker(data){
 	try{
-		const {email, senha} = data.payload;
-		const {id, nome, empty} = yield call(Auth.loginUser, email, senha);
+		const { email, password } = data.payload;
+		const response = yield call(Auth.loginUser, email, password);
 
-		if(empty){
-			yield put(actions.authSendLoginSuccess(null, null, empty));
-
-		}else{
-			yield put(actions.authSendLoginSuccess(id, nome, false));
+		if(response.id){
+			yield put(actions.authSendLoginSuccess(response.id, response.name));
 		}
+		else{
+			yield put(actions.authError(response));
+		}
+
 	} catch (error){
-		//console.log(`Erro ${error}, tente novamente mais tarde`);
 		yield put(actions.authError(error));
 	}
 }

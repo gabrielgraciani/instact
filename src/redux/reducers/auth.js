@@ -9,7 +9,6 @@ export const initialState = {
 	error: false,
 	loading: false,
 	id: '',
-	empty: false,
 	logout: false
 };
 
@@ -46,8 +45,7 @@ export default function authReducer(
 			return{
 				loading: false,
 				id: payload.id,
-				nome: payload.nome,
-				empty: payload.empty
+				name: payload.name
 			};
 
 		default:

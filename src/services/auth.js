@@ -1,10 +1,8 @@
-import {db} from 'services/firebase';
 import api from './api';
 
 export default class auth{
-	static registerUser = async (data) => {
+	static registerUser = async ( data ) => {
 		try {
-
 			const response = await api.post('/users', data);
 
 			return response.data.success;
@@ -16,27 +14,15 @@ export default class auth{
 	};
 
 
-	static loginUser = (email, senha) => {
-		return new Promise((res, rej) => {
-			try{
-				let usersRef = db.collection('users');
+	static loginUser = async ( email, password ) => {
+		try{
 
-				usersRef.where('email', '==', email).where('senha', '==', senha).get().then(function(querySnapshot) {
-					if(querySnapshot.empty){
-						const empty = true;
-						res({empty});
-					}else{
-						querySnapshot.forEach(function(doc) {
-							const id = doc.id;
-							const nome = doc.data().nome;
-							res({id, nome});
-						})
-					}
-				});
-			} catch(error){
-				console.log('erro', error);
-				rej(error);
-			}
-		});
+			const response = await api.post('/authenticate', { email, password });
+
+			return response.data;
+
+		} catch (err) {
+			return err.response.data.message;
+		}
 	};
 }

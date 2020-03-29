@@ -1,10 +1,8 @@
-import React, {lazy, Suspense, useEffect} from 'react'
-import {Route, Switch, Redirect} from 'react-router-dom';
-import {EDIT, LOGIN, HOME, PROFILE} from './routes';
+import React, {lazy, Suspense} from 'react'
+import {Route, Switch} from 'react-router-dom';
+import {EDIT, LOGIN, PROFILE} from './routes';
 import Header from 'components/header';
 import Footer from 'components/footer';
-import {useSelector} from "react-redux";
-import { useCookies } from 'react-cookie';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 const Home = lazy(() => import('pages/index'));
@@ -14,30 +12,6 @@ const Edit = lazy(() => import('pages/edit'));
 
 
 function App({location}){
-
-	const {id, nome } = useSelector(store => store.auth);
-	// eslint-disable-next-line
-	const [cookies, setCookie] = useCookies(['id']);
-	// eslint-disable-next-line
-	const [cookiesNome, setCookiesNome] = useCookies(['nome']);
-
-	useEffect(() => {
-		if(!cookies.id){
-			setCookie('id', id || '', {path: '/', maxAge: 3600});
-			setCookiesNome('nome', nome || '', {path: '/', maxAge: 3600});
-		}
-	}, [id, nome, cookies, setCookie, setCookiesNome, cookies.id]);
-
-	if(cookies.id){
-		if(location.pathname === LOGIN){
-			return <Redirect to={HOME} />
-		}
-	}
-	else{
-		if(location.pathname !== LOGIN){
-			return <Redirect to={LOGIN} />
-		}
-	}
 
 	return(
 		<>

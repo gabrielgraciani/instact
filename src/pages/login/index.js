@@ -21,7 +21,7 @@ function Login (){
 	const [values, setValues] = useState(initialState);
 
 	const dispatch = useDispatch();
-	const { isSaving, error, loading, empty } = useSelector(store => store.auth);
+	const { isSaving, error, loading } = useSelector(store => store.auth);
 
 	const handleChangeForm = () => {
 		setLogin(!login);
@@ -61,8 +61,7 @@ function Login (){
 						</div>
 
 						{login ? (
-							<LoginForm empty={empty}
-									   handleChange={handleChange}
+							<LoginForm handleChange={handleChange}
 									   handleSubmit={handleSubmit}
 									   loading={loading}
 									   values={values}

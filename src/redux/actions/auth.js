@@ -25,11 +25,10 @@ export const authSendLogin = (payload) => ({
 	payload
 });
 
-export const authSendLoginSuccess = (id, nome, empty) => ({
+export const authSendLoginSuccess = (id, name) => ({
 	type: AUTH_SEND_LOGIN_SUCCESS,
 	payload: {
 		id,
-		nome,
-		empty
+		name
 	}
 });
