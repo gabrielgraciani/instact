@@ -22,7 +22,7 @@ export default class auth{
 			return response.data;
 
 		} catch (err) {
-			return err.response.data.message;
+			return err.response.data.message || err.response.data.error.message;
 		}
 	};
 }
