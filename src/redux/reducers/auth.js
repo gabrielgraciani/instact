@@ -48,6 +48,15 @@ export default function authReducer(
 				name: payload.name
 			};
 
+		case actions.AUTH_LOGOUT:
+			return{
+				id: '',
+				name: '',
+				email: '',
+				password: '',
+				username: ''
+			};
+
 		default:
 			return state;
 	}

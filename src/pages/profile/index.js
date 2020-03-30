@@ -6,7 +6,6 @@ import PostTeste from 'assets/images/post_teste.jpg';
 import {useDispatch, useSelector} from "react-redux";
 import {classActiveSend} from "../../redux/actions/classActive";
 import {userFetch} from "../../redux/actions/user";
-import { useCookies } from 'react-cookie';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Config from 'components/profile/config';
 import {Link} from 'react-router-dom';
@@ -18,18 +17,17 @@ function Profile(){
 	const { active } = useSelector(store => store.classActive);
 	const { loading = true, userData = [] } = useSelector(store => store.user);
 
+	console.log('data', userData);
+
 	const handleChange = () => {
 		dispatch(classActiveSend());
 	};
 
-	// eslint-disable-next-line
-	const [cookies, setCookie] = useCookies(['id']);
-
-	console.log('userdata', userData);
+	const id = localStorage.getItem('id');
 
 	useEffect(() => {
-			dispatch(userFetch(cookies.id));
-	}, [cookies.id, dispatch]);
+			dispatch(userFetch(id));
+	}, [id, dispatch]);
 
 	return(
 		<>
@@ -52,7 +50,7 @@ function Profile(){
 							<div className="content">
 								<div className="row">
 									<div className="user">
-										<h4>{userData.nome_usuario}</h4>
+										<h4>{userData.username}</h4>
 									</div>
 									<Link to={EDIT}>
 										<div className="edit">
@@ -78,7 +76,7 @@ function Profile(){
 
 								<div className="row">
 									<div className="nome">
-										<span><strong>{userData.nome}</strong></span>
+										<span><strong>{userData.name}</strong></span>
 									</div>
 								</div>
 							</div>

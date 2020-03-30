@@ -1,18 +1,14 @@
-import {db} from 'services/firebase';
+import api from './api';
 
 export default class user{
-	static getUser = (id) => {
-		return new Promise((res, rej) => {
-			try{
-				let usersRef = db.collection('users');
+	static getUser = async (id) => {
+		try{
+			const response = await api.get(`/users/${id}`);
 
-				usersRef.doc(id).get().then(function(doc){
-					res(doc.data());
-				})
-			} catch(error){
-				console.log('erro', error);
-				rej(error);
-			}
-		})
+			return response.data;
+
+		} catch (err) {
+			return err.response.data.message || err.response.data.error.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
+		}
 	}
 }

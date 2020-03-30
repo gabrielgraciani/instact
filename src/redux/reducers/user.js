@@ -18,7 +18,6 @@ export default function authReducer(
 				...initialState,
 				...state,
 				loading: true,
-				userData: []
 			};
 
 		case actions.USER_FETCH_SUCCESS:

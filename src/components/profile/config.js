@@ -1,16 +1,12 @@
 import React from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {classActiveSend} from "../../redux/actions/classActive";
-import { useCookies } from 'react-cookie';
+import { useDispatch, useSelector } from "react-redux";
+import { classActiveSend } from "../../redux/actions/classActive";
+import { authLogout } from "../../redux/actions/auth";
 
 function Config(){
 
 	const dispatch = useDispatch();
 	const { active } = useSelector(store => store.classActive);
-	// eslint-disable-next-line
-	const [cookies, setCookie] = useCookies(['id']);
-	// eslint-disable-next-line
-	const [cookiesNome, setCookiesNome] = useCookies(['nome']);
 
 	const handleChange = () => {
 		dispatch(classActiveSend());
@@ -18,8 +14,7 @@ function Config(){
 
 	const handleLogout = () => {
 		handleChange();
-		setCookie('id', '');
-		setCookiesNome('nome', '');
+		dispatch(authLogout());
 	};
 
 	return(

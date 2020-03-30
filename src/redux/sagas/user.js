@@ -9,6 +9,7 @@ function* userFetchWorker(data) {
 		const userData = yield call(User.getUser, id);
 
 		yield put(actions.userFetchSuccess(userData));
+
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);
 	}
