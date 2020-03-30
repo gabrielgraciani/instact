@@ -7,10 +7,12 @@ function* authSendCadastroWorker(data) {
 	try {
 		const userData = data.payload;
 		const response = yield call(Auth.registerUser, userData);
-		console.log('response', response);
+
 
 		if(response === true){
 			yield put (actions.authSendCadastroSuccess());
+
+			yield call(authSendLoginWorker, userData);
 		}
 		else{
 			yield put(actions.authError(response));
@@ -24,7 +26,7 @@ function* authSendCadastroWorker(data) {
 
 function* authSendLoginWorker(data){
 	try{
-		const { email, password } = data.payload;
+		const { email, password } = data.payload || data;
 		const response = yield call(Auth.loginUser, email, password);
 
 		if(response.id){
