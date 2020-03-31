@@ -8,7 +8,6 @@ function* authSendCadastroWorker(data) {
 		const userData = data.payload;
 		const response = yield call(Auth.registerUser, userData);
 
-
 		if(response === true){
 			yield put (actions.authSendCadastroSuccess());
 

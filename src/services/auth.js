@@ -8,7 +8,7 @@ export default class auth{
 			return response.data.success;
 
 		} catch (err) {
-			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
+			return err.response.data.message || err.response.data.error.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
 		}
 
 	};
