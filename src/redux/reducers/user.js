@@ -1,8 +1,12 @@
 import * as actions from '../actions/user';
 
 export const initialState = {
-	nome: '',
+	name: '',
 	email: '',
+	username: '',
+	biography: '',
+	telephone: '',
+	password: '',
 	loading: false,
 	userData: []
 };
@@ -26,6 +30,18 @@ export default function authReducer(
 				...state,
 				loading: false,
 				userData: payload.userData
+			};
+
+		case actions.USER_UPDATE:
+			return{
+				...initialState,
+				...state
+			};
+
+		case actions.USER_UPDATE_SUCCESS:
+			return{
+				...initialState,
+				...state
 			};
 
 		default:

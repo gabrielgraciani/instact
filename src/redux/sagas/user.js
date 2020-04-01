@@ -15,13 +15,33 @@ function* userFetchWorker(data) {
 	}
 }
 
+function* userUpdateWorker(data){
+	try{
+		const xd = data.payload;
+
+		const response = yield call(User.updateUser, xd);
+
+		if(response === true){
+			yield put(actions.userUpdateSuccess());
+		}
+
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
 function* userFetchWatcher() {
 	yield takeLatest(actions.USER_FETCH, userFetchWorker);
+}
+
+function* userUpdateWatcher(){
+	yield takeLatest(actions.USER_UPDATE, userUpdateWorker);
 }
 
 function* authWatcher() {
 	yield all([
 		userFetchWatcher(),
+		userUpdateWatcher(),
 	]);
 }
 

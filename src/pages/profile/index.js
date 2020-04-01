@@ -17,8 +17,6 @@ function Profile(){
 	const { active } = useSelector(store => store.classActive);
 	const { loading = true, userData = [] } = useSelector(store => store.user);
 
-	console.log('data', userData);
-
 	const handleChange = () => {
 		dispatch(classActiveSend());
 	};
