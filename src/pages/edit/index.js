@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userFetch, userUpdate } from "../../redux/actions/user";
 import InputNoLabel from 'components/input/inputNoLabel';
 import TextArea from 'components/textarea';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 function Edit(){
 
@@ -16,7 +17,7 @@ function Edit(){
 	};
 
 	const dispatch = useDispatch();
-	const { userData = [] } = useSelector(store => store.user);
+	const { userData = [], isSaving, response } = useSelector(store => store.user);
 	const [values, setValues] = useState(initialState);
 	const [disabled, setDisabled] = useState(true);
 
@@ -46,6 +47,7 @@ function Edit(){
 	}, [id, dispatch, userData]);
 
 	return(
+		<>
 		<div id="wrap_edit">
 			<div className="indent">
 				<div className="sidemenu">
@@ -85,13 +87,26 @@ function Edit(){
 					<div className="item">
 						<div className="col"> </div>
 						<div className="col col2">
-							<input type="submit" value="Enviar" disabled={disabled} />
+							{isSaving ? (
+								<div className="loading">
+									<CircularProgress size={20} />
+								</div>
+							) : (
+								<input type="submit" disabled={disabled} value="Enviar"/>
+							)}
 						</div>
 					</div>
 
 				</form>
 			</div>
 		</div>
+
+		<div id="wrap_sucesso" className={response ? 'active' : ''}>
+			{response && (
+				<span>Perfil salvo.</span>
+			)}
+		</div>
+		</>
 	);
 }
 

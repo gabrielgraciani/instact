@@ -1,4 +1,4 @@
-import { takeLatest, all, put, call } from 'redux-saga/effects';
+import { takeLatest, all, put, call, delay } from 'redux-saga/effects';
 
 import * as actions from '../actions/user';
 import User from '../../services/user';
@@ -22,7 +22,10 @@ function* userUpdateWorker(data){
 		const response = yield call(User.updateUser, xd);
 
 		if(response === true){
-			yield put(actions.userUpdateSuccess());
+			yield put(actions.userUpdateSuccess(response));
+
+			yield delay(3000);
+			yield put(actions.userUpdateSuccess(false));
 		}
 
 	} catch (error) {

@@ -8,7 +8,9 @@ export const initialState = {
 	telephone: '',
 	password: '',
 	loading: false,
-	userData: []
+	userData: [],
+	isSaving: false,
+	response: false,
 };
 
 
@@ -35,13 +37,16 @@ export default function authReducer(
 		case actions.USER_UPDATE:
 			return{
 				...initialState,
-				...state
+				...state,
+				isSaving: true
 			};
 
 		case actions.USER_UPDATE_SUCCESS:
 			return{
 				...initialState,
-				...state
+				...state,
+				isSaving: false,
+				response: payload.response
 			};
 
 		default:

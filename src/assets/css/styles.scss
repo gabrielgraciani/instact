@@ -230,12 +230,20 @@ p{font-size:21px;}
 						span{color:#262626; font-size:20px;}
 					}
 					button{border:0; outline:0; background:transparent; font-size:14px; color:#3897f0; font-weight:bold;}
+					.loading{width:60px; height:31px; margin:20px 0 0 0; display:flex; align-items:center; justify-content:center; background:#3897f0; color:$white; font-size:14px; font-weight:bold; border:0; border-radius:5px;
+						svg{color:$white; width:20px;height:20px;}
+					}
 				}
 			}
 			.item.imagem{align-items:center;}
 			.item:last-child{margin:0;}
 		}
 	}
+}
+
+#wrap_sucesso {transition:all .3s ease;  width: 100%; background: #262626; padding: 11.5px 15px; position:fixed; bottom:-44px; left:0;
+	span{font-size:15px; color:#fff; font-weight:normal;}
+	&.active{bottom:0}
 }
 
 

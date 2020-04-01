@@ -20,6 +20,9 @@ export const userUpdate = (payload) => ({
 	payload
 });
 
-export const userUpdateSuccess = () => ({
-	type: USER_UPDATE_SUCCESS
+export const userUpdateSuccess = (response) => ({
+	type: USER_UPDATE_SUCCESS,
+	payload: {
+		response
+	}
 });
