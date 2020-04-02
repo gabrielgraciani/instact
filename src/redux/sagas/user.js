@@ -17,12 +17,13 @@ function* userFetchWorker(data) {
 
 function* userUpdateWorker(data){
 	try{
-		const xd = data.payload;
+		const userData = data.payload;
 
-		const response = yield call(User.updateUser, xd);
+		const response = yield call(User.updateUser, userData);
 
 		if(response === true){
 			yield put(actions.userUpdateSuccess(response));
+			yield put(actions.userAtt(userData));
 
 			yield delay(3000);
 			yield put(actions.userUpdateSuccess(false));

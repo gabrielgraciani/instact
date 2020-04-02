@@ -49,6 +49,12 @@ export default function authReducer(
 				response: payload.response
 			};
 
+		case actions.USER_ATT:
+			return{
+				...state,
+				userData: payload.userData
+			};
+
 		default:
 			return state;
 	}
