@@ -20,6 +20,7 @@ function Edit(){
 	const { userData = [], isSaving, response } = useSelector(store => store.user);
 	const [values, setValues] = useState(initialState);
 	const [disabled, setDisabled] = useState(true);
+	const [changeMenu, setChangeMenu] = useState(false);
 
 	const handleChange = useCallback((e) => {
 		setValues({
@@ -34,6 +35,14 @@ function Edit(){
 		e.preventDefault();
 
 		dispatch(userUpdate(values));
+	};
+
+	const handleChangeProfile = () => {
+		setChangeMenu(false);
+	};
+
+	const handleChangePassword = () => {
+		setChangeMenu(true);
 	};
 
 	const id = localStorage.getItem('id');
@@ -51,53 +60,83 @@ function Edit(){
 		<div id="wrap_edit">
 			<div className="indent">
 				<div className="sidemenu">
-					<div className="item active">
+					<div className={`item ${changeMenu ? '' : 'active'}`} onClick={handleChangeProfile}>
 						<span>Editar perfil</span>
 					</div>
-					<div className="item">
+					<div className={`item ${changeMenu ? 'active' : ''}`} onClick={handleChangePassword}>
 						<span>Alterar senha</span>
 					</div>
 				</div>
 
-				<form className="content" onSubmit={handleUpdate}>
-					<div className="item imagem">
-						<div className="col">
-							<AccountCircleIcon />
+				{changeMenu ? (
+					<form className="content content2" onSubmit={handleUpdate}>
+						<div className="item imagem">
+							<div className="col">
+								<AccountCircleIcon />
+							</div>
+							<div className="col col2">
+								<div className="nome"><span className="big">{userData.name}</span></div>
+							</div>
 						</div>
-						<div className="col col2">
-							<div className="nome"><span>{userData.name}</span></div>
-							<button type="button">Alterar foto de perfil</button>
+
+						<InputNoLabel className='gray' span="Senha antiga" type="text" name="password" handleChange={handleChange} value={values.password}  />
+						<InputNoLabel className='gray' span="Nova senha" type="text" name="username" handleChange={handleChange} value={values.username}  />
+						<InputNoLabel className='gray' span="Confirmar nova senha" type="text" name="username" handleChange={handleChange} value={values.username}  />
+
+						<div className="item">
+							<div className="col"> </div>
+							<div className="col col2">
+								{isSaving ? (
+									<div className="loading big">
+										<CircularProgress size={20} />
+									</div>
+								) : (
+									<input className="big" type="submit" disabled={disabled} value="Alterar senha"/>
+								)}
+							</div>
 						</div>
-					</div>
-
-					<InputNoLabel span="Nome" type="text" name="name" handleChange={handleChange} value={values.name}  />
-					<InputNoLabel span="Nome de usuário" type="text" name="username" handleChange={handleChange} value={values.username}  />
-					<TextArea span="Biografia" name="biography" handleChange={handleChange} value={values.biography}  />
-
-					<div className="item">
-						<div className="col"> </div>
-						<div className="col col2">
-							<span>Informações privadas</span>
+					</form>
+				) : (
+					<form className="content" onSubmit={handleUpdate}>
+						<div className="item imagem">
+							<div className="col">
+								<AccountCircleIcon />
+							</div>
+							<div className="col col2">
+								<div className="nome"><span>{userData.name}</span></div>
+								<button type="button">Alterar foto de perfil</button>
+							</div>
 						</div>
-					</div>
 
-					<InputNoLabel span="E-mail" type="email" name="email" handleChange={handleChange} value={values.email}  />
-					<InputNoLabel span="Telefone" type="text" name="telephone" handleChange={handleChange} value={values.telephone}  />
+						<InputNoLabel span="Nome" type="text" name="name" handleChange={handleChange} value={values.name}  />
+						<InputNoLabel span="Nome de usuário" type="text" name="username" handleChange={handleChange} value={values.username}  />
+						<TextArea span="Biografia" name="biography" handleChange={handleChange} value={values.biography}  />
 
-					<div className="item">
-						<div className="col"> </div>
-						<div className="col col2">
-							{isSaving ? (
-								<div className="loading">
-									<CircularProgress size={20} />
-								</div>
-							) : (
-								<input type="submit" disabled={disabled} value="Enviar"/>
-							)}
+						<div className="item">
+							<div className="col"> </div>
+							<div className="col col2">
+								<span>Informações privadas</span>
+							</div>
 						</div>
-					</div>
 
-				</form>
+						<InputNoLabel span="E-mail" type="email" name="email" handleChange={handleChange} value={values.email}  />
+						<InputNoLabel span="Telefone" type="text" name="telephone" handleChange={handleChange} value={values.telephone}  />
+
+						<div className="item">
+							<div className="col"> </div>
+							<div className="col col2">
+								{isSaving ? (
+									<div className="loading">
+										<CircularProgress size={20} />
+									</div>
+								) : (
+									<input type="submit" disabled={disabled} value="Enviar"/>
+								)}
+							</div>
+						</div>
+					</form>
+				)}
+
 			</div>
 		</div>
 
