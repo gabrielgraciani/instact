@@ -232,7 +232,9 @@ p{font-size:21px;}
 					svg{color:#262626; width:30px; height:30px;}
 				}
 				.col.col2{flex-grow:1; justify-content:flex-start; padding:0; flex-direction:column;
-					span{font-size:14px; color:#999; margin:15px 0 0 0;}
+					span{font-size:14px; color:#999; margin:15px 0 0 0;
+						&.small{font-size:12px; text-align:left; line-height:12px; font-weight:400; margin:5px 0 0 0;}
+					}
 					.nome{
 						span{color:#262626; font-size:20px;
 							&.big{font-size:24px; font-weight:400;}

@@ -66,7 +66,7 @@ function Edit(){
 					</div>
 				</div>
 
-				{changeMenu ? (
+				{!changeMenu ? (
 					<FormProfile
 						handleUpdate={handleUpdate}
 						userData={userData}
