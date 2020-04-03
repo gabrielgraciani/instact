@@ -15,9 +15,9 @@ const formPassword = ({ handleUpdatePassword, userData, handleChangePassword, va
 				</div>
 			</div>
 
-			<InputNoLabel className='gray' span="Senha antiga" type="text" name="password" handleChange={handleChangePassword} value={valuesPassword.password}  />
-			<InputNoLabel className='gray' span="Nova senha" type="text" name="newpassword" handleChange={handleChangePassword} value={valuesPassword.newpassword}  />
-			<InputNoLabel className='gray' span="Confirmar nova senha" type="text" name="newpasswordconfirm" handleChange={handleChangePassword} value={valuesPassword.newpasswordconfirm}  />
+			<InputNoLabel className='gray' span="Senha antiga" type="password" name="password" handleChange={handleChangePassword} value={valuesPassword.password}  />
+			<InputNoLabel className='gray' span="Nova senha" type="password" name="newpassword" handleChange={handleChangePassword} value={valuesPassword.newpassword}  />
+			<InputNoLabel className='gray' span="Confirmar nova senha" type="password" name="newpasswordconfirm" handleChange={handleChangePassword} value={valuesPassword.newpasswordconfirm}  />
 
 			<div className="item">
 				<div className="col"> </div>

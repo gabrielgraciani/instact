@@ -14,19 +14,15 @@ function Edit(){
 		telephone: '',
 	};
 
-	const initialStatePassword = {
-		password: '',
-		newpassword: '',
-		newpasswordconfirm: '',
-	};
-
 	const dispatch = useDispatch();
 	const { userData = [], isSaving, response } = useSelector(store => store.user);
 	const [values, setValues] = useState(initialState);
 	const [disabled, setDisabled] = useState(true);
 	const [changeMenu, setChangeMenu] = useState(false);
-	const [valuesPassword, setValuesPassword] = useState(initialStatePassword);
+	const [valuesPassword, setValuesPassword] = useState('');
 	const [disabledPassword, setDisabledPassword] = useState(true);
+
+	console.log('repsonse', response);
 
 	const handleChange = useCallback((e) => {
 		setValues({
@@ -83,6 +79,19 @@ function Edit(){
 
 	}, [id, dispatch, userData]);
 
+	useEffect(() => {
+		if(response === true){
+			setValuesPassword({
+				id,
+				password: '',
+				newpassword: '',
+				newpasswordconfirm: '',
+			});
+
+			setDisabledPassword(true);
+		}
+	}, [response, id]);
+
 	return(
 		<>
 		<div id="wrap_edit">
@@ -120,8 +129,11 @@ function Edit(){
 		</div>
 
 		<div id="wrap_sucesso" className={response ? 'active' : ''}>
-			{response && (
+			{response === true && (
 				<span>Perfil salvo.</span>
+			)}
+			{response === 'Passwords do not match' && (
+				<span>Certifique-se de que as senhas correspondam.</span>
 			)}
 		</div>
 		</>

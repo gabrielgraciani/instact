@@ -40,15 +40,12 @@ function* userUpdatePasswordWorker(data){
 
 		console.log('userData', userData);
 
-		/*const response = yield call(User.updatePasswordUser, userData);
+		const response = yield call(User.updatePasswordUser, userData);
 
-		if(response === true){
-			yield put(actions.userUpdateSuccess(response));
-			yield put(actions.userAtt(userData));
+		yield put(actions.userUpdatePasswordSuccess(response));
 
-			yield delay(3000);
-			yield put(actions.userUpdateSuccess(false));
-		}*/
+		yield delay(3000);
+		yield put(actions.userUpdatePasswordSuccess(false));
 
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);
