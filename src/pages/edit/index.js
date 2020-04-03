@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { userFetch, userUpdate } from "../../redux/actions/user";
+import { userFetch, userUpdate, userUpdatePassword } from "../../redux/actions/user";
 import FormProfile from 'components/edit/formProfile';
 import FormPassword from 'components/edit/formPassword';
 
@@ -14,11 +14,19 @@ function Edit(){
 		telephone: '',
 	};
 
+	const initialStatePassword = {
+		password: '',
+		newpassword: '',
+		newpasswordconfirm: '',
+	};
+
 	const dispatch = useDispatch();
 	const { userData = [], isSaving, response } = useSelector(store => store.user);
 	const [values, setValues] = useState(initialState);
 	const [disabled, setDisabled] = useState(true);
 	const [changeMenu, setChangeMenu] = useState(false);
+	const [valuesPassword, setValuesPassword] = useState(initialStatePassword);
+	const [disabledPassword, setDisabledPassword] = useState(true);
 
 	const handleChange = useCallback((e) => {
 		setValues({
@@ -35,12 +43,30 @@ function Edit(){
 		dispatch(userUpdate(values));
 	};
 
-	const handleChangeProfile = () => {
+	const handleChangeMenuProfile = () => {
 		setChangeMenu(false);
 	};
 
-	const handleChangePassword = () => {
+	const handleChangeMenuPassword = () => {
 		setChangeMenu(true);
+	};
+
+	const handleChangePassword = useCallback((e) => {
+		setValuesPassword({
+			...valuesPassword,
+			[e.target.name]: e.target.value
+		});
+
+		if(valuesPassword.password && valuesPassword.newpassword && valuesPassword.newpasswordconfirm){
+			setDisabledPassword(false);
+		}
+
+	}, [valuesPassword]);
+
+	const handleUpdatePassword = (e) => {
+		e.preventDefault();
+
+		dispatch(userUpdatePassword(valuesPassword));
 	};
 
 	const id = localStorage.getItem('id');
@@ -49,6 +75,10 @@ function Edit(){
 			dispatch(userFetch(id));
 		} else{
 			setValues(userData);
+
+			setValuesPassword({
+				id: userData.id
+			});
 		}
 
 	}, [id, dispatch, userData]);
@@ -58,10 +88,10 @@ function Edit(){
 		<div id="wrap_edit">
 			<div className="indent">
 				<div className="sidemenu">
-					<div className={`item ${changeMenu ? '' : 'active'}`} onClick={handleChangeProfile}>
+					<div className={`item ${changeMenu ? '' : 'active'}`} onClick={handleChangeMenuProfile}>
 						<span>Editar perfil</span>
 					</div>
-					<div className={`item ${changeMenu ? 'active' : ''}`} onClick={handleChangePassword}>
+					<div className={`item ${changeMenu ? 'active' : ''}`} onClick={handleChangeMenuPassword}>
 						<span>Alterar senha</span>
 					</div>
 				</div>
@@ -77,12 +107,12 @@ function Edit(){
 					/>
 				) : (
 					<FormPassword
-						handleUpdate={handleUpdate}
+						handleUpdatePassword={handleUpdatePassword}
 						userData={userData}
-						handleChange={handleChange}
-						values={values}
+						handleChangePassword={handleChangePassword}
+						valuesPassword={valuesPassword}
 						isSaving={isSaving}
-						disabled={disabled}
+						disabledPassword={disabledPassword}
 					/>
 				)}
 

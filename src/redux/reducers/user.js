@@ -7,6 +7,8 @@ export const initialState = {
 	biography: '',
 	telephone: '',
 	password: '',
+	newpassword: '',
+	newpasswordconfirm: '',
 	loading: false,
 	userData: [],
 	isSaving: false,
@@ -53,6 +55,21 @@ export default function authReducer(
 			return{
 				...state,
 				userData: payload.userData
+			};
+
+		case actions.USER_UPDATE_PASSWORD:
+			return{
+				...initialState,
+				...state,
+				isSaving: true
+			};
+
+		case actions.USER_UPDATE_PASSWORD_SUCCESS:
+			return{
+				...initialState,
+				...state,
+				isSaving: false,
+				response: payload.response
 			};
 
 		default:
