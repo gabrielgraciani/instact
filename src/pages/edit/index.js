@@ -65,13 +65,20 @@ function Edit(){
 
 	const handleChangeFile = (e) => {
 
-		const formData = new FormData();
-		formData.append('file', e.target.files[0]);
+		if(e.target.files[0].size/1024/1024 > 1){
+			alert('tamanho excedido');
+		}
+		else{
+			const formData = new FormData();
+			formData.append('file', e.target.files[0]);
 
-		dispatch(userSendProfileImage({
-			formData,
-			id
-		}));
+			dispatch(userSendProfileImage({
+				formData,
+				id
+			}));
+		}
+
+
 	};
 
 	const id = localStorage.getItem('id');

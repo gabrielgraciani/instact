@@ -7,7 +7,7 @@ function TextArea({span, name, value, handleChange}){
 				<span>{span}</span>
 			</div>
 			<div className="col col2">
-				<textarea name={name} value={value} onChange={handleChange} />
+				<textarea name={name} value={value || ''} onChange={handleChange} />
 			</div>
 		</div>
 	);

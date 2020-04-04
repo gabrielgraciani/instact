@@ -12,7 +12,7 @@ function Input({type, placeholder, label, name, value, handleChange}){
 	return(
 		<div className="item">
 			<label htmlFor="email" className={animatePlaceholder ? 'active' : ''}>{label}</label>
-			<input type={type} name={name} value={value} placeholder={placeholder} onChange={e => handleFocus(e)} />
+			<input type={type} name={name} value={value || ''} placeholder={placeholder} onChange={e => handleFocus(e)} />
 		</div>
 	);
 }
