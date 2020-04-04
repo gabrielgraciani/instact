@@ -58,8 +58,11 @@ function* userSendProfileImageWorker(data){
 		const userData = data.payload;
 
 		const response = yield call(User.sendProfileImage, userData);
-		console.log('response', response);
 
+		yield put(actions.userSendProfileImageSuccess(response));
+
+		yield delay(3000);
+		yield put(actions.userUpdateSuccess(false));
 
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);

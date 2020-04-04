@@ -42,18 +42,15 @@ export default class user{
 		try{
 			const { id, formData } = data;
 
-			console.log('file', formData);
-
 			const response = await api.post(`/users-image/${id}`, formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data'
 				}
 			});
 
-			return response.data.success || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
+			return response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
 
 		} catch (err) {
-			console.log('err', err.response);
 			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
 		}
 	};

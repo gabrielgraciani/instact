@@ -256,7 +256,7 @@ p{font-size:21px;}
 }
 
 
-#wrap_sucesso {transition:all .3s ease;  width: 100%; background: #262626; padding: 11.5px 15px; position:fixed; bottom:-44px; left:0;
+#wrap_sucesso {transition:all .3s ease; z-index:999;  width: 100%; background: #262626; padding: 11.5px 15px; position:fixed; bottom:-44px; left:0;
 	span{font-size:15px; color:#fff; font-weight:normal;}
 	&.active{bottom:0}
 }

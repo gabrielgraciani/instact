@@ -65,7 +65,7 @@ function Edit(){
 
 	const handleChangeFile = (e) => {
 
-		if(e.target.files[0].size/1024/1024 > 1){
+		if(e.target.files[0].size/1024/1024 > 2){
 			alert('tamanho excedido');
 		}
 		else{
@@ -151,6 +151,12 @@ function Edit(){
 			)}
 			{response === 'Passwords do not match' && (
 				<span>Certifique-se de que as senhas correspondam.</span>
+			)}
+			{response === 'Profile Image successfully updated' && (
+				<span>Foto de perfil adicionada.</span>
+			)}
+			{response === 'Error uploading profile image' && (
+				<span>Erro ao adicionar foto de perfil.</span>
 			)}
 		</div>
 		</>
