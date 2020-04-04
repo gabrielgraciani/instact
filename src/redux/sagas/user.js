@@ -21,13 +21,14 @@ function* userUpdateWorker(data){
 
 		const response = yield call(User.updateUser, userData);
 
-		if(response === true){
-			yield put(actions.userUpdateSuccess(response));
-			yield put(actions.userAtt(userData));
+		yield put(actions.userUpdateSuccess(response));
 
-			yield delay(3000);
-			yield put(actions.userUpdateSuccess(false));
+		if(response === 'User successfully updated'){
+			yield put(actions.userAtt(userData));
 		}
+
+		yield delay(3000);
+		yield put(actions.userUpdateSuccess(false));
 
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);

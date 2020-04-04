@@ -96,7 +96,7 @@ function Edit(){
 	}, [id, dispatch, userData]);
 
 	useEffect(() => {
-		if(response === true){
+		if(response === 'User successfully updated'){
 			setValuesPassword({
 				id,
 				password: '',
@@ -146,7 +146,7 @@ function Edit(){
 		</div>
 
 		<div id="wrap_sucesso" className={response ? 'active' : ''}>
-			{response === true && (
+			{response === 'User successfully updated' && (
 				<span>Perfil salvo.</span>
 			)}
 			{response === 'Passwords do not match' && (
@@ -157,6 +157,9 @@ function Edit(){
 			)}
 			{response === 'Error uploading profile image' && (
 				<span>Erro ao adicionar foto de perfil.</span>
+			)}
+			{response === 'Error updating user' && (
+				<span>Erro ao atualizar usuário.</span>
 			)}
 		</div>
 		</>

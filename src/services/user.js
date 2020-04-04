@@ -16,9 +16,11 @@ export default class user{
 		try{
 			const { id, name, username, biography, email, telephone } = data;
 
+			console.log('data', data);
+
 			const response = await api.put(`/users/${id}`, { name, username, biography, email, telephone });
 
-			return response.data.success || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
+			return response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
 
 		} catch (err) {
 			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
@@ -31,7 +33,7 @@ export default class user{
 
 			const response = await api.put(`/users/${id}`, { password, newpassword, newpasswordconfirm });
 
-			return response.data.success || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
+			return response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
 
 		} catch (err) {
 			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
