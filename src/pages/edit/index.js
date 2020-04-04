@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { userFetch, userUpdate, userUpdatePassword } from "../../redux/actions/user";
+import { userFetch, userUpdate, userUpdatePassword, userSendProfileImage } from "../../redux/actions/user";
 import FormProfile from 'components/edit/formProfile';
 import FormPassword from 'components/edit/formPassword';
 
@@ -21,8 +21,6 @@ function Edit(){
 	const [changeMenu, setChangeMenu] = useState(false);
 	const [valuesPassword, setValuesPassword] = useState('');
 	const [disabledPassword, setDisabledPassword] = useState(true);
-
-	console.log('repsonse', response);
 
 	const handleChange = useCallback((e) => {
 		setValues({
@@ -63,6 +61,17 @@ function Edit(){
 		e.preventDefault();
 
 		dispatch(userUpdatePassword(valuesPassword));
+	};
+
+	const handleChangeFile = (e) => {
+
+		const formData = new FormData();
+		formData.append('file', e.target.files[0]);
+
+		dispatch(userSendProfileImage({
+			formData,
+			id
+		}));
 	};
 
 	const id = localStorage.getItem('id');
@@ -113,6 +122,7 @@ function Edit(){
 						values={values}
 						isSaving={isSaving}
 						disabled={disabled}
+						handleChangeFile={handleChangeFile}
 					/>
 				) : (
 					<FormPassword

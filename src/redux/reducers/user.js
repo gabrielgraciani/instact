@@ -13,6 +13,7 @@ export const initialState = {
 	userData: [],
 	isSaving: false,
 	response: false,
+	image: '',
 };
 
 
@@ -69,6 +70,19 @@ export default function authReducer(
 				...initialState,
 				...state,
 				isSaving: false,
+				response: payload.response
+			};
+
+		case actions.USER_SEND_PROFILE_IMAGE:
+			return{
+				...initialState,
+				...state,
+			};
+
+		case actions.USER_SEND_PROFILE_IMAGE_SUCCESS:
+			return{
+				...initialState,
+				...state,
 				response: payload.response
 			};
 

@@ -5,6 +5,8 @@ export const USER_UPDATE_SUCCESS = 'USER_UPDATE_SUCCESS';
 export const USER_ATT = 'USER_ATT';
 export const USER_UPDATE_PASSWORD = 'USER_UPDATE_PASSWORD';
 export const USER_UPDATE_PASSWORD_SUCCESS = 'USER_UPDATE_PASSWORD_SUCCESS';
+export const USER_SEND_PROFILE_IMAGE = 'USER_SEND_PROFILE_IMAGE';
+export const USER_SEND_PROFILE_IMAGE_SUCCESS = 'USER_SEND_PROFILE_IMAGE_SUCCESS';
 
 export const userFetch = (payload) => ({
 	type: USER_FETCH,
@@ -44,6 +46,18 @@ export const userUpdatePassword = (payload) => ({
 
 export const userUpdatePasswordSuccess = (response) => ({
 	type: USER_UPDATE_PASSWORD_SUCCESS,
+	payload: {
+		response
+	}
+});
+
+export const userSendProfileImage = (payload) => ({
+	type: USER_SEND_PROFILE_IMAGE,
+	payload
+});
+
+export const userSendProfileImageSuccess = (response) => ({
+	type: USER_SEND_PROFILE_IMAGE_SUCCESS,
 	payload: {
 		response
 	}

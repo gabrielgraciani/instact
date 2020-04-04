@@ -4,7 +4,7 @@ import InputNoLabel from 'components/input/inputNoLabel';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import TextArea from 'components/textarea';
 
-const formProfile = ({ handleUpdate, userData, handleChange, values, isSaving, disabled }) => {
+const formProfile = ({ handleUpdate, userData, handleChange, values, isSaving, disabled, handleChangeFile }) => {
 	return (
 		<form className="content" onSubmit={handleUpdate}>
 			<div className="item imagem">
@@ -13,7 +13,17 @@ const formProfile = ({ handleUpdate, userData, handleChange, values, isSaving, d
 				</div>
 				<div className="col col2">
 					<div className="nome"><span>{userData.name}</span></div>
-					<button type="button">Alterar foto de perfil</button>
+					<div className='file-box'>
+						<input
+							type='file'
+							className='file-box-input'
+							id='profileImage'
+							onChange={handleChangeFile}
+						/>
+						<label className='file-box-label' htmlFor='profileImage'>
+							Alterar foto de perfil
+						</label>
+					</div>
 				</div>
 			</div>
 

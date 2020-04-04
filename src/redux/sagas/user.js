@@ -52,6 +52,20 @@ function* userUpdatePasswordWorker(data){
 	}
 }
 
+function* userSendProfileImageWorker(data){
+	try{
+
+		const userData = data.payload;
+
+		const response = yield call(User.sendProfileImage, userData);
+		console.log('response', response);
+
+
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
 function* userFetchWatcher() {
 	yield takeLatest(actions.USER_FETCH, userFetchWorker);
 }
@@ -64,11 +78,16 @@ function* userUpdatePasswordWatcher(){
 	yield takeLatest(actions.USER_UPDATE_PASSWORD, userUpdatePasswordWorker);
 }
 
+function* userSendProfileImageWatcher(){
+	yield takeLatest(actions.USER_SEND_PROFILE_IMAGE, userSendProfileImageWorker);
+}
+
 function* authWatcher() {
 	yield all([
 		userFetchWatcher(),
 		userUpdateWatcher(),
 		userUpdatePasswordWatcher(),
+		userSendProfileImageWatcher(),
 	]);
 }
 
