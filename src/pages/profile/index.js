@@ -21,7 +21,7 @@ function Profile(){
 		dispatch(classActiveSend());
 	};
 
-	const id = localStorage.getItem('id');
+	const id = localStorage.getItem('id_user_instact');
 
 	useEffect(() => {
 			dispatch(userFetch(id));

@@ -16,7 +16,7 @@ function Header({location}){
 
 	useEffect(() => {
 		if(location.pathname === LOGIN){
-				setHidden(true);
+			setHidden(true);
 		}
 		else{
 			setHidden(false);

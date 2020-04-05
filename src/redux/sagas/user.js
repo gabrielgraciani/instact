@@ -60,13 +60,14 @@ function* userSendProfileImageWorker(data){
 
 		const { message, profile_image } = yield call(User.sendProfileImage, userData2);
 
-		yield put(actions.userSendProfileImageSuccess(message));
 
 		const { userData } = yield select(store => store.user);
 		userData.profile_image = profile_image;
 
+		yield put(actions.userSendProfileImageSuccess(message));
+
 		yield delay(3000);
-		yield put(actions.userUpdateSuccess(false));
+		yield put(actions.userSendProfileImageSuccess(false));
 
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);

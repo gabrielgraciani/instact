@@ -6,7 +6,7 @@ import Footer from 'components/footer';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useSelector } from "react-redux";
 
-const Home = lazy(() => import('pages/index'));
+const Home = lazy(() => import('pages/home'));
 const Login = lazy(() => import('pages/login'));
 const Profile = lazy(() => import('pages/profile'));
 const Edit = lazy(() => import('pages/edit'));
@@ -16,7 +16,7 @@ function App({ location }){
 
 	const { id } = useSelector(store => store.auth);
 
-	const idLocalStorage = localStorage.getItem('id');
+	const idLocalStorage = localStorage.getItem('id_user_instact');
 	const history = useHistory();
 
 	useEffect(() => {
