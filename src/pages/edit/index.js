@@ -139,6 +139,7 @@ function Edit(){
 						handleChangePassword={handleChangePassword}
 						valuesPassword={valuesPassword}
 						isSaving={isSaving}
+						isSavingImage={isSavingImage}
 						disabledPassword={disabledPassword}
 					/>
 				)}

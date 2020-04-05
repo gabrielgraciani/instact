@@ -3,12 +3,20 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import InputNoLabel from 'components/input/inputNoLabel';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-const formPassword = ({ handleUpdatePassword, userData, handleChangePassword, valuesPassword, isSaving, disabledPassword }) => {
+const formPassword = ({ handleUpdatePassword, userData, handleChangePassword, valuesPassword, isSaving, disabledPassword, isSavingImage }) => {
 	return (
 		<form className="content content2" onSubmit={handleUpdatePassword}>
 			<div className="item imagem">
 				<div className="col">
-					<AccountCircleIcon />
+					{isSavingImage ? (
+						<CircularProgress size={30} />
+					) : (
+						userData.profile_image ? (
+							<img src={`https://instact.s3.amazonaws.com/users/${userData.id}/${userData.profile_image}`} alt={userData.name} />
+						) : (
+							<AccountCircleIcon />
+						)
+					)}
 				</div>
 				<div className="col col2">
 					<div className="nome"><span className="big">{userData.name}</span></div>

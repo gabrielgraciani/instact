@@ -4,12 +4,15 @@ import LogoSmall from 'assets/images/logo-small.png';
 import SearchIcon from '@material-ui/icons/Search';
 import CancelIcon from '@material-ui/icons/Cancel';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import HomeIcon from '@material-ui/icons/Home';
 import {Link} from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 function Header({location}){
 
 	const [hidden, setHidden] = useState(true);
+	const { userData = [], isSavingImage } = useSelector(store => store.user);
 
 	useEffect(() => {
 		if(location.pathname === LOGIN){
@@ -44,7 +47,19 @@ function Header({location}){
 						</Link>
 
 						<Link to={PROFILE}>
-							<AccountCircleIcon className={location.pathname === PROFILE ? 'profile active' : ''} />
+
+							{isSavingImage ? (
+								<CircularProgress className="loading" />
+							) : (
+								userData.profile_image ? (
+									<img src={`https://instact.s3.amazonaws.com/users/${userData.id}/${userData.profile_image}`}
+										 alt={userData.name}
+										 className={location.pathname === PROFILE ? 'profile active' : ''}
+									/>
+								) : (
+									<AccountCircleIcon className={location.pathname === PROFILE ? 'profile active' : ''} />
+								)
+							)}
 						</Link>
 					</div>
 				</div>

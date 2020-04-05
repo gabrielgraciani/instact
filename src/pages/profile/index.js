@@ -39,8 +39,10 @@ function Profile(){
 					<div className="indent">
 						<div className="head">
 							<div className="img">
-								{userData.imagem ? (
-									<div>imagem</div>
+								{userData.profile_image ? (
+									<img src={`https://instact.s3.amazonaws.com/users/${userData.id}/${userData.profile_image}`}
+										 alt={userData.name}
+									/>
 								) : (
 									<AccountCircleIcon />
 								)}
