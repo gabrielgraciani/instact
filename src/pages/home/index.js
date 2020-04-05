@@ -28,7 +28,7 @@ const Home = () => {
 					<div className="post">
 						<div className="head">
 							<div className="user">
-								<img src="" alt="" />
+								{/*<img src="" alt="" />*/}
 								<AccountCircleIcon />
 								<span>Nome do usuario</span>
 							</div>
@@ -72,6 +72,57 @@ const Home = () => {
 						</form>
 					</div>
 				</div>
+
+				<div className="fixed">
+					<div className="user">
+						<div className="imagem">
+							{/*<img src="" alt="" />*/}
+							<AccountCircleIcon />
+						</div>
+						<div className="text">
+							<span><strong>username</strong></span>
+							<span className="small">nome do usuário</span>
+						</div>
+					</div>
+					<div className="sugestions">
+						<div className="head">
+							<h4>Sugestões para você</h4>
+						</div>
+						<div className="body">
+							<div className="item">
+								<div className="imagem">
+									{/*<img src="" alt="" />*/}
+									<AccountCircleIcon />
+								</div>
+								<div className="text">
+									<span><strong>username</strong></span>
+									<span className="small">nome do usuário</span>
+								</div>
+								<div className="follow">
+									<span>Seguir</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div className="footer">
+						<li><a href="https://about.instagram.com/about-us" target="_blank" rel="noopener noreferrer">Sobre nós</a></li>
+						<li><a href="https://help.instagram.com/" target="_blank" rel="noopener noreferrer">Ajuda</a></li>
+						<li><a href="https://about.instagram.com/blog/" target="_blank" rel="noopener noreferrer">Imprensa</a></li>
+						<li><a href="https://www.instagram.com/developer/" target="_blank" rel="noopener noreferrer">API</a></li>
+						<li><a href="https://www.instagram.com/about/jobs/" target="_blank" rel="noopener noreferrer">Carreiras</a></li>
+						<li><a href="https://help.instagram.com/519522125107875" target="_blank" rel="noopener noreferrer">Privacidade</a></li>
+						<li><a href="https://help.instagram.com/581066165581870" target="_blank" rel="noopener noreferrer">Termos</a></li>
+						<li><a href="https://www.instagram.com/explore/locations/" target="_blank" rel="noopener noreferrer">Diretório</a></li>
+						<li><a href="https://www.instagram.com/directory/profiles/" target="_blank" rel="noopener noreferrer">Perfis</a></li>
+						<li><a href="https://www.instagram.com/directory/hashtags/" target="_blank" rel="noopener noreferrer">Hashtag</a></li>
+						<li>Idioma</li>
+
+						<div className="copyright"><span>© 2020 INSTAGRAM DO FACEBOOK</span></div>
+					</div>
+
+				</div>
+
 			</div>
 		</div>
 		)
