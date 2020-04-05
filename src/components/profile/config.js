@@ -2,11 +2,13 @@ import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { classActiveSend } from "../../redux/actions/classActive";
 import { authLogout } from "../../redux/actions/auth";
+import { useHistory } from 'react-router-dom';
 
 function Config(){
 
 	const dispatch = useDispatch();
 	const { active } = useSelector(store => store.classActive);
+	const history = useHistory();
 
 	const handleChange = () => {
 		dispatch(classActiveSend());
@@ -14,6 +16,7 @@ function Config(){
 
 	const handleLogout = () => {
 		handleChange();
+		history.push('/login');
 		dispatch(authLogout());
 	};
 
