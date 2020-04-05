@@ -1,4 +1,4 @@
-import { takeLatest, all, put, call, delay } from 'redux-saga/effects';
+import { takeLatest, all, put, call, delay, select } from 'redux-saga/effects';
 
 import * as actions from '../actions/user';
 import User from '../../services/user';
@@ -56,11 +56,14 @@ function* userUpdatePasswordWorker(data){
 function* userSendProfileImageWorker(data){
 	try{
 
-		const userData = data.payload;
+		const userData2 = data.payload;
 
-		const response = yield call(User.sendProfileImage, userData);
+		const { message, profile_image } = yield call(User.sendProfileImage, userData2);
 
-		yield put(actions.userSendProfileImageSuccess(response));
+		yield put(actions.userSendProfileImageSuccess(message));
+
+		const { userData } = yield select(store => store.user);
+		userData.profile_image = profile_image;
 
 		yield delay(3000);
 		yield put(actions.userUpdateSuccess(false));

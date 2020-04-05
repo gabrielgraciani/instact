@@ -15,7 +15,7 @@ function Edit(){
 	};
 
 	const dispatch = useDispatch();
-	const { userData = [], isSaving, response } = useSelector(store => store.user);
+	const { userData = [], isSaving, isSavingImage, response } = useSelector(store => store.user);
 	const [values, setValues] = useState(initialState);
 	const [disabled, setDisabled] = useState(true);
 	const [changeMenu, setChangeMenu] = useState(false);
@@ -128,6 +128,7 @@ function Edit(){
 						handleChange={handleChange}
 						values={values}
 						isSaving={isSaving}
+						isSavingImage={isSavingImage}
 						disabled={disabled}
 						handleChangeFile={handleChangeFile}
 					/>

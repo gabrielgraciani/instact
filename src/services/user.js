@@ -44,16 +44,16 @@ export default class user{
 		try{
 			const { id, formData } = data;
 
-			const response = await api.post(`/users-image/${id}`, formData, {
+			const response = await api.post(`/users/save-image/${id}`, formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data'
 				}
 			});
 
-			return response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
+			return {message: response.data.message, profile_image: response.data.profile_image } || { message: 'Ocorreu um erro inesperado. Tente novamente mais tarde' };
 
 		} catch (err) {
-			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
+			return { message: err.response.data.message } || { message:'Ocorreu um erro inesperado. Tente novamente mais tarde' };
 		}
 	};
 }

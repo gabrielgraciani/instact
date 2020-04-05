@@ -4,12 +4,21 @@ import InputNoLabel from 'components/input/inputNoLabel';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import TextArea from 'components/textarea';
 
-const formProfile = ({ handleUpdate, userData, handleChange, values, isSaving, disabled, handleChangeFile }) => {
+const formProfile = ({ handleUpdate, userData, handleChange, values, isSaving, disabled, handleChangeFile, isSavingImage }) => {
 	return (
 		<form className="content" onSubmit={handleUpdate}>
 			<div className="item imagem">
 				<div className="col">
-					<AccountCircleIcon />
+					{isSavingImage ? (
+						<CircularProgress size={30} />
+					) : (
+						userData.profile_image ? (
+							<img src={`https://instact.s3.amazonaws.com/users/${userData.id}/${userData.profile_image}`} alt={userData.name} />
+						) : (
+							<AccountCircleIcon />
+						)
+					)}
+
 				</div>
 				<div className="col col2">
 					<div className="nome"><span>{userData.name}</span></div>

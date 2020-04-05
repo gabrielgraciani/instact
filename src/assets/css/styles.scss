@@ -249,7 +249,8 @@ p{font-size:21px;}
 					}
 				}
 			}
-			.item.imagem{align-items:center;}
+			.item.imagem{align-items:center;
+				img{width:38px; height:38px; border-radius:50%;}}
 			.item:last-child{margin:0;}
 		}
 	}
