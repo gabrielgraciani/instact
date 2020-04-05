@@ -4,7 +4,7 @@ import InputNoLabel from 'components/input/inputNoLabel';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import TextArea from 'components/textarea';
 
-const formProfile = ({ handleUpdate, userData, handleChange, values, isSaving, disabled, handleChangeFile, isSavingImage }) => {
+const formProfile = ({ handleUpdate, userData, handleChange, values, isSaving, disabled, handleChangeFile, isSavingImage, errorImageSize }) => {
 	return (
 		<form className="content" onSubmit={handleUpdate}>
 			<div className="item imagem">
@@ -18,7 +18,6 @@ const formProfile = ({ handleUpdate, userData, handleChange, values, isSaving, d
 							<AccountCircleIcon />
 						)
 					)}
-
 				</div>
 				<div className="col col2">
 					<div className="nome"><span>{userData.name}</span></div>
@@ -33,6 +32,9 @@ const formProfile = ({ handleUpdate, userData, handleChange, values, isSaving, d
 							Alterar foto de perfil
 						</label>
 					</div>
+					{errorImageSize && (
+						<span className="error">O arquivo precisa ser menor que 2MB.</span>
+					)}
 				</div>
 			</div>
 

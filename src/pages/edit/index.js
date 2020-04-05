@@ -21,6 +21,7 @@ function Edit(){
 	const [changeMenu, setChangeMenu] = useState(false);
 	const [valuesPassword, setValuesPassword] = useState('');
 	const [disabledPassword, setDisabledPassword] = useState(true);
+	const [errorImageSize, setErrorImageSize] = useState(false);
 
 	const handleChange = useCallback((e) => {
 		setValues({
@@ -65,10 +66,11 @@ function Edit(){
 
 	const handleChangeFile = (e) => {
 
-		if(e.target.files[0].size/1024/1024 > 2){
-			alert('tamanho excedido');
+		if(e.target.files[0].size/1024/1024 > 3){
+			setErrorImageSize(true);
 		}
 		else{
+			setErrorImageSize(false);
 			const formData = new FormData();
 			formData.append('file', e.target.files[0]);
 
@@ -131,6 +133,7 @@ function Edit(){
 						isSavingImage={isSavingImage}
 						disabled={disabled}
 						handleChangeFile={handleChangeFile}
+						errorImageSize={errorImageSize}
 					/>
 				) : (
 					<FormPassword
