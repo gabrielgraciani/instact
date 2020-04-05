@@ -362,6 +362,13 @@ p{font-size:21px;}
 	}
 }
 
+#wrap_create_post{width:100%; height:100vh; position:fixed; display:flex; align-items:center; justify-content:center; z-index:999;
+	&:after{content:''; position:absolute; top:0; left:0; width:100%; height:100%; background:#000; opacity:0.5;}
+	.indent{position:relative; z-index:9999; display:flex; align-items:center; justify-content:center;
+		form{width:100%; display:flex; flex-direction:column;}
+	}
+}
+
 
 @media (max-width: 935px) {
 	#wrap_posts {

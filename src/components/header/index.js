@@ -3,16 +3,19 @@ import {LOGIN, HOME, PROFILE} from '../../routes';
 import LogoSmall from 'assets/images/logo-small.png';
 import SearchIcon from '@material-ui/icons/Search';
 import CancelIcon from '@material-ui/icons/Cancel';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import HomeIcon from '@material-ui/icons/Home';
 import {Link} from 'react-router-dom';
 import { useSelector } from "react-redux";
+import FormPost from 'components/createPost/formPost';
 
 function Header({location}){
 
 	const [hidden, setHidden] = useState(true);
 	const { userData = [], isSavingImage } = useSelector(store => store.user);
+	const [activeAdd, setActiveAdd] = useState(false);
 
 	useEffect(() => {
 		if(location.pathname === LOGIN){
@@ -23,11 +26,16 @@ function Header({location}){
 		}
 	}, [location]);
 
+	const handleChangeAdd = () => {
+		setActiveAdd(!activeAdd);
+	};
+
 
 
 	return(
 		<>
 		{!hidden && (
+			<>
 			<div id="wrap_header">
 				<div className="indent">
 					<div className="logo">
@@ -45,6 +53,8 @@ function Header({location}){
 						<Link to={HOME}>
 							<HomeIcon className={location.pathname === HOME ? 'active' : ''} />
 						</Link>
+
+						<AddCircleIcon onClick={handleChangeAdd} className={activeAdd ? 'active' : ''} />
 
 						<Link to={PROFILE}>
 
@@ -64,6 +74,11 @@ function Header({location}){
 					</div>
 				</div>
 			</div>
+			{activeAdd && (
+				<FormPost />
+			)}
+			</>
+
 		)}
 		</>
 
