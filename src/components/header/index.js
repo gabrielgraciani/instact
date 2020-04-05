@@ -75,7 +75,7 @@ function Header({location}){
 				</div>
 			</div>
 			{activeAdd && (
-				<FormPost />
+				<FormPost handleChangeAdd={handleChangeAdd} />
 			)}
 			</>
 
