@@ -10,7 +10,7 @@ const RegisterForm = ({ handleChange, handleRegister, isSaving, values, error })
 
 		<form action="" onSubmit={handleRegister}>
 			<Input type="text" label="E-mail" name="email" handleChange={handleChange} value={values.email} />
-			<Input type="text" label="Nome completo" name="name" handleChange={handleChange} value={values.nome} />
+			<Input type="text" label="Nome completo" name="name" handleChange={handleChange} value={values.name} />
 			<Input type="text" label="Nome de usuário" name="username" handleChange={handleChange} value={values.username} />
 			<Input type="password" label="Senha" name="password" handleChange={handleChange} value={values.password} />
 			{isSaving ? (
