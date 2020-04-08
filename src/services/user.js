@@ -14,9 +14,11 @@ export default class user{
 
 	static updateUser = async (data) => {
 		try{
-			const { id, name, username, biography, email, telephone } = data;
+			const { id, name, username, email } = data;
+			let { biography, telephone } = data;
 
-			console.log('data', data);
+			if(!biography) biography = '';
+			if(!telephone) telephone = '';
 
 			const response = await api.put(`/users/${id}`, { name, username, biography, email, telephone });
 
