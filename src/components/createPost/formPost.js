@@ -1,10 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-/*import PostTeste from 'assets/images/post_teste.jpg';*/
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArchiveIcon from '@material-ui/icons/Archive';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 
-const formPost = ({ handleChangeAdd }) => {
+const FormPost = ({ handleChangeAdd }) => {
+
+	const [errorImageSize, setErrorImageSize] = useState(false);
+	const [imagePreview, setImagePreview] = useState('');
+
+	const handleChangeFile = (e) => {
+
+		if(e.target.files[0].size/1024/1024 > 3){
+			setErrorImageSize(true);
+		}
+		else {
+			setErrorImageSize(false);
+			const formData = new FormData();
+			formData.append('file', e.target.files[0]);
+
+			console.log('teste', e.target.files[0]);
+
+			setImagePreview(URL.createObjectURL(e.target.files[0]));
+
+		}
+	};
+
+	const handleRemoveFile = () => {
+		setImagePreview('');
+	};
+
 	return(
 		<div id="wrap_create_post">
 			<div className="indent">
@@ -28,15 +53,38 @@ const formPost = ({ handleChangeAdd }) => {
 						<input type="text" placeholder="Escreva uma legenda..." />
 					</form>
 					<div className="upload">
-						{/*<img src={PostTeste} alt="" />*/}
-						<ArchiveIcon />
-						<span>Realizar upload de arquivo</span>
+						{imagePreview !== '' ? (
+							<>
+								<RemoveCircleIcon className="remove" onClick={handleRemoveFile} />
+								<img src={imagePreview} alt=""/>
+							</>
+						) : (
+							<div className='file-box'>
+								<input
+									type='file'
+									className='file-box-input'
+									id='profileImage'
+									onChange={handleChangeFile}
+								/>
+								<label className='file-box-label' htmlFor='profileImage'>
+									<ArchiveIcon />
+									<span>Realizar upload de arquivo</span>
+								</label>
+							</div>
+						)}
 					</div>
 				</div>
+
+				{errorImageSize && (
+					<div className="error">
+						<span>Tamanho do arquivo excedido!!</span>
+					</div>
+				)}
+
 
 			</div>
 		</div>
 	)
 };
 
-export default formPost;
+export default FormPost;
