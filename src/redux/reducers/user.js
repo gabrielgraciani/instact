@@ -89,6 +89,11 @@ export default function authReducer(
 				response: payload.response
 			};
 
+		case actions.USER_CLEAR:
+			return{
+				...initialState
+			};
+
 		default:
 			return state;
 	}
