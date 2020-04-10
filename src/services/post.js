@@ -4,9 +4,11 @@ export default class post{
 	static registerPost = async ( data ) => {
 		try {
 
-			const response = await api.post('/posts', data, {
+			const { formData } = data;
+
+			const response = await api.post('/posts', formData, {
 				headers: {
-					'Content-Type': 'multipart/form-data'
+					'Content-Type': 'multipart/form-data',
 				}
 			});
 

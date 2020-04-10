@@ -11,7 +11,7 @@ const FormPost = ({ handleChangeAdd }) => {
 
 	const [errorImageSize, setErrorImageSize] = useState(false);
 	const [imagePreview, setImagePreview] = useState('');
-	const [fileSend, setFileSend] = useState('');
+	const [fileSend, setFileSend] = useState([]);
 	const [description, setDescription] = useState('');
 
 	const dispatch = useDispatch();
@@ -25,10 +25,8 @@ const FormPost = ({ handleChangeAdd }) => {
 		}
 		else {
 			setErrorImageSize(false);
-			const formData = new FormData();
-			formData.append('file', e.target.files[0]);
 
-			setFileSend(formData);
+			setFileSend(e.target.files[0]);
 			setImagePreview(URL.createObjectURL(e.target.files[0]));
 		}
 	};
@@ -42,10 +40,14 @@ const FormPost = ({ handleChangeAdd }) => {
 	};
 
 	const handleSubmit = () => {
+
+		const formData = new FormData();
+		formData.append('file', fileSend);
+		formData.append('description', description);
+		formData.append('users_id', idLocalStorage);
+
 		dispatch(postSendCadastro({
-			users_id: idLocalStorage,
-			description,
-			file: fileSend
+			formData
 		}));
 	};
 
