@@ -1,4 +1,4 @@
-import { takeLatest, all, put, call } from 'redux-saga/effects';
+import { takeLatest, all, put, call, delay } from 'redux-saga/effects';
 
 import * as actions from '../actions/post';
 import Post from '../../services/post';
@@ -8,6 +8,12 @@ function* postSendCadastroWorker(data) {
 		const data2 = data.payload;
 		const teste = yield call(Post.registerPost, data2);
 		console.log('teste', teste);
+
+		yield put(actions.postSendCadastroSuccess(false));
+
+		yield delay(1000);
+		yield put(actions.postSendCadastroSuccess(true));
+
 
 
 	} catch (error) {

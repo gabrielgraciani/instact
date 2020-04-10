@@ -4,6 +4,7 @@ export const initialState = {
 	description: '',
 	file: '',
 	isSaving: false,
+	isOpen: true,
 };
 
 
@@ -19,7 +20,8 @@ export default function postReducer(
 
 		case actions.POST_SEND_CADASTRO_SUCCESS:
 			return {
-				isSaving: false
+				isSaving: false,
+				isOpen: payload.isOpen
 			};
 
 		default:

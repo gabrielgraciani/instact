@@ -6,6 +6,9 @@ export const postSendCadastro = (payload) => ({
 	payload
 });
 
-export const postSendCadastroSuccess = () => ({
+export const postSendCadastroSuccess = (isOpen) => ({
 	type: POST_SEND_CADASTRO_SUCCESS,
+	payload: {
+		isOpen
+	}
 });

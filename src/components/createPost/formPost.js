@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArchiveIcon from '@material-ui/icons/Archive';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postSendCadastro } from "../../redux/actions/post";
 
 
@@ -16,6 +16,7 @@ const FormPost = ({ handleChangeAdd }) => {
 
 	const dispatch = useDispatch();
 	const idLocalStorage = localStorage.getItem('id_user_instact');
+	const { isSaving, isOpen } = useSelector(store => store.post);
 
 
 	const handleChangeFile = (e) => {
@@ -41,6 +42,12 @@ const FormPost = ({ handleChangeAdd }) => {
 
 	const handleSubmit = () => {
 
+		if(description === ''){
+
+		} else{
+
+		}
+
 		const formData = new FormData();
 		formData.append('file', fileSend);
 		formData.append('description', description);
@@ -50,6 +57,12 @@ const FormPost = ({ handleChangeAdd }) => {
 			formData
 		}));
 	};
+
+	useEffect(() => {
+		if(!isOpen){
+			handleChangeAdd();
+		}
+	}, [isOpen, handleChangeAdd]);
 
 	return(
 		<div id="wrap_create_post">
@@ -62,7 +75,11 @@ const FormPost = ({ handleChangeAdd }) => {
 						<h4>Nova publicação</h4>
 					</div>
 					<div className="share" onClick={handleSubmit}>
-						<span>Compartilhar</span>
+						{isSaving ? (
+							<span>Salvando...</span>
+						) : (
+							<span>Compartilhar</span>
+						)}
 					</div>
 				</div>
 				<div className="body">
