@@ -7,6 +7,7 @@ export const initialState = {
 	isOpen: true,
 	loading: false,
 	postData: [],
+	userPosts: [],
 };
 
 
@@ -39,6 +40,21 @@ export default function postReducer(
 				...state,
 				loading: false,
 				postData: payload.postData
+			};
+
+		case actions.POST_FETCH_FROM_USER:
+			return {
+				...initialState,
+				...state,
+				loading: true,
+			};
+
+		case actions.POST_FETCH_FROM_USER_SUCCESS:
+			return {
+				...initialState,
+				...state,
+				loading: false,
+				userPosts: payload.userPosts
 			};
 
 		default:

@@ -23,13 +23,23 @@ function* postSendCadastroWorker(data) {
 
 function* postFetchWorker() {
 	try {
-		console.log('chegou aqui');
-
 		const postData = yield call(Post.getPosts);
 
-		console.log('post', postData);
-
 		yield put(actions.postFetchSuccess(postData));
+
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
+function* postFetchFromUserWorker(data) {
+	try {
+
+		const id  = data.payload;
+
+		const userPosts = yield call(Post.getPostsFromUser, id);
+
+		yield put(actions.postFetchFromUserSuccess(userPosts));
 
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);
@@ -44,10 +54,15 @@ function* postFetchWatcher() {
 	yield takeLatest(actions.POST_FETCH, postFetchWorker);
 }
 
+function* postFetchFromUserWatcher() {
+	yield takeLatest(actions.POST_FETCH_FROM_USER, postFetchFromUserWorker);
+}
+
 function* postWatcher() {
 	yield all([
 		postSendCadastroWatcher(),
 		postFetchWatcher(),
+		postFetchFromUserWatcher(),
 	]);
 }
 

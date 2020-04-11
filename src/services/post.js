@@ -31,4 +31,15 @@ export default class post{
 			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
 		}
 	};
+
+	static getPostsFromUser = async (id) => {
+		try{
+			const response = await api.get(`/all-posts-from-user/${id}`);
+
+			return response.data;
+
+		} catch (err) {
+			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
+		}
+	};
 }
