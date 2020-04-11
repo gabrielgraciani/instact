@@ -35,11 +35,11 @@ const Post = ({ postData }) => (
 					</div>
 				</div>
 				<div className="likes">
-					<span>Curtido por <strong>31.000 pessoas</strong></span>
+					<span>Curtido por <strong>{post.qt_likes} {post.qt_likes === 1 ? 'pessoa' : 'pessoas'}</strong></span>
 				</div>
 				<div className="comments">
 					<span><strong>{post.username} </strong> {post.description}</span>
-					<span className="all">Ver todos os 707 comentários</span>
+					<span className="all">Ver todos os {post.qt_comments} {post.qt_comments === 1 ? 'comentário' : 'comentários'}</span>
 					<span><strong>nomedousuario </strong> comentario blabla</span>
 					<span><strong>nomedousuario </strong> comentario blabla</span>
 				</div>

@@ -6,8 +6,7 @@ import Post from '../../services/post';
 function* postSendCadastroWorker(data) {
 	try {
 		const data2 = data.payload;
-		const teste = yield call(Post.registerPost, data2);
-		console.log('teste', teste);
+		yield call(Post.registerPost, data2);
 
 		yield put(actions.postSendCadastroSuccess(false));
 

@@ -11,8 +11,6 @@ export default class post{
 				}
 			});
 
-			console.log('response', response);
-
 			return response.data.success;
 
 		} catch (err) {
