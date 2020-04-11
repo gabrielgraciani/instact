@@ -1,5 +1,6 @@
 export const POST_SEND_CADASTRO = 'POST_SEND_CADASTRO';
 export const POST_SEND_CADASTRO_SUCCESS = 'POST_SEND_CADASTRO_SUCCESS';
+export const POST_UPDATE_LIST= 'POST_UPDATE_LIST';
 export const POST_FETCH = 'POST_FETCH';
 export const POST_FETCH_SUCCESS = 'POST_FETCH_SUCCESS';
 export const POST_FETCH_FROM_USER = 'POST_FETCH_FROM_USER';
@@ -13,7 +14,14 @@ export const postSendCadastro = (payload) => ({
 export const postSendCadastroSuccess = (isOpen) => ({
 	type: POST_SEND_CADASTRO_SUCCESS,
 	payload: {
-		isOpen
+		isOpen,
+	}
+});
+
+export const postUpdateList = (postAdd) => ({
+	type: POST_UPDATE_LIST,
+	payload: {
+		postAdd
 	}
 });
 

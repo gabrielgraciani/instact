@@ -11,7 +11,7 @@ export default class post{
 				}
 			});
 
-			return response.data.success;
+			return { success: response.data.success, postAdd: response.data.post};
 
 		} catch (err) {
 			console.log('err', err);

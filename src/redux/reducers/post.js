@@ -8,6 +8,7 @@ export const initialState = {
 	loading: false,
 	postData: [],
 	userPosts: [],
+	postAdd: [],
 };
 
 
@@ -18,13 +19,27 @@ export default function postReducer(
 	switch (type) {
 		case actions.POST_SEND_CADASTRO:
 			return {
+				...initialState,
+				...state,
 				isSaving: true,
 			};
 
 		case actions.POST_SEND_CADASTRO_SUCCESS:
 			return {
+				...initialState,
+				...state,
 				isSaving: false,
 				isOpen: payload.isOpen
+			};
+
+		case actions.POST_UPDATE_LIST:
+			return {
+				...initialState,
+				...state,
+				postData: [
+					payload.postAdd,
+					...state.postData
+				]
 			};
 
 		case actions.POST_FETCH:
