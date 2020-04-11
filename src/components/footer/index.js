@@ -1,20 +1,18 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {HOME} from '../../routes';
 
 function Footer({location}){
 
 	const [hidden, setHidden] = useState(false);
 
-	if(location.pathname === HOME){
-		try{
+	useEffect(() => {
+		if(location.pathname === HOME){
 			setHidden(true);
-		} catch(error){}
-	}
-	else{
-		try{
+		}
+		else{
 			setHidden(false);
-		} catch(error){}
-	}
+		}
+	}, [location.pathname]);
 
 	return(
 		<>

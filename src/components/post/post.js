@@ -12,7 +12,7 @@ const Post = ({ postData }) => (
 			<div className="post" key={post.id}>
 				<div className="head">
 					<div className="user">
-						{post.profile_image === '' ? (
+						{!post.profile_image ? (
 							<AccountCircleIcon />
 						) : (
 							<img src={`https://instact.s3.amazonaws.com/users/${post.users_id}/${post.profile_image}`} alt="" />

@@ -36,7 +36,7 @@ const Home = () => {
 				<div className="fixed">
 					<div className="user">
 						<Link to={PROFILE} className="imagem">
-							{userData.profile_image === '' ? (
+							{!userData.profile_image ? (
 								<AccountCircleIcon />
 							) : (
 								<img src={`https://instact.s3.amazonaws.com/users/${userData.id}/${userData.profile_image}`} alt="" />
