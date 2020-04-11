@@ -7,7 +7,6 @@ import Post from 'components/post/post';
 import { Link } from 'react-router-dom';
 import { PROFILE } from '../../routes';
 
-
 const Home = () => {
 
 	const dispatch = useDispatch();

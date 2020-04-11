@@ -4,10 +4,12 @@ import ModeCommentIcon from '@material-ui/icons/ModeComment';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SimpleInput from 'components/input/simpleInput';
+import * as moment from 'moment';
+import 'moment/locale/pt-br';
 
-
-const Post = ({ postData, allComments }) => (
-	<>
+const Post = ({ postData, allComments }) => {
+	return(
+		<>
 		{postData.map((post) => (
 			<div className="post" key={post.id}>
 				<div className="head">
@@ -52,7 +54,7 @@ const Post = ({ postData, allComments }) => (
 					))}
 				</div>
 				<div className="time">
-					<span>HÁ 29 MINUTOS</span>
+					<span>{moment(post.created_at).fromNow()}</span>
 				</div>
 				<form>
 					<SimpleInput
@@ -68,7 +70,8 @@ const Post = ({ postData, allComments }) => (
 				</form>
 			</div>
 		))}
-	</>
-);
+		</>
+	)
+};
 
 export default Post;
