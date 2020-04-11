@@ -110,6 +110,10 @@ function Edit(){
 		}
 	}, [response, id]);
 
+	useEffect(() => {
+		document.title = 'Editar perfil • Instagram clone';
+	}, []);
+
 	return(
 		<>
 		<div id="wrap_edit">

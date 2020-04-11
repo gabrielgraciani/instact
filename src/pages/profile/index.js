@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import GridOnIcon from '@material-ui/icons/GridOn';
@@ -28,7 +28,12 @@ function Profile(){
 	useEffect(() => {
 		dispatch(userFetch(id));
 		dispatch(postFetchFromUser(id));
+
 	}, [id, dispatch]);
+
+	useEffect(() => {
+		document.title = userData.name || 'Instact - Instagram clone';
+	}, [userData]);
 
 	return(
 		<>

@@ -26,6 +26,10 @@ const Home = () => {
 		dispatch(postFetchComments());
 	}, [dispatch]);
 
+	useEffect(() => {
+		document.title = 'Instact - Instagram clone';
+	}, []);
+
 	return(
 		<div id="wrap_principal">
 			<div className="indent">
