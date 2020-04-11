@@ -1,4 +1,5 @@
 import React, { lazy, Suspense, useEffect } from 'react'
+import 'dotenv/config';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { EDIT, LOGIN, PROFILE } from './routes';
 import Header from 'components/header';

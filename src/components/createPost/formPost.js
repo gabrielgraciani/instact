@@ -11,8 +11,10 @@ const FormPost = ({ handleChangeAdd }) => {
 
 	const [errorImageSize, setErrorImageSize] = useState(false);
 	const [imagePreview, setImagePreview] = useState('');
-	const [fileSend, setFileSend] = useState([]);
+	const [fileSend, setFileSend] = useState('');
 	const [description, setDescription] = useState('');
+	const [errorEmptyDescription, setErrorEmptyDescription] = useState(false);
+	const [errorEmptyImage, setErrorEmptyImage] = useState(false);
 
 	const dispatch = useDispatch();
 	const idLocalStorage = localStorage.getItem('id_user_instact');
@@ -43,19 +45,24 @@ const FormPost = ({ handleChangeAdd }) => {
 	const handleSubmit = () => {
 
 		if(description === ''){
-
+			setErrorEmptyDescription(true);
+		} else if(fileSend === '') {
+			setErrorEmptyImage(true);
+			setErrorEmptyDescription(false);
 		} else{
+			setErrorEmptyDescription(false);
+			setErrorEmptyImage(false);
+
+			const formData = new FormData();
+			formData.append('file', fileSend);
+			formData.append('description', description);
+			formData.append('users_id', idLocalStorage);
+
+			dispatch(postSendCadastro({
+				formData
+			}));
 
 		}
-
-		const formData = new FormData();
-		formData.append('file', fileSend);
-		formData.append('description', description);
-		formData.append('users_id', idLocalStorage);
-
-		dispatch(postSendCadastro({
-			formData
-		}));
 	};
 
 	useEffect(() => {
@@ -116,6 +123,16 @@ const FormPost = ({ handleChangeAdd }) => {
 				{errorImageSize && (
 					<div className="error">
 						<span>Tamanho do arquivo excedido!!</span>
+					</div>
+				)}
+				{errorEmptyDescription && (
+					<div className="error">
+						<span>Escreva uma legenda</span>
+					</div>
+				)}
+				{errorEmptyImage && (
+					<div className="error">
+						<span>Coloque uma imagem</span>
 					</div>
 				)}
 

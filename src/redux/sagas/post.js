@@ -21,13 +21,33 @@ function* postSendCadastroWorker(data) {
 	}
 }
 
+function* postFetchWorker() {
+	try {
+		console.log('chegou aqui');
+
+		const postData = yield call(Post.getPosts);
+
+		console.log('post', postData);
+
+		yield put(actions.postFetchSuccess(postData));
+
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
 function* postSendCadastroWatcher() {
 	yield takeLatest(actions.POST_SEND_CADASTRO, postSendCadastroWorker);
+}
+
+function* postFetchWatcher() {
+	yield takeLatest(actions.POST_FETCH, postFetchWorker);
 }
 
 function* postWatcher() {
 	yield all([
 		postSendCadastroWatcher(),
+		postFetchWatcher(),
 	]);
 }
 

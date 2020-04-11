@@ -3,7 +3,6 @@ import api from './api';
 export default class post{
 	static registerPost = async ( data ) => {
 		try {
-
 			const { formData } = data;
 
 			const response = await api.post('/posts', formData, {
@@ -20,6 +19,16 @@ export default class post{
 			console.log('err', err);
 			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
 		}
+	};
 
+	static getPosts = async () => {
+		try{
+			const response = await api.get(`/posts`);
+
+			return response.data;
+
+		} catch (err) {
+			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
+		}
 	};
 }
