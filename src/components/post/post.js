@@ -12,9 +12,12 @@ const Post = ({ postData }) => (
 			<div className="post" key={post.id}>
 				<div className="head">
 					<div className="user">
-						{/*<img src="" alt="" />*/}
-						<AccountCircleIcon />
-						<span>Nome do usuario</span>
+						{post.profile_image === '' ? (
+							<AccountCircleIcon />
+						) : (
+							<img src={`https://instact.s3.amazonaws.com/users/${post.users_id}/${post.profile_image}`} alt="" />
+						)}
+						<span>{post.name}</span>
 					</div>
 					<div className="opcoes">
 						<MoreHorizIcon />
@@ -35,7 +38,7 @@ const Post = ({ postData }) => (
 					<span>Curtido por <strong>31.000 pessoas</strong></span>
 				</div>
 				<div className="comments">
-					<span><strong>nomedousuario </strong> {post.description}</span>
+					<span><strong>{post.username} </strong> {post.description}</span>
 					<span className="all">Ver todos os 707 comentários</span>
 					<span><strong>nomedousuario </strong> comentario blabla</span>
 					<span><strong>nomedousuario </strong> comentario blabla</span>

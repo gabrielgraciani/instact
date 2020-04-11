@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {LOGIN, HOME, PROFILE} from '../../routes';
+import React, { useState, useEffect } from 'react';
+import { LOGIN, HOME, PROFILE } from '../../routes';
 import LogoSmall from 'assets/images/logo-small.png';
 import SearchIcon from '@material-ui/icons/Search';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -7,7 +7,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import HomeIcon from '@material-ui/icons/Home';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import FormPost from 'components/createPost/formPost';
 

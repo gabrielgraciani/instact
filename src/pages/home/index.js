@@ -4,6 +4,8 @@ import { userFetch } from "../../redux/actions/user";
 import { postFetch } from "../../redux/actions/post";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Post from 'components/post/post';
+import { Link } from 'react-router-dom';
+import { PROFILE } from '../../routes';
 
 
 const Home = () => {
@@ -33,13 +35,16 @@ const Home = () => {
 
 				<div className="fixed">
 					<div className="user">
-						<div className="imagem">
-							{/*<img src="" alt="" />*/}
-							<AccountCircleIcon />
-						</div>
+						<Link to={PROFILE} className="imagem">
+							{userData.profile_image === '' ? (
+								<AccountCircleIcon />
+							) : (
+								<img src={`https://instact.s3.amazonaws.com/users/${userData.id}/${userData.profile_image}`} alt="" />
+							)}
+						</Link>
 						<div className="text">
-							<span><strong>username</strong></span>
-							<span className="small">nome do usuário</span>
+							<Link to={PROFILE}><span><strong>{userData.username}</strong></span></Link>
+							<span className="small">{userData.name}</span>
 						</div>
 					</div>
 					<div className="sugestions">
