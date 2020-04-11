@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { userFetch } from "../../redux/actions/user";
-import { postFetch } from "../../redux/actions/post";
+import { postFetch, postFetchComments } from "../../redux/actions/post";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Post from 'components/post/post';
 import { Link } from 'react-router-dom';
@@ -12,7 +12,7 @@ const Home = () => {
 
 	const dispatch = useDispatch();
 	const { userData = [] } = useSelector(store => store.user);
-	const { postData = [] } = useSelector(store => store.post);
+	const { postData = [], allComments = [] } = useSelector(store => store.post);
 
 	const id = localStorage.getItem('id_user_instact');
 	useEffect(() => {
@@ -24,13 +24,14 @@ const Home = () => {
 
 	useEffect(() => {
 		dispatch(postFetch());
+		dispatch(postFetchComments());
 	}, [dispatch]);
 
 	return(
 		<div id="wrap_principal">
 			<div className="indent">
 				<div className="posts">
-					<Post postData={postData} />
+					<Post postData={postData} allComments={allComments} />
 				</div>
 
 				<div className="fixed">

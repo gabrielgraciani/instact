@@ -5,6 +5,8 @@ export const POST_FETCH = 'POST_FETCH';
 export const POST_FETCH_SUCCESS = 'POST_FETCH_SUCCESS';
 export const POST_FETCH_FROM_USER = 'POST_FETCH_FROM_USER';
 export const POST_FETCH_FROM_USER_SUCCESS = 'POST_FETCH_FROM_USER_SUCCESS';
+export const POST_FETCH_COMMENTS = 'POST_FETCH_COMMENTS';
+export const POST_FETCH_COMMENTS_SUCCESS = 'POST_FETCH_COMMENTS_SUCCESS';
 
 export const postSendCadastro = (payload) => ({
 	type: POST_SEND_CADASTRO,
@@ -45,5 +47,16 @@ export const postFetchFromUserSuccess = (userPosts) => ({
 	type: POST_FETCH_FROM_USER_SUCCESS,
 	payload: {
 		userPosts
+	}
+});
+
+export const postFetchComments = () => ({
+	type: POST_FETCH_COMMENTS
+});
+
+export const postFetchCommentsSuccess = (allComments) => ({
+	type: POST_FETCH_COMMENTS_SUCCESS,
+	payload: {
+		allComments
 	}
 });

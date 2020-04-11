@@ -40,4 +40,15 @@ export default class post{
 			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
 		}
 	};
+
+	static getAllComments = async () => {
+		try{
+			const response = await api.get(`/comments`);
+
+			return response.data;
+
+		} catch (err) {
+			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
+		}
+	};
 }

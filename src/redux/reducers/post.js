@@ -9,6 +9,7 @@ export const initialState = {
 	postData: [],
 	userPosts: [],
 	postAdd: [],
+	allComments: [],
 };
 
 
@@ -70,6 +71,21 @@ export default function postReducer(
 				...state,
 				loading: false,
 				userPosts: payload.userPosts
+			};
+
+		case actions.POST_FETCH_COMMENTS:
+			return {
+				...initialState,
+				...state,
+				loading: true,
+			};
+
+		case actions.POST_FETCH_COMMENTS_SUCCESS:
+			return {
+				...initialState,
+				...state,
+				loading: false,
+				allComments: payload.allComments
 			};
 
 		default:

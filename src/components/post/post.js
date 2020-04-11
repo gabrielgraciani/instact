@@ -6,7 +6,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SimpleInput from 'components/input/simpleInput';
 
 
-const Post = ({ postData }) => (
+const Post = ({ postData, allComments }) => (
 	<>
 		{postData.map((post) => (
 			<div className="post" key={post.id}>
@@ -39,9 +39,17 @@ const Post = ({ postData }) => (
 				</div>
 				<div className="comments">
 					<span><strong>{post.username} </strong> {post.description}</span>
-					<span className="all">Ver todos os {post.qt_comments} {post.qt_comments === 1 ? 'comentário' : 'comentários'}</span>
-					<span><strong>nomedousuario </strong> comentario blabla</span>
-					<span><strong>nomedousuario </strong> comentario blabla</span>
+					{post.qt_comments > 2 ? (
+						<span className="all">Ver todos os {post.qt_comments} comentários</span>
+					) : (
+						<div className="margin"> </div>
+					)}
+
+					{allComments.map((comment) => (
+						comment.posts_id === post.id && (
+							<span key={comment.id}><strong>{comment.username} </strong> {comment.comment}</span>
+						)
+					))}
 				</div>
 				<div className="time">
 					<span>HÁ 29 MINUTOS</span>
