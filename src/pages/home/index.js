@@ -14,9 +14,17 @@ const Home = () => {
 	const dispatch = useDispatch();
 	const { userData = [] } = useSelector(store => store.user);
 	const { postData = [], likeSuccess, likeId } = useSelector(store => store.post);
-	console.log('valor real', postData);
 
 	const id = localStorage.getItem('id_user_instact');
+
+	const verifyLike = (index) => {
+		const check = postData[index].likes.find(like => like.users_id.toString() === id);
+		if(check){
+			return check.id;
+		}
+
+		return false;
+	};
 
 	const handleLike = (posts_id) => {
 		dispatch(postSendLike({
@@ -55,8 +63,8 @@ const Home = () => {
 						  handleLike={handleLike}
 						  handleDeslike={handleDeslike}
 						  likeSuccess={likeSuccess}
-						  userId={id}
 						  likeId={likeId}
+						  verifyLike={verifyLike}
 					/>
 				</div>
 
