@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { userFetch } from "../../redux/actions/user";
-import { postFetch, postSendLike } from "../../redux/actions/post";
+import { postFetch, postSendLike, postSendDeslike } from "../../redux/actions/post";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Post from 'components/post/post';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ const Home = () => {
 
 	const dispatch = useDispatch();
 	const { userData = [] } = useSelector(store => store.user);
-	const { postData = [], likeSuccess } = useSelector(store => store.post);
+	const { postData = [], likeSuccess, likeId } = useSelector(store => store.post);
 	console.log('valor real', postData);
 
 	const id = localStorage.getItem('id_user_instact');
@@ -21,6 +21,13 @@ const Home = () => {
 	const handleLike = (posts_id) => {
 		dispatch(postSendLike({
 			posts_id,
+			users_id: id
+		}));
+	};
+
+	const handleDeslike = (like_id) => {
+		dispatch(postSendDeslike({
+			like_id,
 			users_id: id
 		}));
 	};
@@ -44,7 +51,13 @@ const Home = () => {
 		<div id="wrap_principal">
 			<div className="indent">
 				<div className="posts">
-					<Post postData={postData} handleLike={handleLike} likeSuccess={likeSuccess} userId={id} />
+					<Post postData={postData}
+						  handleLike={handleLike}
+						  handleDeslike={handleDeslike}
+						  likeSuccess={likeSuccess}
+						  userId={id}
+						  likeId={likeId}
+					/>
 				</div>
 
 				<div className="fixed">

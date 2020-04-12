@@ -7,6 +7,8 @@ export const POST_FETCH_FROM_USER = 'POST_FETCH_FROM_USER';
 export const POST_FETCH_FROM_USER_SUCCESS = 'POST_FETCH_FROM_USER_SUCCESS';
 export const POST_SEND_LIKE = 'POST_SEND_LIKE';
 export const POST_SEND_LIKE_SUCCESS = 'POST_SEND_LIKE_SUCCESS';
+export const POST_SEND_DESLIKE = 'POST_SEND_DESLIKE';
+export const POST_SEND_DESLIKE_SUCCESS = 'POST_SEND_DESLIKE_SUCCESS';
 
 export const postSendCadastro = (payload) => ({
 	type: POST_SEND_CADASTRO,
@@ -55,9 +57,23 @@ export const postSendLike = (payload) => ({
 	payload
 });
 
-export const postSendLikeSuccess = (likeSuccess) => ({
+export const postSendLikeSuccess = (likeSuccess, likeId) => ({
 	type: POST_SEND_LIKE_SUCCESS,
 	payload: {
 		likeSuccess,
+		likeId
+	}
+});
+
+export const postSendDeslike = (payload) => ({
+	type: POST_SEND_DESLIKE,
+	payload
+});
+
+export const postSendDeslikeSuccess = (likeSuccess, likeId) => ({
+	type: POST_SEND_DESLIKE_SUCCESS,
+	payload: {
+		likeSuccess,
+		likeId
 	}
 });

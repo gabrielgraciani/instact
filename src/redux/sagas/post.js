@@ -66,14 +66,25 @@ function* postFetchFromUserWorker(data) {
 
 function* postSendLikeWorker(data) {
 	try {
+
 		const likeData = data.payload;
 		const { like_id } = yield call(Post.registerLike, likeData);
-		console.log('teste', like_id);
 
-		yield put(actions.postSendLikeSuccess(true));
+		yield put(actions.postSendLikeSuccess(true, like_id));
 
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
 
+function* postSendDeslikeWorker(data) {
+	try {
 
+		const like_data = data.payload;
+		const teste = yield call(Post.removeLike, like_data);
+		console.log('teste', teste);
+
+		yield put(actions.postSendDeslikeSuccess(false, ''));
 
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);
@@ -96,12 +107,17 @@ function* postSendLikeWatcher() {
 	yield takeLatest(actions.POST_SEND_LIKE, postSendLikeWorker);
 }
 
+function* postSendDeslikeWatcher() {
+	yield takeLatest(actions.POST_SEND_DESLIKE, postSendDeslikeWorker);
+}
+
 function* postWatcher() {
 	yield all([
 		postSendCadastroWatcher(),
 		postFetchWatcher(),
 		postFetchFromUserWatcher(),
 		postSendLikeWatcher(),
+		postSendDeslikeWatcher(),
 	]);
 }
 

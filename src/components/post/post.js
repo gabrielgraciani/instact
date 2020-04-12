@@ -7,16 +7,17 @@ import SimpleInput from 'components/input/simpleInput';
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
 
-const Post = ({ postData, handleLike, likeSuccess, userId }) => {
+const Post = ({ postData, handleLike, handleDeslike, likeSuccess, userId, likeId }) => {
+
+
 
 	const verifyLike = (index) => {
-		const check = postData[index].likes.find(like => like.users_id.toString() === userId ? 'oi' : 'tchau');
+		const check = postData[index].likes.find(like => like.users_id.toString() === userId);
 		if(check){
 			return check.id;
 		}
 
 		return false;
-
 	};
 
 	return(
@@ -43,10 +44,11 @@ const Post = ({ postData, handleLike, likeSuccess, userId }) => {
 					<div className="item">
 
 
-						{verifyLike(index) ? (
-							<FavoriteIcon className='active' />
+						{likeId === '' ? (
+							<FavoriteIcon onClick={() => {verifyLike(index) ? handleDeslike(verifyLike(index)) : handleLike(post.id)}}
+										  className={`${likeSuccess ? 'active' : ''} ${verifyLike(index) ? 'active' : ''}`} />
 						) : (
-							<FavoriteIcon onClick={() => {handleLike(post.id)}} className={likeSuccess ? 'active' : ''} />
+							<FavoriteIcon onClick={() => {handleDeslike(likeId)}} className={likeSuccess ? 'active' : ''} />
 						)}
 
 					</div>

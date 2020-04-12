@@ -80,4 +80,22 @@ export default class post{
 			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
 		}
 	};
+
+	static removeLike = async ( data ) => {
+		try {
+			const { like_id, users_id } = data;
+
+			const response = await api.delete(`/likes/${like_id}`, {
+				headers: {
+					'Authorization': users_id,
+				}
+			});
+
+			return response.data.success;
+
+		} catch (err) {
+			console.log('err', err);
+			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
+		}
+	};
 }
