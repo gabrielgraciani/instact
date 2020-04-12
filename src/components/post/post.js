@@ -26,7 +26,15 @@ const Post = ({ postData, handleLike, handleDeslike, likeSuccess, likeId, verify
 					</div>
 				</div>
 				<div className="body">
-					<img src={`https://instact.s3.amazonaws.com/posts/${post.file}`} alt=""/>
+					{likeId === '' ? (
+						verifyLike(index) && post.isLiked === undefined ? (
+							<img onDoubleClick={() => {handleDeslike(verifyLike(index), post.id)}} src={`https://instact.s3.amazonaws.com/posts/${post.file}`} alt=""/>
+						) : (
+							<img onDoubleClick={() => {handleLike(post.id)}} src={`https://instact.s3.amazonaws.com/posts/${post.file}`} alt=""/>
+						)
+					) : (
+						<img onDoubleClick={() => {handleDeslike(likeId, post.id)}} src={`https://instact.s3.amazonaws.com/posts/${post.file}`} alt=""/>
+					)}
 				</div>
 				<div className="actions">
 					<div className="item">
