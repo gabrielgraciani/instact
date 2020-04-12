@@ -7,10 +7,21 @@ import SimpleInput from 'components/input/simpleInput';
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
 
-const Post = ({ postData, handleLike, likeSuccess }) => {
+const Post = ({ postData, handleLike, likeSuccess, userId }) => {
+
+	const verifyLike = (index) => {
+		const check = postData[index].likes.find(like => like.users_id.toString() === userId ? 'oi' : 'tchau');
+		if(check){
+			return check.id;
+		}
+
+		return false;
+
+	};
+
 	return(
 		<>
-		{postData.map((post) => (
+		{postData.map((post, index) => (
 			<div className="post" key={post.id}>
 				<div className="head">
 					<div className="user">
@@ -30,7 +41,14 @@ const Post = ({ postData, handleLike, likeSuccess }) => {
 				</div>
 				<div className="actions">
 					<div className="item">
-						<FavoriteIcon onClick={() => {handleLike(post.id)}} className={likeSuccess ? 'active' : ''} />
+
+
+						{verifyLike(index) ? (
+							<FavoriteIcon className='active' />
+						) : (
+							<FavoriteIcon onClick={() => {handleLike(post.id)}} className={likeSuccess ? 'active' : ''} />
+						)}
+
 					</div>
 					<div className="item">
 						<ModeCommentIcon />

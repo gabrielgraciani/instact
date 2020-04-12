@@ -44,7 +44,7 @@ const Home = () => {
 		<div id="wrap_principal">
 			<div className="indent">
 				<div className="posts">
-					<Post postData={postData} handleLike={handleLike} likeSuccess={likeSuccess} />
+					<Post postData={postData} handleLike={handleLike} likeSuccess={likeSuccess} userId={id} />
 				</div>
 
 				<div className="fixed">

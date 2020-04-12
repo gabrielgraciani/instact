@@ -67,7 +67,8 @@ function* postFetchFromUserWorker(data) {
 function* postSendLikeWorker(data) {
 	try {
 		const likeData = data.payload;
-		yield call(Post.registerLike, likeData);
+		const { like_id } = yield call(Post.registerLike, likeData);
+		console.log('teste', like_id);
 
 		yield put(actions.postSendLikeSuccess(true));
 
