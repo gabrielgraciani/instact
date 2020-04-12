@@ -275,6 +275,19 @@ p{font-size:21px;}
 
 #wrap_dialog{width:100%;}
 
+
+@keyframes like-button{
+	0%{transform:scale(1);}
+	50%{transform:scale(1.4);}
+	100%{transform:scale(1);}
+}
+
+@keyframes heart-icon{
+	0%{transform:translate(-50%, -50%) scale(0);}
+	50%{transform:translate(-50%, -50%) scale(1.4);}
+	100%{transform:translate(-50%, -50%) scale(0);}
+}
+
 #wrap_principal{width:100%; position:relative; margin-top:20px;
 	.indent{display:flex; justify-content:space-between; position:relative;
 		.posts{width:615px; display:flex; flex-direction:column;
@@ -286,13 +299,14 @@ p{font-size:21px;}
 						svg{width:35px; height:35px; border-radius:50%; margin:0 10px 0 0;}
 					}
 				}
-				.body{width:100%; min-height:300px;
+				.body{width:100%; min-height:300px; position:relative;
 					img{max-width:100%; width:100%;}
+					.heart{position:absolute; top:50%; left:50%; animation: heart-icon .6s ease; transform: translate(-50%, -50%) scale(0);}
 				}
 				.actions{width:100%; display:flex; padding:0 16px; margin-top:5px;
 					.item{margin:0 15px 0 0; cursor:pointer;
 						svg{fill:transparent; stroke: #262626; stroke-width:1.5px; width:24px; height:24px;
-							&.active{fill:#ED4956; stroke:#ED4956;}
+							&.active{fill:#ED4956; stroke:#ED4956; animation: like-button .3s ease;}
 						}
 					}
 				}

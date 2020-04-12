@@ -6,6 +6,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SimpleInput from 'components/input/simpleInput';
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
+import HeartIcon from 'assets/images/heart.png';
 
 const Post = ({ postData, handleLike, handleDeslike, likeSuccess, likeId, verifyLike }) => {
 	return(
@@ -28,12 +29,22 @@ const Post = ({ postData, handleLike, handleDeslike, likeSuccess, likeId, verify
 				<div className="body">
 					{likeId === '' ? (
 						verifyLike(index) && post.isLiked === undefined ? (
-							<img onDoubleClick={() => {handleDeslike(verifyLike(index), post.id)}} src={`https://instact.s3.amazonaws.com/posts/${post.file}`} alt=""/>
+							<>
+								<img onDoubleClick={() => {handleDeslike(verifyLike(index), post.id)}} src={`https://instact.s3.amazonaws.com/posts/${post.file}`} alt=""/>
+								<div className="heart">
+									<img src={HeartIcon} alt="like" />
+								</div>
+							</>
 						) : (
 							<img onDoubleClick={() => {handleLike(post.id)}} src={`https://instact.s3.amazonaws.com/posts/${post.file}`} alt=""/>
 						)
 					) : (
-						<img onDoubleClick={() => {handleDeslike(likeId, post.id)}} src={`https://instact.s3.amazonaws.com/posts/${post.file}`} alt=""/>
+						<>
+							<img onDoubleClick={() => {handleDeslike(likeId, post.id)}} src={`https://instact.s3.amazonaws.com/posts/${post.file}`} alt=""/>
+							<div className="heart">
+								<img src={HeartIcon} alt="like" />
+							</div>
+						</>
 					)}
 				</div>
 				<div className="actions">
