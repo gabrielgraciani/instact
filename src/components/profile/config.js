@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { classActiveSend } from "../../redux/actions/classActive";
 import { authLogout } from "../../redux/actions/auth";
 import { userClear } from "../../redux/actions/user";
@@ -10,7 +10,6 @@ import Dialog from 'components/dialog/dialog';
 function Config(){
 
 	const dispatch = useDispatch();
-	const { active } = useSelector(store => store.classActive);
 	const history = useHistory();
 
 	const handleChange = () => {

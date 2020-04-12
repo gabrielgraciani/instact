@@ -7,7 +7,7 @@ import SimpleInput from 'components/input/simpleInput';
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
 
-const Post = ({ postData, allComments, handleLike, likeSuccess }) => {
+const Post = ({ postData, handleLike, likeSuccess }) => {
 	return(
 		<>
 		{postData.map((post) => (
@@ -47,10 +47,8 @@ const Post = ({ postData, allComments, handleLike, likeSuccess }) => {
 						<div className="margin"> </div>
 					)}
 
-					{allComments.map((comment) => (
-						comment.posts_id === post.id && (
-							<span key={comment.id}><strong>{comment.username} </strong> {comment.comment}</span>
-						)
+					{post.comments.map((comment) => (
+						<span key={comment.id}><strong>{comment.username} </strong> {comment.comment}</span>
 					))}
 				</div>
 				<div className="time">

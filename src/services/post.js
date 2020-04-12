@@ -52,6 +52,17 @@ export default class post{
 		}
 	};
 
+	static getAllLikes = async () => {
+		try{
+			const response = await api.get(`/likes`);
+
+			return response.data;
+
+		} catch (err) {
+			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
+		}
+	};
+
 	static registerLike = async ( data ) => {
 		try {
 			const { posts_id, users_id } = data;

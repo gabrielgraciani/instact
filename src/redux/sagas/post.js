@@ -24,6 +24,24 @@ function* postSendCadastroWorker(data) {
 function* postFetchWorker() {
 	try {
 		const postData = yield call(Post.getPosts);
+		const allLikes = yield call(Post.getAllLikes);
+		const allComments = yield call(Post.getAllComments);
+
+		postData.map((item) => {
+			const teste = [];
+			allLikes.map((itemLike) => (
+				itemLike.posts_id === item.id && teste.push(itemLike)
+			));
+			return item.likes = teste;
+		});
+
+		postData.map((item) => {
+			const comment = [];
+			allComments.map((itemComment) => (
+				itemComment.posts_id === item.id && comment.push(itemComment)
+			));
+			return item.comments = comment;
+		});
 
 		yield put(actions.postFetchSuccess(postData));
 
@@ -40,17 +58,6 @@ function* postFetchFromUserWorker(data) {
 		const userPosts = yield call(Post.getPostsFromUser, id);
 
 		yield put(actions.postFetchFromUserSuccess(userPosts));
-
-	} catch (error) {
-		console.log(`Erro ${error}, tente novamente mais tarde`);
-	}
-}
-
-function* postFetchCommentsWorker() {
-	try {
-		const comments = yield call(Post.getAllComments);
-
-		yield put(actions.postFetchCommentsSuccess(comments));
 
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);
@@ -84,10 +91,6 @@ function* postFetchFromUserWatcher() {
 	yield takeLatest(actions.POST_FETCH_FROM_USER, postFetchFromUserWorker);
 }
 
-function* postFetchCommentsWatcher() {
-	yield takeLatest(actions.POST_FETCH_COMMENTS, postFetchCommentsWorker);
-}
-
 function* postSendLikeWatcher() {
 	yield takeLatest(actions.POST_SEND_LIKE, postSendLikeWorker);
 }
@@ -97,7 +100,6 @@ function* postWatcher() {
 		postSendCadastroWatcher(),
 		postFetchWatcher(),
 		postFetchFromUserWatcher(),
-		postFetchCommentsWatcher(),
 		postSendLikeWatcher(),
 	]);
 }

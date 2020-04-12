@@ -74,21 +74,6 @@ export default function postReducer(
 				userPosts: payload.userPosts
 			};
 
-		case actions.POST_FETCH_COMMENTS:
-			return {
-				...initialState,
-				...state,
-				loading: true,
-			};
-
-		case actions.POST_FETCH_COMMENTS_SUCCESS:
-			return {
-				...initialState,
-				...state,
-				loading: false,
-				allComments: payload.allComments
-			};
-
 		case actions.POST_SEND_LIKE:
 			return {
 				...initialState,
