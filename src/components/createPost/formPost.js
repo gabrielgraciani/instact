@@ -73,7 +73,6 @@ const FormPost = ({ handleChangeAdd }) => {
 	}, [isOpen, handleChangeAdd]);
 
 	return(
-		<div id="wrap_create_post">
 			<div className="indent">
 				<Dialog handleClose={handleChangeAdd}>
 					<div className="head">
@@ -139,7 +138,6 @@ const FormPost = ({ handleChangeAdd }) => {
 					)}
 				</Dialog>
 			</div>
-		</div>
 	)
 };
 

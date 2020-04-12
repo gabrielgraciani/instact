@@ -72,9 +72,12 @@ function Header({location}){
 					</div>
 				</div>
 			</div>
+
+			<div id="wrap_create_post" className={activeAdd ? 'active' : ''}>
 			{activeAdd && (
 				<FormPost handleChangeAdd={handleChangeAdd} />
 			)}
+			</div>
 			</>
 		)}
 		</>

@@ -31,20 +31,18 @@ function Config(){
 
 
 	return(
-		<div id="wrap_config" className={active ? 'active' : '' }>
-			<div className="indent">
-				<Dialog handleClose={handleChange}>
-					<button type="button" className="item" onClick={handleChangeRoute}>
-						Editar perfil
-					</button>
-					<button type="button" className="item" onClick={handleLogout}>
-						Sair
-					</button>
-					<button type="button" className="item" onClick={handleChange}>
-						Cancelar
-					</button>
-				</Dialog>
-			</div>
+		<div className="indent">
+			<Dialog handleClose={handleChange}>
+				<button type="button" className="item" onClick={handleChangeRoute}>
+					Editar perfil
+				</button>
+				<button type="button" className="item" onClick={handleLogout}>
+					Sair
+				</button>
+				<button type="button" className="item" onClick={handleChange}>
+					Cancelar
+				</button>
+			</Dialog>
 		</div>
 	)
 }

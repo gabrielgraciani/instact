@@ -107,11 +107,12 @@ function Profile(){
 					</div>
 				</div>
 
-				{active && (
-					<Config />
+				<div id="wrap_config" className={active ? 'active' : '' }>
+					{active && (
+						<Config />
 
-				)}
-
+					)}
+				</div>
 			</>
 		)}
 		</>
