@@ -7,6 +7,8 @@ export const POST_FETCH_FROM_USER = 'POST_FETCH_FROM_USER';
 export const POST_FETCH_FROM_USER_SUCCESS = 'POST_FETCH_FROM_USER_SUCCESS';
 export const POST_FETCH_COMMENTS = 'POST_FETCH_COMMENTS';
 export const POST_FETCH_COMMENTS_SUCCESS = 'POST_FETCH_COMMENTS_SUCCESS';
+export const POST_SEND_LIKE = 'POST_SEND_LIKE';
+export const POST_SEND_LIKE_SUCCESS = 'POST_SEND_LIKE_SUCCESS';
 
 export const postSendCadastro = (payload) => ({
 	type: POST_SEND_CADASTRO,
@@ -58,5 +60,17 @@ export const postFetchCommentsSuccess = (allComments) => ({
 	type: POST_FETCH_COMMENTS_SUCCESS,
 	payload: {
 		allComments
+	}
+});
+
+export const postSendLike = (payload) => ({
+	type: POST_SEND_LIKE,
+	payload
+});
+
+export const postSendLikeSuccess = (likeSuccess) => ({
+	type: POST_SEND_LIKE_SUCCESS,
+	payload: {
+		likeSuccess,
 	}
 });

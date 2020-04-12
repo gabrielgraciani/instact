@@ -51,4 +51,22 @@ export default class post{
 			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
 		}
 	};
+
+	static registerLike = async ( data ) => {
+		try {
+			const { posts_id, users_id } = data;
+
+			const response = await api.post('/likes', {posts_id}, {
+				headers: {
+					'Authorization': users_id,
+				}
+			});
+
+			return { success: response.data.success, postAdd: response.data.post};
+
+		} catch (err) {
+			console.log('err', err);
+			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
+		}
+	};
 }

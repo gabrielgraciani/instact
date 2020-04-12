@@ -57,6 +57,21 @@ function* postFetchCommentsWorker() {
 	}
 }
 
+function* postSendLikeWorker(data) {
+	try {
+		const likeData = data.payload;
+		yield call(Post.registerLike, likeData);
+
+		yield put(actions.postSendLikeSuccess(true));
+
+
+
+
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
 function* postSendCadastroWatcher() {
 	yield takeLatest(actions.POST_SEND_CADASTRO, postSendCadastroWorker);
 }
@@ -73,12 +88,17 @@ function* postFetchCommentsWatcher() {
 	yield takeLatest(actions.POST_FETCH_COMMENTS, postFetchCommentsWorker);
 }
 
+function* postSendLikeWatcher() {
+	yield takeLatest(actions.POST_SEND_LIKE, postSendLikeWorker);
+}
+
 function* postWatcher() {
 	yield all([
 		postSendCadastroWatcher(),
 		postFetchWatcher(),
 		postFetchFromUserWatcher(),
 		postFetchCommentsWatcher(),
+		postSendLikeWatcher(),
 	]);
 }
 

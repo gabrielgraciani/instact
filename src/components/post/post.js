@@ -7,7 +7,7 @@ import SimpleInput from 'components/input/simpleInput';
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
 
-const Post = ({ postData, allComments }) => {
+const Post = ({ postData, allComments, handleLike, likeSuccess }) => {
 	return(
 		<>
 		{postData.map((post) => (
@@ -30,7 +30,7 @@ const Post = ({ postData, allComments }) => {
 				</div>
 				<div className="actions">
 					<div className="item">
-						<FavoriteIcon />
+						<FavoriteIcon onClick={() => {handleLike(post.id)}} className={likeSuccess ? 'active' : ''} />
 					</div>
 					<div className="item">
 						<ModeCommentIcon />

@@ -290,7 +290,7 @@ p{font-size:21px;}
 					img{max-width:100%; width:100%;}
 				}
 				.actions{width:100%; display:flex; padding:0 16px; margin-top:5px;
-					.item{margin:0 15px 0 0;
+					.item{margin:0 15px 0 0; cursor:pointer;
 						svg{fill:transparent; stroke: #262626; stroke-width:1.5px; width:24px; height:24px;
 							&.active{fill:#ED4956; stroke:#ED4956;}
 						}

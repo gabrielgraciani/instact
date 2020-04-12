@@ -10,6 +10,7 @@ export const initialState = {
 	userPosts: [],
 	postAdd: [],
 	allComments: [],
+	likeSuccess: false,
 };
 
 
@@ -86,6 +87,21 @@ export default function postReducer(
 				...state,
 				loading: false,
 				allComments: payload.allComments
+			};
+
+		case actions.POST_SEND_LIKE:
+			return {
+				...initialState,
+				...state,
+				isSaving: true,
+			};
+
+		case actions.POST_SEND_LIKE_SUCCESS:
+			return {
+				...initialState,
+				...state,
+				isSaving: false,
+				likeSuccess: payload.likeSuccess
 			};
 
 		default:

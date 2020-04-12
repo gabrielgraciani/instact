@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { userFetch } from "../../redux/actions/user";
-import { postFetch, postFetchComments } from "../../redux/actions/post";
+import { postFetch, postFetchComments, postSendLike } from "../../redux/actions/post";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Post from 'components/post/post';
 import { Link } from 'react-router-dom';
@@ -13,9 +13,17 @@ const Home = () => {
 
 	const dispatch = useDispatch();
 	const { userData = [] } = useSelector(store => store.user);
-	const { postData = [], allComments = [] } = useSelector(store => store.post);
+	const { postData = [], allComments = [], likeSuccess } = useSelector(store => store.post);
 
 	const id = localStorage.getItem('id_user_instact');
+
+	const handleLike = (posts_id) => {
+		dispatch(postSendLike({
+			posts_id,
+			users_id: id
+		}));
+	};
+
 	useEffect(() => {
 		if(userData.length === 0){
 			dispatch(userFetch(id));
@@ -36,7 +44,7 @@ const Home = () => {
 		<div id="wrap_principal">
 			<div className="indent">
 				<div className="posts">
-					<Post postData={postData} allComments={allComments} />
+					<Post postData={postData} allComments={allComments} handleLike={handleLike} likeSuccess={likeSuccess} />
 				</div>
 
 				<div className="fixed">
