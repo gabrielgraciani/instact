@@ -30,8 +30,6 @@ function Header({location}){
 		setActiveAdd(!activeAdd);
 	};
 
-
-
 	return(
 		<>
 		{!hidden && (
@@ -78,10 +76,8 @@ function Header({location}){
 				<FormPost handleChangeAdd={handleChangeAdd} />
 			)}
 			</>
-
 		)}
 		</>
-
 	)
 }
 

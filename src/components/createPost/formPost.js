@@ -5,6 +5,7 @@ import ArchiveIcon from '@material-ui/icons/Archive';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import { useDispatch, useSelector } from "react-redux";
 import { postSendCadastro } from "../../redux/actions/post";
+import Dialog from 'components/dialog/dialog';
 
 
 const FormPost = ({ handleChangeAdd }) => {
@@ -74,69 +75,69 @@ const FormPost = ({ handleChangeAdd }) => {
 	return(
 		<div id="wrap_create_post">
 			<div className="indent">
-				<div className="head">
-					<div className="arrow" onClick={handleChangeAdd}>
-						<ArrowBackIosIcon />
+				<Dialog handleClose={handleChangeAdd}>
+					<div className="head">
+						<div className="arrow" onClick={handleChangeAdd}>
+							<ArrowBackIosIcon />
+						</div>
+						<div className="title">
+							<h4>Nova publicação</h4>
+						</div>
+						<div className="share" onClick={handleSubmit}>
+							{isSaving ? (
+								<span>Salvando...</span>
+							) : (
+								<span>Compartilhar</span>
+							)}
+						</div>
 					</div>
-					<div className="title">
-						<h4>Nova publicação</h4>
-					</div>
-					<div className="share" onClick={handleSubmit}>
-						{isSaving ? (
-							<span>Salvando...</span>
-						) : (
-							<span>Compartilhar</span>
-						)}
-					</div>
-				</div>
-				<div className="body">
-					<div className="imagem">
-						{/*<img src="" alt="" />*/}
-						<AccountCircleIcon />
-					</div>
-					<form>
-						<input type="text" placeholder="Escreva uma legenda..." name="description" value={description} onChange={handleChangeDescription} />
-					</form>
-					<div className="upload">
-						{imagePreview !== '' ? (
-							<>
+					<div className="body">
+						<div className="imagem">
+							{/*<img src="" alt="" />*/}
+							<AccountCircleIcon />
+						</div>
+						<form>
+							<input type="text" placeholder="Escreva uma legenda..." name="description" value={description} onChange={handleChangeDescription} />
+						</form>
+						<div className="upload">
+							{imagePreview !== '' ? (
+								<>
 								<RemoveCircleIcon className="remove" onClick={handleRemoveFile} />
 								<img src={imagePreview} alt=""/>
-							</>
-						) : (
-							<div className='file-box'>
-								<input
-									type='file'
-									className='file-box-input'
-									id='profileImage'
-									onChange={handleChangeFile}
-								/>
-								<label className='file-box-label' htmlFor='profileImage'>
-									<ArchiveIcon />
-									<span>Realizar upload de arquivo</span>
-								</label>
-							</div>
-						)}
+								</>
+							) : (
+								<div className='file-box'>
+									<input
+										type='file'
+										className='file-box-input'
+										id='profileImage'
+										onChange={handleChangeFile}
+									/>
+									<label className='file-box-label' htmlFor='profileImage'>
+										<ArchiveIcon />
+										<span>Realizar upload de arquivo</span>
+									</label>
+								</div>
+							)}
+						</div>
 					</div>
-				</div>
 
-				{errorImageSize && (
-					<div className="error">
-						<span>Tamanho do arquivo excedido!!</span>
-					</div>
-				)}
-				{errorEmptyDescription && (
-					<div className="error">
-						<span>Escreva uma legenda</span>
-					</div>
-				)}
-				{errorEmptyImage && (
-					<div className="error">
-						<span>Coloque uma imagem</span>
-					</div>
-				)}
-
-
+					{errorImageSize && (
+						<div className="error">
+							<span>Tamanho do arquivo excedido!!</span>
+						</div>
+					)}
+					{errorEmptyDescription && (
+						<div className="error">
+							<span>Escreva uma legenda</span>
+						</div>
+					)}
+					{errorEmptyImage && (
+						<div className="error">
+							<span>Coloque uma imagem</span>
+						</div>
+					)}
+				</Dialog>
 			</div>
 		</div>
 	)
