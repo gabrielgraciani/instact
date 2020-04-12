@@ -32,20 +32,14 @@ const Post = ({ postData, handleLike, handleDeslike, likeSuccess, likeId, verify
 					<div className="item">
 
 						{likeId === '' ? (
-							<>
-							{verifyLike(index) && post.isLiked === undefined ? (
+							verifyLike(index) && post.isLiked === undefined ? (
 								<FavoriteIcon onClick={() => {handleDeslike(verifyLike(index), post.id)}}
-											  className={verifyLike ? 'active' : ''} />
+											  className='active' />
 							) : (
-								<FavoriteIcon onClick={() => {handleLike(post.id)}} className={post.isLiked ? 'active' : ''} />
-							)}
-
-
-							{/*<FavoriteIcon onClick={() => {verifyLike(index) ? handleDeslike(verifyLike(index, post.id)) : handleLike(post.id)}}
-										  className={`${likeSuccess ? 'active' : ''} ${verifyLike(index) ? 'active' : ''}`} />*/}
-							</>
+								<FavoriteIcon onClick={() => {handleLike(post.id)}} />
+							)
 						) : (
-							<FavoriteIcon onClick={() => {handleDeslike(likeId, post.id)}} className={post.isLiked ? 'active' : ''} />
+							<FavoriteIcon onClick={() => {handleDeslike(likeId, post.id)}} className='active' />
 						)}
 
 					</div>
@@ -55,9 +49,7 @@ const Post = ({ postData, handleLike, handleDeslike, likeSuccess, likeId, verify
 				</div>
 				<div className="likes">
 					<span>Curtido por <strong>
-						{post.isLiked === undefined && post.qt_likes}
-						{post.isLiked && post.qt_likes + 1}
-						{post.isLiked === false && (post.qt_likes > 0 ? post.qt_likes - 1 : post.qt_likes)}
+						{post.qt_likes}
 						{post.qt_likes === 1 ? ' pessoa' : ' pessoas'}</strong></span>
 				</div>
 				<div className="comments">

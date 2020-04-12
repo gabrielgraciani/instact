@@ -76,6 +76,7 @@ function* postSendLikeWorker(data) {
 
 		if (i !== -1) {
 			updatedList[i].isLiked = true;
+			updatedList[i].qt_likes = updatedList[i].qt_likes + 1;
 		}
 
 		const likeData = data.payload;
@@ -99,6 +100,7 @@ function* postSendDeslikeWorker(data) {
 
 		if (i !== -1) {
 			updatedList[i].isLiked = false;
+			updatedList[i].qt_likes = updatedList[i].qt_likes - 1;
 		}
 
 		const like_data = data.payload;
