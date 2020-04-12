@@ -9,8 +9,8 @@ import {postFetchFromUser} from "../../redux/actions/post";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Config from 'components/profile/config';
 import Post from 'components/profile/post';
-import {Link} from 'react-router-dom';
-import {EDIT} from '../../routes';
+import { Link } from 'react-router-dom';
+import { EDIT } from '../../routes';
 
 function Profile(){
 
