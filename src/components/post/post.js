@@ -54,7 +54,11 @@ const Post = ({ postData, handleLike, handleDeslike, likeSuccess, likeId, verify
 					</div>
 				</div>
 				<div className="likes">
-					<span>Curtido por <strong>{post.qt_likes} {post.qt_likes === 1 ? 'pessoa' : 'pessoas'}</strong></span>
+					<span>Curtido por <strong>
+						{post.isLiked === undefined && post.qt_likes}
+						{post.isLiked && post.qt_likes + 1}
+						{post.isLiked === false && (post.qt_likes > 0 ? post.qt_likes - 1 : post.qt_likes)}
+						{post.qt_likes === 1 ? ' pessoa' : ' pessoas'}</strong></span>
 				</div>
 				<div className="comments">
 					<span><strong>{post.username} </strong> {post.description}</span>
