@@ -33,9 +33,10 @@ const Home = () => {
 		}));
 	};
 
-	const handleDeslike = (like_id) => {
+	const handleDeslike = (like_id, posts_id) => {
 		dispatch(postSendDeslike({
 			like_id,
+			posts_id,
 			users_id: id
 		}));
 	};

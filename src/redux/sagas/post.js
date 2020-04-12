@@ -1,4 +1,5 @@
-import { takeLatest, all, put, call, delay } from 'redux-saga/effects';
+import { takeLatest, all, put, call, delay, select } from 'redux-saga/effects';
+import { findIndex } from 'lodash';
 
 import * as actions from '../actions/post';
 import Post from '../../services/post';
@@ -67,6 +68,16 @@ function* postFetchFromUserWorker(data) {
 function* postSendLikeWorker(data) {
 	try {
 
+		const { posts_id } = data.payload;
+
+		const { postData } = yield select(store => store.post);
+		const i = findIndex(postData, { id: posts_id });
+		const updatedList = [...postData];
+
+		if (i !== -1) {
+			updatedList[i].isLiked = true;
+		}
+
 		const likeData = data.payload;
 		const { like_id } = yield call(Post.registerLike, likeData);
 
@@ -80,9 +91,18 @@ function* postSendLikeWorker(data) {
 function* postSendDeslikeWorker(data) {
 	try {
 
+		const { posts_id } = data.payload;
+
+		const { postData } = yield select(store => store.post);
+		const i = findIndex(postData, { id: posts_id });
+		const updatedList = [...postData];
+
+		if (i !== -1) {
+			updatedList[i].isLiked = false;
+		}
+
 		const like_data = data.payload;
-		const teste = yield call(Post.removeLike, like_data);
-		console.log('teste', teste);
+		yield call(Post.removeLike, like_data);
 
 		yield put(actions.postSendDeslikeSuccess(false, ''));
 

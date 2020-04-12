@@ -31,12 +31,21 @@ const Post = ({ postData, handleLike, handleDeslike, likeSuccess, likeId, verify
 				<div className="actions">
 					<div className="item">
 
-
 						{likeId === '' ? (
-							<FavoriteIcon onClick={() => {verifyLike(index) ? handleDeslike(verifyLike(index)) : handleLike(post.id)}}
-										  className={`${likeSuccess ? 'active' : ''} ${verifyLike(index) ? 'active' : ''}`} />
+							<>
+							{verifyLike(index) && post.isLiked === undefined ? (
+								<FavoriteIcon onClick={() => {handleDeslike(verifyLike(index), post.id)}}
+											  className={verifyLike ? 'active' : ''} />
+							) : (
+								<FavoriteIcon onClick={() => {handleLike(post.id)}} className={post.isLiked ? 'active' : ''} />
+							)}
+
+
+							{/*<FavoriteIcon onClick={() => {verifyLike(index) ? handleDeslike(verifyLike(index, post.id)) : handleLike(post.id)}}
+										  className={`${likeSuccess ? 'active' : ''} ${verifyLike(index) ? 'active' : ''}`} />*/}
+							</>
 						) : (
-							<FavoriteIcon onClick={() => {handleDeslike(likeId)}} className={likeSuccess ? 'active' : ''} />
+							<FavoriteIcon onClick={() => {handleDeslike(likeId, post.id)}} className={post.isLiked ? 'active' : ''} />
 						)}
 
 					</div>
