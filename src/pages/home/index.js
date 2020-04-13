@@ -13,7 +13,7 @@ const Home = () => {
 
 	const dispatch = useDispatch();
 	const { userData = [] } = useSelector(store => store.user);
-	const { postData = [], likeSuccess, likeId } = useSelector(store => store.post);
+	const { postData = [], likeId } = useSelector(store => store.post);
 
 	const id = localStorage.getItem('id_user_instact');
 
@@ -63,7 +63,6 @@ const Home = () => {
 					<Post postData={postData}
 						  handleLike={handleLike}
 						  handleDeslike={handleDeslike}
-						  likeSuccess={likeSuccess}
 						  likeId={likeId}
 						  verifyLike={verifyLike}
 					/>

@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ModeCommentIcon from '@material-ui/icons/ModeComment';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import SimpleInput from 'components/input/simpleInput';
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import HeartIcon from 'assets/images/heart.png';
 
-const Post = ({ postData, handleLike, handleDeslike, likeSuccess, likeId, verifyLike }) => {
+const Post = ({ postData, handleLike, handleDeslike, likeId, verifyLike }) => {
+
+	const [valueComment, setValueComment] = useState('');
+
+	const handleChangeInput = (e) => {
+		setValueComment(e.target.value);
+	};
+
 	return(
 		<>
 		{postData.map((post, index) => (
@@ -87,14 +93,7 @@ const Post = ({ postData, handleLike, handleDeslike, likeSuccess, likeId, verify
 					<span>{moment(post.created_at).fromNow()}</span>
 				</div>
 				<form>
-					<SimpleInput
-						className=""
-						type="text"
-						name="comment"
-						handleChange="handleChange"
-						value=""
-						placeholder="Adicione um comentário..."
-					/>
+					<input type="text" value={valueComment} onChange={handleChangeInput}  placeholder="Adicione um comentário..." />
 					<input type="submit" value="Publicar" disabled />
 
 				</form>
