@@ -60,12 +60,16 @@ const Home = () => {
 		<div id="wrap_principal">
 			<div className="indent">
 				<div className="posts">
-					<Post postData={postData}
-						  handleLike={handleLike}
+					{postData.map((post, index) => (
+					<Post handleLike={handleLike}
 						  handleDeslike={handleDeslike}
 						  likeId={likeId}
 						  verifyLike={verifyLike}
+						  index={index}
+						  post={post}
+						  key={post.id}
 					/>
+					))}
 				</div>
 
 				<div className="fixed">
