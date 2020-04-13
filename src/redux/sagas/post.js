@@ -38,9 +38,13 @@ function* postFetchWorker() {
 
 		postData.map((item) => {
 			const comment = [];
-			allComments.map((itemComment) => (
-				itemComment.posts_id === item.id && comment.push(itemComment)
-			));
+			allComments.map((itemComment) => {
+				if (comment.length >= 3) {
+					return false;
+				} else {
+					return itemComment.posts_id === item.id && comment.push(itemComment)
+				}
+			});
 			return item.comments = comment;
 		});
 
@@ -113,6 +117,35 @@ function* postSendDeslikeWorker(data) {
 	}
 }
 
+function* postSendCommentWorker(data) {
+	try {
+
+		const { posts_id } = data.payload;
+
+		const { postData } = yield select(store => store.post);
+		const i = findIndex(postData, { id: posts_id });
+		const updatedList = [...postData];
+
+		const commentData = data.payload;
+		const { success, comment } = yield call(Post.registerComment, commentData);
+
+		if (success === true) {
+
+			if (i !== -1) {
+				updatedList[i].qt_comments = updatedList[i].qt_comments + 1;
+				updatedList[i].comments.push(comment);
+			}
+
+			yield put(actions.postSendCommentSuccess());
+
+		}
+
+
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
 function* postSendCadastroWatcher() {
 	yield takeLatest(actions.POST_SEND_CADASTRO, postSendCadastroWorker);
 }
@@ -133,6 +166,10 @@ function* postSendDeslikeWatcher() {
 	yield takeLatest(actions.POST_SEND_DESLIKE, postSendDeslikeWorker);
 }
 
+function* postSendCommentWatcher() {
+	yield takeLatest(actions.POST_SEND_COMMENT, postSendCommentWorker);
+}
+
 function* postWatcher() {
 	yield all([
 		postSendCadastroWatcher(),
@@ -140,6 +177,7 @@ function* postWatcher() {
 		postFetchFromUserWatcher(),
 		postSendLikeWatcher(),
 		postSendDeslikeWatcher(),
+		postSendCommentWatcher(),
 	]);
 }
 

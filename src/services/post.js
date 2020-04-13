@@ -98,4 +98,22 @@ export default class post{
 			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
 		}
 	};
+
+	static registerComment = async ( data ) => {
+		try {
+			const { posts_id, comment, users_id } = data;
+
+			const response = await api.post('/comments', {posts_id, comment}, {
+				headers: {
+					'Authorization': users_id,
+				}
+			});
+
+			return { success: response.data.success, comment: response.data.comment};
+
+		} catch (err) {
+			console.log('err', err);
+			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
+		}
+	};
 }

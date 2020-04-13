@@ -14,6 +14,7 @@ const Home = () => {
 	const dispatch = useDispatch();
 	const { userData = [] } = useSelector(store => store.user);
 	const { postData = [], likeId } = useSelector(store => store.post);
+	console.log('post', postData);
 
 	const id = localStorage.getItem('id_user_instact');
 
@@ -68,6 +69,7 @@ const Home = () => {
 						  index={index}
 						  post={post}
 						  key={post.id}
+						  usersId={id}
 					/>
 					))}
 				</div>

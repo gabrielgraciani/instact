@@ -9,6 +9,8 @@ export const POST_SEND_LIKE = 'POST_SEND_LIKE';
 export const POST_SEND_LIKE_SUCCESS = 'POST_SEND_LIKE_SUCCESS';
 export const POST_SEND_DESLIKE = 'POST_SEND_DESLIKE';
 export const POST_SEND_DESLIKE_SUCCESS = 'POST_SEND_DESLIKE_SUCCESS';
+export const POST_SEND_COMMENT = 'POST_SEND_COMMENT';
+export const POST_SEND_COMMENT_SUCCESS = 'POST_SEND_COMMENT_SUCCESS';
 
 export const postSendCadastro = (payload) => ({
 	type: POST_SEND_CADASTRO,
@@ -76,4 +78,14 @@ export const postSendDeslikeSuccess = (likeSuccess, likeId) => ({
 		likeSuccess,
 		likeId
 	}
+});
+
+export const postSendComment = (payload) => ({
+	type: POST_SEND_COMMENT,
+	payload
+});
+
+export const postSendCommentSuccess = (payload) => ({
+	type: POST_SEND_COMMENT_SUCCESS,
+	payload
 });

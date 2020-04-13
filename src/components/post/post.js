@@ -3,16 +3,31 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ModeCommentIcon from '@material-ui/icons/ModeComment';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { useDispatch } from "react-redux";
+import { postSendComment } from "../../redux/actions/post";
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import HeartIcon from 'assets/images/heart.png';
 
-const Post = ({ handleLike, handleDeslike, likeId, verifyLike, index, post }) => {
+const Post = ({ handleLike, handleDeslike, likeId, verifyLike, index, post, usersId }) => {
 
 	const [valueComment, setValueComment] = useState('');
+	const dispatch = useDispatch();
 
 	const handleChangeInput = (e) => {
 		setValueComment(e.target.value);
+	};
+
+	const handleSubmitComment = (e) => {
+		e.preventDefault();
+		console.log('oi', valueComment);
+		dispatch(postSendComment({
+			posts_id: post.id,
+			comment: valueComment,
+			users_id: usersId
+		}));
+
+		setValueComment('');
 	};
 
 	return(
@@ -90,9 +105,9 @@ const Post = ({ handleLike, handleDeslike, likeId, verifyLike, index, post }) =>
 			<div className="time">
 				<span>{moment(post.created_at).fromNow()}</span>
 			</div>
-			<form>
+			<form onSubmit={handleSubmitComment}>
 				<input type="text" value={valueComment} onChange={handleChangeInput}  placeholder="Adicione um comentário..." />
-				<input type="submit" value="Publicar" disabled />
+				<input type="submit" value="Publicar" disabled={!valueComment} />
 
 			</form>
 		</div>

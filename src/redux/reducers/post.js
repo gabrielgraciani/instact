@@ -107,6 +107,18 @@ export default function postReducer(
 				likeId: payload.likeId,
 			};
 
+		case actions.POST_SEND_COMMENT:
+			return {
+				...initialState,
+				...state,
+			};
+
+		case actions.POST_SEND_COMMENT_SUCCESS:
+			return {
+				...initialState,
+				...state,
+			};
+
 		default:
 			return state;
 	}
