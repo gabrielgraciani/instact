@@ -9,7 +9,7 @@ import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import HeartIcon from 'assets/images/heart.png';
 
-const Post = ({ handleLike, handleDeslike, likeId, verifyLike, index, post, usersId }) => {
+const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId }) => {
 
 	const [valueComment, setValueComment] = useState('');
 	const dispatch = useDispatch();
@@ -46,7 +46,7 @@ const Post = ({ handleLike, handleDeslike, likeId, verifyLike, index, post, user
 				</div>
 			</div>
 			<div className="body">
-				{likeId === '' ? (
+				{post.likeId === '' ? (
 					verifyLike(index) && post.isLiked === undefined ? (
 						<>
 							<img onDoubleClick={() => {handleDeslike(verifyLike(index), post.id)}} src={`https://instact.s3.amazonaws.com/posts/${post.file}`} alt=""/>
@@ -59,7 +59,7 @@ const Post = ({ handleLike, handleDeslike, likeId, verifyLike, index, post, user
 					)
 				) : (
 					<>
-						<img onDoubleClick={() => {handleDeslike(likeId, post.id)}} src={`https://instact.s3.amazonaws.com/posts/${post.file}`} alt=""/>
+						<img onDoubleClick={() => {handleDeslike(post.likeId, post.id)}} src={`https://instact.s3.amazonaws.com/posts/${post.file}`} alt=""/>
 						<div className="heart">
 							<img src={HeartIcon} alt="like" />
 						</div>
@@ -69,15 +69,15 @@ const Post = ({ handleLike, handleDeslike, likeId, verifyLike, index, post, user
 			<div className="actions">
 				<div className="item">
 
-					{likeId === '' ? (
+					{post.likeId === '' ? (
 						verifyLike(index) && post.isLiked === undefined ? (
 							<FavoriteIcon onClick={() => {handleDeslike(verifyLike(index), post.id)}}
-										  className='active' />
+										  className='active teste1' />
 						) : (
 							<FavoriteIcon onClick={() => {handleLike(post.id)}} />
 						)
 					) : (
-						<FavoriteIcon onClick={() => {handleDeslike(likeId, post.id)}} className='active' />
+						<FavoriteIcon onClick={() => {handleDeslike(post.likeId, post.id)}} className='active teste2' />
 					)}
 
 				</div>

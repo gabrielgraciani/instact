@@ -59,12 +59,8 @@ export const postSendLike = (payload) => ({
 	payload
 });
 
-export const postSendLikeSuccess = (likeSuccess, likeId) => ({
-	type: POST_SEND_LIKE_SUCCESS,
-	payload: {
-		likeSuccess,
-		likeId
-	}
+export const postSendLikeSuccess = () => ({
+	type: POST_SEND_LIKE_SUCCESS
 });
 
 export const postSendDeslike = (payload) => ({
@@ -72,12 +68,8 @@ export const postSendDeslike = (payload) => ({
 	payload
 });
 
-export const postSendDeslikeSuccess = (likeSuccess, likeId) => ({
-	type: POST_SEND_DESLIKE_SUCCESS,
-	payload: {
-		likeSuccess,
-		likeId
-	}
+export const postSendDeslikeSuccess = () => ({
+	type: POST_SEND_DESLIKE_SUCCESS
 });
 
 export const postSendComment = (payload) => ({

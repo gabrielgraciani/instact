@@ -48,6 +48,12 @@ function* postFetchWorker() {
 			return item.comments = comment;
 		});
 
+		postData.map((item) => {
+			return item.likeId = '';
+		})
+
+
+
 		yield put(actions.postFetchSuccess(postData));
 
 	} catch (error) {
@@ -78,15 +84,18 @@ function* postSendLikeWorker(data) {
 		const i = findIndex(postData, { id: posts_id });
 		const updatedList = [...postData];
 
-		if (i !== -1) {
-			updatedList[i].isLiked = true;
-			updatedList[i].qt_likes = updatedList[i].qt_likes + 1;
-		}
-
 		const likeData = data.payload;
-		const { like_id } = yield call(Post.registerLike, likeData);
+		const { success, like_id } = yield call(Post.registerLike, likeData);
 
-		yield put(actions.postSendLikeSuccess(true, like_id));
+		if (success === true ) {
+			if (i !== -1) {
+				updatedList[i].isLiked = true;
+				updatedList[i].likeId = like_id;
+				updatedList[i].qt_likes = updatedList[i].qt_likes + 1;
+			}
+
+			yield put(actions.postSendLikeSuccess());
+		}
 
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);
@@ -102,15 +111,19 @@ function* postSendDeslikeWorker(data) {
 		const i = findIndex(postData, { id: posts_id });
 		const updatedList = [...postData];
 
-		if (i !== -1) {
-			updatedList[i].isLiked = false;
-			updatedList[i].qt_likes = updatedList[i].qt_likes - 1;
+		const like_data = data.payload;
+		const success = yield call(Post.removeLike, like_data);
+
+		if (success) {
+			if (i !== -1) {
+				updatedList[i].isLiked = false;
+				updatedList[i].likeId = '';
+				updatedList[i].qt_likes = updatedList[i].qt_likes - 1;
+			}
+
+			yield put(actions.postSendDeslikeSuccess());
 		}
 
-		const like_data = data.payload;
-		yield call(Post.removeLike, like_data);
-
-		yield put(actions.postSendDeslikeSuccess(false, ''));
 
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);
