@@ -15,6 +15,7 @@ const Home = () => {
 	const dispatch = useDispatch();
 	const { userData = [] } = useSelector(store => store.user);
 	const { postData = [] } = useSelector(store => store.post);
+	console.log('opisat', postData);
 
 	const id = localStorage.getItem('id_user_instact');
 

@@ -34,7 +34,7 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId }) =
 	};
 
 	const handleAllLikes = () => {
-		setAllLikes(true);
+		setAllLikes(!allLikes);
 	};
 
 	return(
@@ -113,13 +113,23 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId }) =
 								<h4>Curtidas</h4>
 							</div>
 							<div className="close">
-								<CloseIcon />
+								<CloseIcon onClick={handleAllLikes} />
 							</div>
 							<div className="body">
-								{post.likes.map(() => (
+								{post.likes.map((item) => (
 									<div className="item">
 										<div className="image">
+											{item.profile_image === null ? (
+												<AccountCircleIcon />
+											) : (
+												<img src={`${STORAGE_URL}users/${item.users_id}/${item.profile_image}`} alt=""/>
+											)}
 										</div>
+										<div className="user">
+											<span><strong>{item.username}</strong></span>
+											<span>{item.name}</span>
+										</div>
+										<button className="follow" type="button">Seguir</button>
 									</div>
 								))}
 							</div>

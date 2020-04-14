@@ -389,7 +389,20 @@ p{font-size:21px;}
 			h4{font-size:16px; color:#262626; font-weight:bold;}
 		}
 		.close{position:absolute; top:9px; right:10px; cursor:pointer;}
-		.body{width:100%; flex-grow:1; padding:5px 16px 0; overflow-y:scroll;}
+		.body{width:100%; flex-grow:1; padding:5px 16px 0; overflow-y:scroll;
+			.item{width:100%; display:flex; align-items:center; margin:7px 0;
+				.image{width:45px; margin:0 7px 0 0; display:flex; align-items:center;
+					img{width:45px; height:45px; max-width:100%; border-radius:50%;}
+					svg{width:45px; height:45px; max-width:100%; border-radius:50%;}
+				}
+				.user{display:flex; flex-direction:column; flex-grow:1;
+					span{font-size:14px; color:#262626; font-weight:normal;
+						&:last-child{color:#8e8e8e;}
+					}
+				}
+				.follow{width:60px; height:30px; border:0; font-weight:bold; outline:0; display:flex; align-items:center; justify-content:center; background:#0095f6; border-radius:5px; color:#fff; font-size:14px;}
+			}
+		}
 	}
 }
 
