@@ -9,10 +9,12 @@ import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import HeartIcon from 'assets/images/heart.png';
 import { STORAGE_URL } from 'configs/constants';
+import CloseIcon from '@material-ui/icons/Close';
 
 const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId }) => {
 
 	const [valueComment, setValueComment] = useState('');
+	const [allLikes, setAllLikes] = useState(false);
 	const dispatch = useDispatch();
 
 	const handleChangeInput = (e) => {
@@ -29,6 +31,10 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId }) =
 		}));
 
 		setValueComment('');
+	};
+
+	const handleAllLikes = () => {
+		setAllLikes(true);
 	};
 
 	return(
@@ -87,9 +93,40 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId }) =
 				</div>
 			</div>
 			<div className="likes">
-				<span>Curtido por <strong>
-					{post.qt_likes}
-					{post.qt_likes === 1 ? ' pessoa' : ' pessoas'}</strong></span>
+				<span>Curtido por
+					{post.qt_likes > 0 ? (
+						<strong onClick={handleAllLikes} className="pointer">
+							{post.qt_likes}
+							{post.qt_likes === 1 ? ' pessoa' : ' pessoas'}
+						</strong>
+					) : (
+						<strong>
+							{post.qt_likes}
+							{post.qt_likes === 1 ? ' pessoa' : ' pessoas'}
+						</strong>
+					)}
+				</span>
+				{allLikes && (
+					<div id="wrap_all_likes">
+						<div className="indent">
+							<div className="title">
+								<h4>Curtidas</h4>
+							</div>
+							<div className="close">
+								<CloseIcon />
+							</div>
+							<div className="body">
+								{post.likes.map(() => (
+									<div className="item">
+										<div className="image">
+										</div>
+									</div>
+								))}
+							</div>
+
+						</div>
+					</div>
+				)}
 			</div>
 			<div className="comments">
 				<span><strong>{post.username} </strong> {post.description}</span>
