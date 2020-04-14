@@ -11,6 +11,7 @@ import Config from 'components/profile/config';
 import Post from 'components/profile/post';
 import { Link } from 'react-router-dom';
 import { EDIT } from '../../routes';
+import { STORAGE_URL } from 'configs/constants';
 
 function Profile(){
 
@@ -48,7 +49,7 @@ function Profile(){
 						<div className="head">
 							<div className="img">
 								{userData.profile_image ? (
-									<img src={`https://instact.s3.amazonaws.com/users/${userData.id}/${userData.profile_image}`}
+									<img src={`${STORAGE_URL}users/${userData.id}/${userData.profile_image}`}
 										 alt={userData.name}
 									/>
 								) : (

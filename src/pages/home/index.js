@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { PROFILE } from '../../routes';
 import FooterLateral from 'components/footer/footerLateral';
 import Sugestion from 'components/sugestion/sugestion';
+import { STORAGE_URL } from 'configs/constants';
 
 const Home = () => {
 
@@ -78,7 +79,7 @@ const Home = () => {
 							{!userData.profile_image ? (
 								<AccountCircleIcon />
 							) : (
-								<img src={`https://instact.s3.amazonaws.com/users/${userData.id}/${userData.profile_image}`} alt="" />
+								<img src={`${STORAGE_URL}users/${userData.id}/${userData.profile_image}`} alt="" />
 							)}
 						</Link>
 						<div className="text">

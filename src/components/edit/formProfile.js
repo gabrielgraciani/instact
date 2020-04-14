@@ -3,6 +3,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import InputNoLabel from 'components/input/inputNoLabel';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import TextArea from 'components/textarea';
+import { STORAGE_URL } from 'configs/constants';
 
 const formProfile = ({ handleUpdate, userData, handleChange, values, isSaving, disabled, handleChangeFile, isSavingImage, errorImageSize }) => {
 	return (
@@ -13,7 +14,7 @@ const formProfile = ({ handleUpdate, userData, handleChange, values, isSaving, d
 						<CircularProgress size={30} />
 					) : (
 						userData.profile_image ? (
-							<img src={`https://instact.s3.amazonaws.com/users/${userData.id}/${userData.profile_image}`} alt={userData.name} />
+							<img src={`${STORAGE_URL}users/${userData.id}/${userData.profile_image}`} alt={userData.name} />
 						) : (
 							<AccountCircleIcon />
 						)

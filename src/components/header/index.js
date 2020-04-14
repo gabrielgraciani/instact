@@ -10,6 +10,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import FormPost from 'components/createPost/formPost';
+import { STORAGE_URL } from 'configs/constants';
 
 function Header({location}){
 
@@ -60,7 +61,7 @@ function Header({location}){
 								<CircularProgress className="loading" />
 							) : (
 								userData.profile_image ? (
-									<img src={`https://instact.s3.amazonaws.com/users/${userData.id}/${userData.profile_image}`}
+									<img src={`${STORAGE_URL}users/${userData.id}/${userData.profile_image}`}
 										 alt={userData.name}
 										 className={location.pathname === PROFILE ? 'profile active' : ''}
 									/>

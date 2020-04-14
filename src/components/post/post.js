@@ -8,6 +8,7 @@ import { postSendComment } from "../../redux/actions/post";
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import HeartIcon from 'assets/images/heart.png';
+import { STORAGE_URL } from 'configs/constants';
 
 const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId }) => {
 
@@ -37,7 +38,7 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId }) =
 					{!post.profile_image ? (
 						<AccountCircleIcon />
 					) : (
-						<img src={`https://instact.s3.amazonaws.com/users/${post.users_id}/${post.profile_image}`} alt="" />
+						<img src={`${STORAGE_URL}users/${post.users_id}/${post.profile_image}`} alt="" />
 					)}
 					<span>{post.name}</span>
 				</div>
@@ -49,17 +50,17 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId }) =
 				{post.likeId === '' ? (
 					verifyLike(index) && post.isLiked === undefined ? (
 						<>
-							<img onDoubleClick={() => {handleDeslike(verifyLike(index), post.id)}} src={`https://instact.s3.amazonaws.com/posts/${post.file}`} alt=""/>
+							<img onDoubleClick={() => {handleDeslike(verifyLike(index), post.id)}} src={`${STORAGE_URL}posts/${post.file}`} alt=""/>
 							<div className="heart">
 								<img src={HeartIcon} alt="like" />
 							</div>
 						</>
 					) : (
-						<img onDoubleClick={() => {handleLike(post.id)}} src={`https://instact.s3.amazonaws.com/posts/${post.file}`} alt=""/>
+						<img onDoubleClick={() => {handleLike(post.id)}} src={`${STORAGE_URL}posts/${post.file}`} alt=""/>
 					)
 				) : (
 					<>
-						<img onDoubleClick={() => {handleDeslike(post.likeId, post.id)}} src={`https://instact.s3.amazonaws.com/posts/${post.file}`} alt=""/>
+						<img onDoubleClick={() => {handleDeslike(post.likeId, post.id)}} src={`${STORAGE_URL}posts/${post.file}`} alt=""/>
 						<div className="heart">
 							<img src={HeartIcon} alt="like" />
 						</div>
