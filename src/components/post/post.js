@@ -38,6 +38,7 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId }) =
 	};
 
 	return(
+		<>
 		<div className="post">
 			<div className="head">
 				<div className="user">
@@ -106,39 +107,6 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId }) =
 						</strong>
 					)}
 				</span>
-				{allLikes && (
-					<div id="wrap_all_likes">
-						<div className="indent">
-							<div className="title">
-								<h4>Curtidas</h4>
-							</div>
-							<div className="close">
-								<CloseIcon onClick={handleAllLikes} />
-							</div>
-							<div className="body">
-								{post.likes.map((item) => (
-									<div className="item">
-										<div className="image">
-											{item.profile_image === null ? (
-												<AccountCircleIcon />
-											) : (
-												<img src={`${STORAGE_URL}users/${item.users_id}/${item.profile_image}`} alt=""/>
-											)}
-										</div>
-										<div className="user">
-											<span><strong>{item.username}</strong></span>
-											<span>{item.name}</span>
-										</div>
-										{item.users_id.toString() !== usersId && (
-											<button className="follow" type="button">Seguir</button>
-										)}
-									</div>
-								))}
-							</div>
-
-						</div>
-					</div>
-				)}
 			</div>
 			<div className="comments">
 				<span><strong>{post.username} </strong> {post.description}</span>
@@ -161,6 +129,41 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId }) =
 
 			</form>
 		</div>
+
+		<div id="wrap_all_likes" className={allLikes ? 'active' : ''}>
+			{allLikes && (
+					<div className="indent">
+						<div className="title">
+							<h4>Curtidas</h4>
+						</div>
+						<div className="close">
+							<CloseIcon onClick={handleAllLikes} />
+						</div>
+						<div className="body">
+							{post.likes.map((item) => (
+								<div className="item">
+									<div className="image">
+										{item.profile_image === null ? (
+											<AccountCircleIcon />
+										) : (
+											<img src={`${STORAGE_URL}users/${item.users_id}/${item.profile_image}`} alt=""/>
+										)}
+									</div>
+									<div className="user">
+										<span><strong>{item.username}</strong></span>
+										<span>{item.name}</span>
+									</div>
+									{item.users_id.toString() !== usersId && (
+										<button className="follow" type="button">Seguir</button>
+									)}
+								</div>
+							))}
+						</div>
+
+					</div>
+			)}
+		</div>
+		</>
 	)
 };
 
