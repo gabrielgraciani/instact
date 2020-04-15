@@ -73,7 +73,7 @@ export default class post{
 				}
 			});
 
-			return { success: response.data.success, like_id: response.data.like_id};
+			return { success: response.data.success, like_id: response.data.like_id, like_data: response.data.like_data};
 
 		} catch (err) {
 			console.log('err', err);

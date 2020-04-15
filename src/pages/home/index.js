@@ -10,6 +10,7 @@ import FooterLateral from 'components/footer/footerLateral';
 import Sugestion from 'components/sugestion/sugestion';
 import { STORAGE_URL } from 'configs/constants';
 import CloseIcon from "@material-ui/icons/Close";
+import Dialog from 'components/dialog/dialog';
 
 const Home = () => {
 
@@ -116,33 +117,34 @@ const Home = () => {
 			<div id="wrap_all_likes" className={allLikes ? 'active' : ''}>
 				{allLikes && (
 					<div className="indent">
-						<div className="title">
-							<h4>Curtidas</h4>
-						</div>
-						<div className="close">
-							<CloseIcon onClick={handleAllLikes} />
-						</div>
-						<div className="body">
-							{postData[indexPost].likes.map((item) => (
-								<div className="item">
-									<div className="image">
-										{item.profile_image === null ? (
-											<AccountCircleIcon />
-										) : (
-											<img src={`${STORAGE_URL}users/${item.users_id}/${item.profile_image}`} alt=""/>
+						<Dialog handleClose={() => setAllLikes(false)}>
+							<div className="title">
+								<h4>Curtidas</h4>
+							</div>
+							<div className="close">
+								<CloseIcon onClick={handleAllLikes} />
+							</div>
+							<div className="body">
+								{postData[indexPost].likes.map((item) => (
+									<div className="item" key={item.id}>
+										<div className="image">
+											{item.profile_image === null ? (
+												<AccountCircleIcon />
+											) : (
+												<img src={`${STORAGE_URL}users/${item.users_id}/${item.profile_image}`} alt=""/>
+											)}
+										</div>
+										<div className="user">
+											<span><strong>{item.username}</strong></span>
+											<span>{item.name}</span>
+										</div>
+										{item.users_id.toString() !== id && (
+											<button className="follow" type="button">Seguir</button>
 										)}
 									</div>
-									<div className="user">
-										<span><strong>{item.username}</strong></span>
-										<span>{item.name}</span>
-									</div>
-									{item.users_id.toString() !== id && (
-										<button className="follow" type="button">Seguir</button>
-									)}
-								</div>
-							))}
-						</div>
-
+								))}
+							</div>
+						</Dialog>
 					</div>
 				)}
 			</div>

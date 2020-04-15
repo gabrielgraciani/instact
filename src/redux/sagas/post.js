@@ -85,13 +85,14 @@ function* postSendLikeWorker(data) {
 		const updatedList = [...postData];
 
 		const likeData = data.payload;
-		const { success, like_id } = yield call(Post.registerLike, likeData);
+		const { success, like_id, like_data } = yield call(Post.registerLike, likeData);
 
 		if (success === true ) {
 			if (i !== -1) {
 				updatedList[i].isLiked = true;
 				updatedList[i].likeId = like_id;
 				updatedList[i].qt_likes = updatedList[i].qt_likes + 1;
+				updatedList[i].likes.push(like_data);
 			}
 
 			yield put(actions.postSendLikeSuccess());
@@ -105,11 +106,15 @@ function* postSendLikeWorker(data) {
 function* postSendDeslikeWorker(data) {
 	try {
 
-		const { posts_id } = data.payload;
+		const { posts_id, like_id } = data.payload;
 
 		const { postData } = yield select(store => store.post);
 		const i = findIndex(postData, { id: posts_id });
 		const updatedList = [...postData];
+
+		const { likes } = postData[i];
+		const j = findIndex(likes, { id: like_id });
+
 
 		const like_data = data.payload;
 		const success = yield call(Post.removeLike, like_data);
@@ -119,6 +124,7 @@ function* postSendDeslikeWorker(data) {
 				updatedList[i].isLiked = false;
 				updatedList[i].likeId = '';
 				updatedList[i].qt_likes = updatedList[i].qt_likes - 1;
+				likes.splice(j, 1);
 			}
 
 			yield put(actions.postSendDeslikeSuccess());
