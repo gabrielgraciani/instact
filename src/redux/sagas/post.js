@@ -165,6 +165,19 @@ function* postSendCommentWorker(data) {
 	}
 }
 
+function* postSendFollowWorker(data) {
+	try {
+
+		const followData = data.payload;
+		const teste = yield call(Post.registerFollow, followData);
+		console.log('teste', teste);
+
+
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
 function* postSendCadastroWatcher() {
 	yield takeLatest(actions.POST_SEND_CADASTRO, postSendCadastroWorker);
 }
@@ -189,6 +202,10 @@ function* postSendCommentWatcher() {
 	yield takeLatest(actions.POST_SEND_COMMENT, postSendCommentWorker);
 }
 
+function* postSendFollowWatcher() {
+	yield takeLatest(actions.POST_SEND_FOLLOW, postSendFollowWorker);
+}
+
 function* postWatcher() {
 	yield all([
 		postSendCadastroWatcher(),
@@ -197,6 +214,7 @@ function* postWatcher() {
 		postSendLikeWatcher(),
 		postSendDeslikeWatcher(),
 		postSendCommentWatcher(),
+		postSendFollowWatcher(),
 	]);
 }
 

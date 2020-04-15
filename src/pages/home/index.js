@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { userFetch } from "../../redux/actions/user";
-import { postFetch, postSendLike, postSendDeslike } from "../../redux/actions/post";
+import { postFetch, postSendLike, postSendDeslike, postSendFollow } from "../../redux/actions/post";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Post from 'components/post/post';
 import { Link } from 'react-router-dom';
@@ -49,6 +49,13 @@ const Home = () => {
 	const handleAllLikes = (posts_id) => {
 		setAllLikes(!allLikes);
 		setIndexPost(posts_id);
+	};
+
+	const handleSendFollow = (users_id) => {
+		dispatch(postSendFollow({
+			sent_users_id: users_id,
+			received_users_id: id,
+		}));
 	};
 
 	useEffect(() => {
@@ -116,8 +123,8 @@ const Home = () => {
 
 			<div id="wrap_all_likes" className={allLikes ? 'active' : ''}>
 				{allLikes && (
-					<div className="indent">
-						<Dialog handleClose={() => setAllLikes(false)}>
+					<Dialog handleClose={() => setAllLikes(false)}>
+						<div className="indent">
 							<div className="title">
 								<h4>Curtidas</h4>
 							</div>
@@ -139,13 +146,13 @@ const Home = () => {
 											<span>{item.name}</span>
 										</div>
 										{item.users_id.toString() !== id && (
-											<button className="follow" type="button">Seguir</button>
+											<button className="follow" onClick={() => handleSendFollow(item.users_id)} type="button">Seguir</button>
 										)}
 									</div>
 								))}
 							</div>
-						</Dialog>
-					</div>
+						</div>
+					</Dialog>
 				)}
 			</div>
 		</>

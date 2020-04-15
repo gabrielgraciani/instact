@@ -113,6 +113,18 @@ export default function postReducer(
 				...state,
 			};
 
+		case actions.POST_SEND_FOLLOW:
+			return {
+				...initialState,
+				...state,
+			};
+
+		case actions.POST_SEND_FOLLOW_SUCCESS:
+			return {
+				...initialState,
+				...state,
+			};
+
 		default:
 			return state;
 	}

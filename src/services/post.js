@@ -116,4 +116,20 @@ export default class post{
 			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
 		}
 	};
+
+	static registerFollow = async (data) => {
+		try{
+
+			const { sent_users_id, received_users_id } = data;
+
+			const response = await api.post(`/follows/${sent_users_id}&${received_users_id}`);
+			console.log('response', response);
+
+			return response.data;
+
+		} catch (err) {
+			console.log('err', err.response);
+			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
+		}
+	};
 }
