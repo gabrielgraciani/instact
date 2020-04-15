@@ -129,7 +129,9 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId }) =
 											<span><strong>{item.username}</strong></span>
 											<span>{item.name}</span>
 										</div>
-										<button className="follow" type="button">Seguir</button>
+										{item.users_id.toString() !== usersId && (
+											<button className="follow" type="button">Seguir</button>
+										)}
 									</div>
 								))}
 							</div>
