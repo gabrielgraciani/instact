@@ -9,12 +9,10 @@ import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import HeartIcon from 'assets/images/heart.png';
 import { STORAGE_URL } from 'configs/constants';
-import CloseIcon from '@material-ui/icons/Close';
 
-const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId }) => {
+const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, handleAllLikes }) => {
 
 	const [valueComment, setValueComment] = useState('');
-	const [allLikes, setAllLikes] = useState(false);
 	const dispatch = useDispatch();
 
 	const handleChangeInput = (e) => {
@@ -31,10 +29,6 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId }) =
 		}));
 
 		setValueComment('');
-	};
-
-	const handleAllLikes = () => {
-		setAllLikes(!allLikes);
 	};
 
 	return(
@@ -96,7 +90,7 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId }) =
 			<div className="likes">
 				<span>Curtido por
 					{post.qt_likes > 0 ? (
-						<strong onClick={handleAllLikes} className="pointer">
+						<strong onClick={() => handleAllLikes(index)} className="pointer">
 							{post.qt_likes}
 							{post.qt_likes === 1 ? ' pessoa' : ' pessoas'}
 						</strong>
@@ -128,40 +122,6 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId }) =
 				<input type="submit" value="Publicar" disabled={!valueComment} />
 
 			</form>
-		</div>
-
-		<div id="wrap_all_likes" className={allLikes ? 'active' : ''}>
-			{allLikes && (
-					<div className="indent">
-						<div className="title">
-							<h4>Curtidas</h4>
-						</div>
-						<div className="close">
-							<CloseIcon onClick={handleAllLikes} />
-						</div>
-						<div className="body">
-							{post.likes.map((item) => (
-								<div className="item">
-									<div className="image">
-										{item.profile_image === null ? (
-											<AccountCircleIcon />
-										) : (
-											<img src={`${STORAGE_URL}users/${item.users_id}/${item.profile_image}`} alt=""/>
-										)}
-									</div>
-									<div className="user">
-										<span><strong>{item.username}</strong></span>
-										<span>{item.name}</span>
-									</div>
-									{item.users_id.toString() !== usersId && (
-										<button className="follow" type="button">Seguir</button>
-									)}
-								</div>
-							))}
-						</div>
-
-					</div>
-			)}
 		</div>
 		</>
 	)

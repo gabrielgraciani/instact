@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { API_URL } from 'configs/constants';
 
 const api = axios.create({
-	baseURL: 'https://instact.herokuapp.com'
+	baseURL: API_URL
 });
 
 export default api;
