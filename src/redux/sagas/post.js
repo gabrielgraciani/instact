@@ -22,11 +22,14 @@ function* postSendCadastroWorker(data) {
 	}
 }
 
-function* postFetchWorker() {
+function* postFetchWorker(data) {
 	try {
+		const userLoggedId = data.payload;
+
 		const postData = yield call(Post.getPosts);
 		const allLikes = yield call(Post.getAllLikes);
 		const allComments = yield call(Post.getAllComments);
+		const allFollows = yield call(Post.getAllFollows, userLoggedId);
 
 		postData.map((item) => {
 			const teste = [];
@@ -50,11 +53,9 @@ function* postFetchWorker() {
 
 		postData.map((item) => {
 			return item.likeId = '';
-		})
+		});
 
-
-
-		yield put(actions.postFetchSuccess(postData));
+		yield put(actions.postFetchSuccess(postData, allFollows));
 
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);
@@ -168,9 +169,16 @@ function* postSendCommentWorker(data) {
 function* postSendFollowWorker(data) {
 	try {
 
+		const { allFollowsUserLogged } = yield select(store => store.post);
+
 		const followData = data.payload;
-		const teste = yield call(Post.registerFollow, followData);
-		console.log('teste', teste);
+		const { success, follow_data } = yield call(Post.registerFollow, followData);
+
+		if (success === true) {
+			allFollowsUserLogged.push(follow_data);
+		}
+
+		yield put(actions.postSendFollowSuccess(allFollowsUserLogged));
 
 
 	} catch (error) {

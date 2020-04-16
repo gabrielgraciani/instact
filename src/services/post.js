@@ -63,6 +63,17 @@ export default class post{
 		}
 	};
 
+	static getAllFollows = async (userLoggedId) => {
+		try{
+			const response = await api.get(`/follows/${userLoggedId}`);
+
+			return response.data;
+
+		} catch (err) {
+			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
+		}
+	};
+
 	static registerLike = async ( data ) => {
 		try {
 			const { posts_id, users_id } = data;
@@ -123,9 +134,8 @@ export default class post{
 			const { sent_users_id, received_users_id } = data;
 
 			const response = await api.post(`/follows/${sent_users_id}&${received_users_id}`);
-			console.log('response', response);
 
-			return response.data;
+			return { success: response.data.success, follow_data: response.data.follow_data };
 
 		} catch (err) {
 			console.log('err', err.response);

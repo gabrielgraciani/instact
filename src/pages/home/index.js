@@ -11,12 +11,13 @@ import Sugestion from 'components/sugestion/sugestion';
 import { STORAGE_URL } from 'configs/constants';
 import CloseIcon from "@material-ui/icons/Close";
 import Dialog from 'components/dialog/dialog';
+import FollowButton from 'components/followButton/followButton';
 
 const Home = () => {
 
 	const dispatch = useDispatch();
 	const { userData = [] } = useSelector(store => store.user);
-	const { postData = [] } = useSelector(store => store.post);
+	const { postData = [], allFollowsUserLogged = [] } = useSelector(store => store.post);
 	const [allLikes, setAllLikes] = useState(false);
 	const [indexPost, setIndexPost] = useState('');
 
@@ -66,8 +67,8 @@ const Home = () => {
 	}, [id, dispatch, userData]);
 
 	useEffect(() => {
-		dispatch(postFetch());
-	}, [dispatch]);
+		dispatch(postFetch(id));
+	}, [dispatch, id]);
 
 	useEffect(() => {
 		document.title = 'Instact - Instagram clone';
@@ -146,7 +147,10 @@ const Home = () => {
 											<span>{item.name}</span>
 										</div>
 										{item.users_id.toString() !== id && (
-											<button className="follow" onClick={() => handleSendFollow(item.users_id)} type="button">Seguir</button>
+											<FollowButton
+												handleSendFollow={handleSendFollow}
+												users_id={item.users_id}
+												allFollowsUserLogged={allFollowsUserLogged} />
 										)}
 									</div>
 								))}

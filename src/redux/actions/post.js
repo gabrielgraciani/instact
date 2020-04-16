@@ -33,14 +33,16 @@ export const postUpdateList = (postAdd) => ({
 	}
 });
 
-export const postFetch = () => ({
-	type: POST_FETCH
+export const postFetch = (payload) => ({
+	type: POST_FETCH,
+	payload
 });
 
-export const postFetchSuccess = (postData) => ({
+export const postFetchSuccess = (postData, allFollowsUserLogged) => ({
 	type: POST_FETCH_SUCCESS,
 	payload: {
-		postData
+		postData,
+		allFollowsUserLogged
 	}
 });
 
@@ -89,7 +91,9 @@ export const postSendFollow = (payload) => ({
 	payload
 });
 
-export const postSendFollowSuccess = (payload) => ({
+export const postSendFollowSuccess = (allFollowsUserLogged) => ({
 	type: POST_SEND_FOLLOW_SUCCESS,
-	payload
+	payload: {
+		allFollowsUserLogged
+	}
 });

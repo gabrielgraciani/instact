@@ -10,6 +10,7 @@ export const initialState = {
 	userPosts: [],
 	postAdd: [],
 	allComments: [],
+	allFollowsUserLogged: [],
 };
 
 
@@ -55,7 +56,8 @@ export default function postReducer(
 				...initialState,
 				...state,
 				loading: false,
-				postData: payload.postData
+				postData: payload.postData,
+				allFollowsUserLogged: payload.allFollowsUserLogged
 			};
 
 		case actions.POST_FETCH_FROM_USER:
@@ -123,6 +125,7 @@ export default function postReducer(
 			return {
 				...initialState,
 				...state,
+				allFollowsUserLogged: payload.allFollowsUserLogged
 			};
 
 		default:
