@@ -150,7 +150,10 @@ const Home = () => {
 											<FollowButton
 												handleSendFollow={handleSendFollow}
 												users_id={item.users_id}
-												allFollowsUserLogged={allFollowsUserLogged} />
+												allFollowsUserLogged={allFollowsUserLogged}
+												profile_image={item.profile_image}
+												username={item.username}
+											/>
 										)}
 									</div>
 								))}
