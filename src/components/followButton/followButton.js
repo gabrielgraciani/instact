@@ -4,7 +4,7 @@ import { STORAGE_URL } from 'configs/constants';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Dialog from 'components/dialog/dialog';
 
-const FollowButton = ({ handleSendFollow, users_id, allFollowsUserLogged, profile_image, username }) => {
+const FollowButton = ({ handleSendFollow, users_id, allFollowsUserLogged, profile_image, username, handleSendUnfollow }) => {
 
 	const [checkUserFollow, setCheckUserFollow] = useState(-1);
 	const [unfollowBox, setUnfollowBox] = useState(false);
@@ -42,7 +42,7 @@ const FollowButton = ({ handleSendFollow, users_id, allFollowsUserLogged, profil
 
 						<span>Se mudar de ideia, você terá de pedir para seguir @{username} novamente.</span>
 
-						<button type="button" className="red">Deixar de seguir</button>
+						<button type="button" onClick={() => {handleSendUnfollow(users_id); setUnfollowBox(false)}} className="red">Deixar de seguir</button>
 						<button type="button" onClick={() => setUnfollowBox(false)}>Cancelar</button>
 					</div>
 				</Dialog>

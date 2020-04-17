@@ -1,5 +1,5 @@
 import { takeLatest, all, put, call, delay, select } from 'redux-saga/effects';
-import { findIndex } from 'lodash';
+import { findIndex, filter } from 'lodash';
 
 import * as actions from '../actions/post';
 import Post from '../../services/post';
@@ -186,6 +186,27 @@ function* postSendFollowWorker(data) {
 	}
 }
 
+function* postSendUnfollowWorker(data) {
+	try {
+
+		const { sent_users_id, received_users_id } = data.payload;
+
+		const { allFollowsUserLogged } = yield select(store => store.post);
+		const i = findIndex(allFollowsUserLogged, { sent_users_id, received_users_id });
+
+		const unfollowData = data.payload;
+		const success = yield call(Post.registerUnfollow, unfollowData);
+
+		if(success === true){
+			allFollowsUserLogged.splice(i, 1);
+			yield put(actions.postSendUnfollowSuccess());
+		}
+
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
 function* postSendCadastroWatcher() {
 	yield takeLatest(actions.POST_SEND_CADASTRO, postSendCadastroWorker);
 }
@@ -214,6 +235,10 @@ function* postSendFollowWatcher() {
 	yield takeLatest(actions.POST_SEND_FOLLOW, postSendFollowWorker);
 }
 
+function* postSendUnfollowWatcher() {
+	yield takeLatest(actions.POST_SEND_UNFOLLOW, postSendUnfollowWorker);
+}
+
 function* postWatcher() {
 	yield all([
 		postSendCadastroWatcher(),
@@ -223,6 +248,7 @@ function* postWatcher() {
 		postSendDeslikeWatcher(),
 		postSendCommentWatcher(),
 		postSendFollowWatcher(),
+		postSendUnfollowWatcher(),
 	]);
 }
 

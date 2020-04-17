@@ -13,6 +13,8 @@ export const POST_SEND_COMMENT = 'POST_SEND_COMMENT';
 export const POST_SEND_COMMENT_SUCCESS = 'POST_SEND_COMMENT_SUCCESS';
 export const POST_SEND_FOLLOW = 'POST_SEND_FOLLOW';
 export const POST_SEND_FOLLOW_SUCCESS = 'POST_SEND_FOLLOW_SUCCESS';
+export const POST_SEND_UNFOLLOW = 'POST_SEND_UNFOLLOW';
+export const POST_SEND_UNFOLLOW_SUCCESS = 'POST_SEND_UNFOLLOW_SUCCESS';
 
 export const postSendCadastro = (payload) => ({
 	type: POST_SEND_CADASTRO,
@@ -96,4 +98,13 @@ export const postSendFollowSuccess = (allFollowsUserLogged) => ({
 	payload: {
 		allFollowsUserLogged
 	}
+});
+
+export const postSendUnfollow = (payload) => ({
+	type: POST_SEND_UNFOLLOW,
+	payload
+});
+
+export const postSendUnfollowSuccess = () => ({
+	type: POST_SEND_UNFOLLOW_SUCCESS,
 });

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { userFetch } from "../../redux/actions/user";
-import { postFetch, postSendLike, postSendDeslike, postSendFollow } from "../../redux/actions/post";
+import { postFetch, postSendLike, postSendDeslike, postSendFollow, postSendUnfollow } from "../../redux/actions/post";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Post from 'components/post/post';
 import { Link } from 'react-router-dom';
@@ -55,7 +55,14 @@ const Home = () => {
 	const handleSendFollow = (users_id) => {
 		dispatch(postSendFollow({
 			sent_users_id: users_id,
-			received_users_id: id,
+			received_users_id: id
+		}));
+	};
+
+	const handleSendUnfollow = (users_id) => {
+		dispatch(postSendUnfollow({
+			sent_users_id: users_id,
+			received_users_id: parseInt(id)
 		}));
 	};
 
@@ -153,6 +160,7 @@ const Home = () => {
 												allFollowsUserLogged={allFollowsUserLogged}
 												profile_image={item.profile_image}
 												username={item.username}
+												handleSendUnfollow={handleSendUnfollow}
 											/>
 										)}
 									</div>

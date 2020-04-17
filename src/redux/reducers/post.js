@@ -128,6 +128,18 @@ export default function postReducer(
 				allFollowsUserLogged: payload.allFollowsUserLogged
 			};
 
+		case actions.POST_SEND_UNFOLLOW:
+			return {
+				...initialState,
+				...state,
+			};
+
+		case actions.POST_SEND_UNFOLLOW_SUCCESS:
+			return {
+				...initialState,
+				...state,
+			};
+
 		default:
 			return state;
 	}

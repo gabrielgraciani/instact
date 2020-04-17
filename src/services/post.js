@@ -142,4 +142,19 @@ export default class post{
 			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
 		}
 	};
+
+	static registerUnfollow = async (data) => {
+		try{
+
+			const { sent_users_id, received_users_id } = data;
+
+			const response = await api.delete(`/follows/${sent_users_id}&${received_users_id}`);
+
+			return response.data.success;
+
+		} catch (err) {
+			console.log('err', err.response);
+			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
+		}
+	};
 }
