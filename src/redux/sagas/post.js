@@ -1,5 +1,5 @@
 import { takeLatest, all, put, call, delay, select } from 'redux-saga/effects';
-import { findIndex, filter } from 'lodash';
+import { findIndex } from 'lodash';
 
 import * as actions from '../actions/post';
 import Post from '../../services/post';

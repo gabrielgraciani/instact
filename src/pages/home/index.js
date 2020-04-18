@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { userFetch } from "../../redux/actions/user";
 import { postFetch, postSendLike, postSendDeslike, postSendFollow, postSendUnfollow } from "../../redux/actions/post";
+import { globalFetchSugestions } from "../../redux/actions/global";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Post from 'components/post/post';
 import { Link } from 'react-router-dom';
@@ -18,6 +19,7 @@ const Home = () => {
 	const dispatch = useDispatch();
 	const { userData = [] } = useSelector(store => store.user);
 	const { postData = [], allFollowsUserLogged = [], isFollowing, isUnfollowing } = useSelector(store => store.post);
+	const { sugestions = [] } = useSelector(store => store.global);
 	const [allLikes, setAllLikes] = useState(false);
 	const [indexPost, setIndexPost] = useState('');
 
@@ -75,6 +77,7 @@ const Home = () => {
 
 	useEffect(() => {
 		dispatch(postFetch(id));
+		dispatch(globalFetchSugestions(id));
 	}, [dispatch, id]);
 
 	useEffect(() => {
@@ -118,7 +121,7 @@ const Home = () => {
 								<h4>Sugestões para você</h4>
 							</div>
 							<div className="body">
-								<Sugestion />
+								<Sugestion sugestions={sugestions} />
 							</div>
 						</div>
 
