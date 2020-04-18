@@ -8,7 +8,6 @@ import Post from 'components/post/post';
 import { Link } from 'react-router-dom';
 import { PROFILE } from '../../routes';
 import FooterLateral from 'components/footer/footerLateral';
-import Sugestion from 'components/sugestion/sugestion';
 import { STORAGE_URL } from 'configs/constants';
 import CloseIcon from "@material-ui/icons/Close";
 import Dialog from 'components/dialog/dialog';
@@ -23,6 +22,7 @@ const Home = () => {
 	const [allLikes, setAllLikes] = useState(false);
 	const [indexPost, setIndexPost] = useState('');
 
+	console.log('sugestions', sugestions);
 	const id = localStorage.getItem('id_user_instact');
 
 	const verifyLike = (index) => {
@@ -121,7 +121,34 @@ const Home = () => {
 								<h4>Sugestões para você</h4>
 							</div>
 							<div className="body">
-								<Sugestion sugestions={sugestions} />
+								{sugestions.map((item) => (
+								<div className="item" key={item.id}>
+									<div className="imagem">
+										{!item.profile_image ? (
+											<AccountCircleIcon />
+										) : (
+											<img src={`${STORAGE_URL}users/${item.id}/${item.profile_image}`} alt="" />
+										)}
+									</div>
+									<div className="text">
+										<span><strong>{item.username}</strong></span>
+										<span className="small">{item.name}</span>
+									</div>
+									<div className="follow">
+										{/*<button className="following">Seguindo</button>*/}
+										<FollowButton
+											handleSendFollow={handleSendFollow}
+											users_id={item.id}
+											allFollowsUserLogged={allFollowsUserLogged}
+											profile_image={item.profile_image}
+											username={item.username}
+											handleSendUnfollow={handleSendUnfollow}
+											isFollowing={isFollowing}
+											isUnfollowing={isUnfollowing}
+										/>
+									</div>
+								</div>
+								))}
 							</div>
 						</div>
 

@@ -364,7 +364,11 @@ p{font-size:21px;}
 							}
 						}
 						.follow{display:flex; align-items:center;
-							span{color:#0095f6; font-size:13px; font-weight:bold;}
+							button{color:#0095f6; font-size:13px; font-weight:bold; border:0; outline:0; background:transparent; cursor:pointer;
+								&.unfollow{color:#262626;}
+								&.red{color:#ed4956; font-weight:bold;}
+							}
+							.size{width:20px !important; height:20px !important;}
 						}
 					}
 				}
