@@ -3,8 +3,18 @@ import { findIndex } from 'lodash';
 import { STORAGE_URL } from 'configs/constants';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Dialog from 'components/dialog/dialog';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const FollowButton = ({ handleSendFollow, users_id, allFollowsUserLogged, profile_image, username, handleSendUnfollow }) => {
+const FollowButton = ({
+	  handleSendFollow,
+	  users_id,
+	  allFollowsUserLogged,
+	  profile_image,
+	  username,
+	  handleSendUnfollow,
+	  isFollowing,
+	  isUnfollowing
+}) => {
 
 	const [checkUserFollow, setCheckUserFollow] = useState(-1);
 	const [unfollowBox, setUnfollowBox] = useState(false);
@@ -25,10 +35,22 @@ const FollowButton = ({ handleSendFollow, users_id, allFollowsUserLogged, profil
 	return(
 		<>
 		{(checkUserFollow !== -1) && (
-			<button className="unfollow" onClick={handleOpenUnfollowBox} type="button">Seguindo</button>
+			isUnfollowing ? (
+				<div className="loading">
+					<CircularProgress className="size" />
+				</div>
+			) : (
+				<button className="unfollow" onClick={handleOpenUnfollowBox} type="button">Seguindo</button>
+			)
 		)}
 		{checkUserFollow === -1 && (
-			<button className="follow" onClick={() => handleSendFollow(users_id)} type="button">Seguir</button>
+			isFollowing ? (
+				<div className="loading following">
+					<CircularProgress className="size" />
+				</div>
+			) : (
+					<button className="follow" onClick={() => handleSendFollow(users_id)} type="button">Seguir</button>
+				)
 		)}
 		{unfollowBox && (
 			<div id="wrap_box_unfollow">

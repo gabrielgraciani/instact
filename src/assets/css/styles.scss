@@ -405,6 +405,12 @@ p{font-size:21px;}
 				.follow{width:60px; height:30px; cursor:pointer; border:0; font-weight:bold; outline:0; display:flex; align-items:center; justify-content:center; background:#0095f6; border-radius:5px; color:#fff; font-size:14px;}
 				.unfollow{width:80px; height:30px; cursor:pointer; border:1px solid #dbdbdb; font-weight:bold; outline:0; display:flex; align-items:center; justify-content:center; background:transparent; border-radius:5px; color:#262626; font-size:14px;}
 			}
+			.loading{width:80px; height:30px; display:flex; align-items:center; justify-content:center; border:1px solid #dbdbdb; border-radius:5px;
+				&.following{width:60px; background:#0095f6;
+					svg{color:#fff;}
+				}
+				.size{width:20px !important; height:20px !important;}
+			}
 		}
 	}
 }

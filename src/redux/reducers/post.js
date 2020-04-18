@@ -11,6 +11,8 @@ export const initialState = {
 	postAdd: [],
 	allComments: [],
 	allFollowsUserLogged: [],
+	isFollowing: false,
+	isUnfollowing: false,
 };
 
 
@@ -119,25 +121,29 @@ export default function postReducer(
 			return {
 				...initialState,
 				...state,
+				isFollowing: true,
 			};
 
 		case actions.POST_SEND_FOLLOW_SUCCESS:
 			return {
 				...initialState,
 				...state,
-				allFollowsUserLogged: payload.allFollowsUserLogged
+				allFollowsUserLogged: payload.allFollowsUserLogged,
+				isFollowing: false,
 			};
 
 		case actions.POST_SEND_UNFOLLOW:
 			return {
 				...initialState,
 				...state,
+				isUnfollowing: true,
 			};
 
 		case actions.POST_SEND_UNFOLLOW_SUCCESS:
 			return {
 				...initialState,
 				...state,
+				isUnfollowing: false
 			};
 
 		default:

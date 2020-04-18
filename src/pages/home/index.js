@@ -17,7 +17,7 @@ const Home = () => {
 
 	const dispatch = useDispatch();
 	const { userData = [] } = useSelector(store => store.user);
-	const { postData = [], allFollowsUserLogged = [] } = useSelector(store => store.post);
+	const { postData = [], allFollowsUserLogged = [], isFollowing, isUnfollowing } = useSelector(store => store.post);
 	const [allLikes, setAllLikes] = useState(false);
 	const [indexPost, setIndexPost] = useState('');
 
@@ -161,6 +161,8 @@ const Home = () => {
 												profile_image={item.profile_image}
 												username={item.username}
 												handleSendUnfollow={handleSendUnfollow}
+												isFollowing={isFollowing}
+												isUnfollowing={isUnfollowing}
 											/>
 										)}
 									</div>
