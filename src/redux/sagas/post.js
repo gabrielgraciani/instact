@@ -25,7 +25,7 @@ function* postSendCadastroWorker(data) {
 function* postFetchWorker(data) {
 	try {
 		const { id, page } = data.payload;
-		console.log('data', data.payload);
+		console.log('chegou a');
 
 		const postData = yield call(Post.getPosts, page);
 		const allLikes = yield call(Post.getAllLikes);
@@ -56,7 +56,11 @@ function* postFetchWorker(data) {
 			return item.likeId = '';
 		});
 
-		yield put(actions.postFetchSuccess(postData, allFollows));
+
+		let end = false;
+		if(postData.length === 0 ) end = true;
+
+		yield put(actions.postFetchSuccess(postData, allFollows, end));
 
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);

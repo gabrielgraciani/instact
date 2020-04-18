@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { userFetch } from "../../redux/actions/user";
 import { postFetch, postSendLike, postSendDeslike, postSendFollow, postSendUnfollow } from "../../redux/actions/post";
@@ -12,12 +12,13 @@ import { STORAGE_URL } from 'configs/constants';
 import CloseIcon from "@material-ui/icons/Close";
 import Dialog from 'components/dialog/dialog';
 import FollowButton from 'components/followButton/followButton';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const Home = () => {
 
 	const dispatch = useDispatch();
 	const { userData = [] } = useSelector(store => store.user);
-	const { postData = [], allFollowsUserLogged = [], isFollowing, isUnfollowing } = useSelector(store => store.post);
+	const { postData = [], allFollowsUserLogged = [], isFollowing, isUnfollowing, end, isLoading } = useSelector(store => store.post);
 	const { sugestions = [] } = useSelector(store => store.global);
 	const [allLikes, setAllLikes] = useState(false);
 	const [indexPost, setIndexPost] = useState('');
@@ -71,12 +72,24 @@ const Home = () => {
 	useEffect(() => {
 		document.title = 'Instact - Instagram clone';
 		dispatch(userFetch(id));
-		dispatch(postFetch({
-			id : parseInt(id),
-			page
-		}));
+		if(!end) {
+			dispatch(postFetch({
+				id : parseInt(id),
+				page
+			}));
+		}
 		dispatch(globalFetchSugestions(id));
-	}, [dispatch, id, page]);
+	}, [dispatch, id, page, end]);
+
+	const handleScroll = useCallback(() => {
+		if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
+		setPage(page + 1);
+	}, [page]);
+
+	useEffect(() => {
+		window.addEventListener('scroll', handleScroll);
+		return () => window.removeEventListener('scroll', handleScroll);
+	}, [handleScroll]);
 
 	return(
 		<>
@@ -145,12 +158,26 @@ const Home = () => {
 								))}
 							</div>
 						</div>
-
 						<FooterLateral />
-
 					</div>
-
 				</div>
+
+				{isLoading && (
+					<div className="loading">
+						<CircularProgress />
+					</div>
+				)}
+
+				{end && (
+					<div className="indent">
+						<div className="no-posts">
+							<span>Não há mais Publicações, aumente sua lista de seguidores!!</span>
+						</div>
+					</div>
+				)}
+
+
+
 			</div>
 
 			<div id="wrap_all_likes" className={allLikes ? 'active' : ''}>

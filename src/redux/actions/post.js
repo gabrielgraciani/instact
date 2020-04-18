@@ -40,11 +40,12 @@ export const postFetch = (payload) => ({
 	payload
 });
 
-export const postFetchSuccess = (postData, allFollowsUserLogged) => ({
+export const postFetchSuccess = (postData, allFollowsUserLogged, end) => ({
 	type: POST_FETCH_SUCCESS,
 	payload: {
 		postData,
-		allFollowsUserLogged
+		allFollowsUserLogged,
+		end
 	}
 });
 

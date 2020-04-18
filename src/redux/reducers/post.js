@@ -13,6 +13,8 @@ export const initialState = {
 	allFollowsUserLogged: [],
 	isFollowing: false,
 	isUnfollowing: false,
+	end: false,
+	isLoading: false,
 };
 
 
@@ -50,16 +52,18 @@ export default function postReducer(
 			return {
 				...initialState,
 				...state,
-				loading: true,
+				isLoading: true,
 			};
 
 		case actions.POST_FETCH_SUCCESS:
 			return {
 				...initialState,
 				...state,
-				loading: false,
-				postData: payload.postData,
-				allFollowsUserLogged: payload.allFollowsUserLogged
+				postData: [...state.postData,
+					...payload.postData],
+				allFollowsUserLogged: payload.allFollowsUserLogged,
+				end: payload.end,
+				isLoading: false,
 			};
 
 		case actions.POST_FETCH_FROM_USER:
