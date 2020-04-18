@@ -19,9 +19,11 @@ export default class post{
 		}
 	};
 
-	static getPosts = async () => {
+	static getPosts = async (page) => {
 		try{
-			const response = await api.get(`/posts`);
+			const response = await api.get(`/posts`, {
+				params: { page }
+			});
 
 			return response.data;
 

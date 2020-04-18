@@ -21,8 +21,8 @@ const Home = () => {
 	const { sugestions = [] } = useSelector(store => store.global);
 	const [allLikes, setAllLikes] = useState(false);
 	const [indexPost, setIndexPost] = useState('');
+	const [page, setPage] = useState(1);
 
-	console.log('sugestions', sugestions);
 	const id = localStorage.getItem('id_user_instact');
 
 	const verifyLike = (index) => {
@@ -69,20 +69,14 @@ const Home = () => {
 	};
 
 	useEffect(() => {
-		if(userData.length === 0){
-			dispatch(userFetch(id));
-		}
-
-	}, [id, dispatch, userData]);
-
-	useEffect(() => {
-		dispatch(postFetch(id));
-		dispatch(globalFetchSugestions(id));
-	}, [dispatch, id]);
-
-	useEffect(() => {
 		document.title = 'Instact - Instagram clone';
-	}, []);
+		dispatch(userFetch(id));
+		dispatch(postFetch({
+			id : parseInt(id),
+			page
+		}));
+		dispatch(globalFetchSugestions(id));
+	}, [dispatch, id, page]);
 
 	return(
 		<>

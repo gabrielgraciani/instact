@@ -24,12 +24,13 @@ function* postSendCadastroWorker(data) {
 
 function* postFetchWorker(data) {
 	try {
-		const userLoggedId = data.payload;
+		const { id, page } = data.payload;
+		console.log('data', data.payload);
 
-		const postData = yield call(Post.getPosts);
+		const postData = yield call(Post.getPosts, page);
 		const allLikes = yield call(Post.getAllLikes);
 		const allComments = yield call(Post.getAllComments);
-		const allFollows = yield call(Post.getAllFollows, userLoggedId);
+		const allFollows = yield call(Post.getAllFollows, id);
 
 		postData.map((item) => {
 			const teste = [];
