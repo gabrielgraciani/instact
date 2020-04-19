@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { userFetch } from "../../redux/actions/user";
-import { postFetch, postSendLike, postSendDeslike, postSendFollow, postSendUnfollow } from "../../redux/actions/post";
+import { postFetch, postFetchMore, postSendLike, postSendDeslike, postSendFollow, postSendUnfollow } from "../../redux/actions/post";
 import { globalFetchSugestions } from "../../redux/actions/global";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Post from 'components/post/post';
@@ -72,19 +72,23 @@ const Home = () => {
 	useEffect(() => {
 		document.title = 'Instact - Instagram clone';
 		dispatch(userFetch(id));
-		if(!end) {
-			dispatch(postFetch({
-				id : parseInt(id),
-				page
-			}));
-		}
+		dispatch(postFetch({
+			id : parseInt(id),
+			page: 1
+		}));
 		dispatch(globalFetchSugestions(id));
-	}, [dispatch, id, page, end]);
+	}, [dispatch, id]);
 
 	const handleScroll = useCallback(() => {
 		if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
 		setPage(page + 1);
-	}, [page]);
+		if(!end) {
+			dispatch(postFetchMore({
+				id : parseInt(id),
+				page: page + 1
+			}));
+		}
+	}, [page, dispatch, end, id]);
 
 	useEffect(() => {
 		window.addEventListener('scroll', handleScroll);

@@ -59,6 +59,23 @@ export default function postReducer(
 			return {
 				...initialState,
 				...state,
+				postData: payload.postData,
+				allFollowsUserLogged: payload.allFollowsUserLogged,
+				end: payload.end,
+				isLoading: false,
+			};
+
+		case actions.POST_FETCH_MORE:
+			return {
+				...initialState,
+				...state,
+				isLoading: true,
+			};
+
+		case actions.POST_FETCH_MORE_SUCCESS:
+			return {
+				...initialState,
+				...state,
 				postData: [...state.postData,
 					...payload.postData],
 				allFollowsUserLogged: payload.allFollowsUserLogged,

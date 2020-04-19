@@ -56,10 +56,51 @@ function* postFetchWorker(data) {
 		});
 
 
+		yield put(actions.postFetchSuccess(postData, allFollows, false));
+
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
+function* postFetchMoreWorker(data) {
+	try {
+		const { id, page } = data.payload;
+
+		const postData = yield call(Post.getPosts, page);
+		const allLikes = yield call(Post.getAllLikes);
+		const allComments = yield call(Post.getAllComments);
+		const allFollows = yield call(Post.getAllFollows, id);
+
+		postData.map((item) => {
+			const teste = [];
+			allLikes.map((itemLike) => (
+				itemLike.posts_id === item.id && teste.push(itemLike)
+			));
+			return item.likes = teste;
+		});
+
+		postData.map((item) => {
+			const comment = [];
+			allComments.map((itemComment) => {
+				if (comment.length >= 3) {
+					return false;
+				} else {
+					return itemComment.posts_id === item.id && comment.push(itemComment)
+				}
+			});
+			return item.comments = comment;
+		});
+
+		postData.map((item) => {
+			return item.likeId = '';
+		});
+
+
 		let end = false;
 		if(postData.length === 0 ) end = true;
 
-		yield put(actions.postFetchSuccess(postData, allFollows, end));
+		yield put(actions.postFetchMoreSuccess(postData, allFollows, end));
 
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);
@@ -219,6 +260,10 @@ function* postFetchWatcher() {
 	yield takeLatest(actions.POST_FETCH, postFetchWorker);
 }
 
+function* postFetchMoreWatcher() {
+	yield takeLatest(actions.POST_FETCH_MORE, postFetchMoreWorker);
+}
+
 function* postFetchFromUserWatcher() {
 	yield takeLatest(actions.POST_FETCH_FROM_USER, postFetchFromUserWorker);
 }
@@ -247,6 +292,7 @@ function* postWatcher() {
 	yield all([
 		postSendCadastroWatcher(),
 		postFetchWatcher(),
+		postFetchMoreWatcher(),
 		postFetchFromUserWatcher(),
 		postSendLikeWatcher(),
 		postSendDeslikeWatcher(),
