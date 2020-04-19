@@ -9,6 +9,8 @@ import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import HeartIcon from 'assets/images/heart.png';
 import { STORAGE_URL } from 'configs/constants';
+import { Link } from 'react-router-dom';
+import { SINGLE_POST } from '../../routes';
 
 const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, handleAllLikes }) => {
 
@@ -70,7 +72,6 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 			</div>
 			<div className="actions">
 				<div className="item">
-
 					{post.likeId === '' ? (
 						verifyLike(index) && post.isLiked === undefined ? (
 							<FavoriteIcon onClick={() => {handleDeslike(verifyLike(index), post.id)}}
@@ -81,10 +82,11 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 					) : (
 						<FavoriteIcon onClick={() => {handleDeslike(post.likeId, post.id)}} className='active teste2' />
 					)}
-
 				</div>
 				<div className="item">
-					<ModeCommentIcon />
+					<Link to={`${SINGLE_POST}/${post.id}`}>
+						<ModeCommentIcon />
+					</Link>
 				</div>
 			</div>
 			<div className="likes">

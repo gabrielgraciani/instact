@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useEffect } from 'react'
 import 'dotenv/config';
 import { Route, Switch, useHistory } from 'react-router-dom';
-import { EDIT, LOGIN, PROFILE } from './routes';
+import { EDIT, LOGIN, PROFILE, SINGLE_POST } from './routes';
 import Header from 'components/header';
 import Footer from 'components/footer';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -11,6 +11,7 @@ const Home = lazy(() => import('pages/home'));
 const Login = lazy(() => import('pages/login'));
 const Profile = lazy(() => import('pages/profile'));
 const Edit = lazy(() => import('pages/edit'));
+const SinglePost = lazy(() => import('pages/singlePost'));
 
 
 function App({ location }){
@@ -44,6 +45,7 @@ function App({ location }){
 						<Route path={LOGIN} component={Login} />
 						<Route path={PROFILE} component={Profile} />
 						<Route path={EDIT} component={Edit} />
+						<Route path={SINGLE_POST} component={SinglePost} />
 						<Route component={Home} />
 					</Switch>
 				</Suspense>

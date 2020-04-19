@@ -25,7 +25,6 @@ function* postSendCadastroWorker(data) {
 function* postFetchWorker(data) {
 	try {
 		const { id, page } = data.payload;
-		console.log('chegou a');
 
 		const postData = yield call(Post.getPosts, page);
 		const allLikes = yield call(Post.getAllLikes);
