@@ -1,5 +1,7 @@
 import React from 'react';
 import PostTeste from 'assets/images/post_teste.jpg';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ModeCommentIcon from '@material-ui/icons/ModeComment';
 
 const SinglePost = ({ match }) => {
 
@@ -8,6 +10,7 @@ const SinglePost = ({ match }) => {
 	console.log('id', id);
 
 	return (
+		<>
 		<div id="wrap_principal">
 			<div className="indent">
 				<div className="posts single">
@@ -52,11 +55,59 @@ const SinglePost = ({ match }) => {
 									</div>
 								</div>
 							</div>
+
+							<div className="actions">
+								<div className="item">
+									<FavoriteIcon />
+								</div>
+								<div className="item">
+									<ModeCommentIcon />
+								</div>
+							</div>
+
+							<div className="likes">
+								<span>Curtido por <strong>500 pessoas</strong></span>
+							</div>
+
+							<div className="time">
+								<span>Há 2 horas</span>
+							</div>
+
+							<form >
+								<input type="text" value="" placeholder="Adicione um comentário..." />
+								<input type="submit" value="Publicar" disabled="disabled" />
+
+							</form>
+
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
+		<div id="wrap_posts">
+			<div className="indent title">
+				<h4>Mais publicações de <strong>username</strong></h4>
+			</div>
+			<div className="indent">
+				<div className="item">
+					<img src={PostTeste} alt="teste"/>
+				</div>
+				<div className="item">
+					<img src={PostTeste} alt="teste"/>
+				</div>
+				<div className="item">
+					<img src={PostTeste} alt="teste"/>
+				</div>
+				<div className="item">
+					<img src={PostTeste} alt="teste"/>
+				</div>
+				<div className="item">
+					<img src={PostTeste} alt="teste"/>
+				</div>
+			</div>
+		</div>
+		</>
 	)
 };
 
