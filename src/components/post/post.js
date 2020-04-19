@@ -10,7 +10,6 @@ import 'moment/locale/pt-br';
 import HeartIcon from 'assets/images/heart.png';
 import { STORAGE_URL } from 'configs/constants';
 import { Link } from 'react-router-dom';
-import { SINGLE_POST } from '../../routes';
 
 const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, handleAllLikes }) => {
 
@@ -84,7 +83,7 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 					)}
 				</div>
 				<div className="item">
-					<Link to={`${SINGLE_POST}/${post.id}`}>
+					<Link to={`/p/${post.id}`}>
 						<ModeCommentIcon />
 					</Link>
 				</div>
