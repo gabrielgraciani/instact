@@ -11,7 +11,7 @@ import HeartIcon from 'assets/images/heart.png';
 import { STORAGE_URL } from 'configs/constants';
 import { Link } from 'react-router-dom';
 
-const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, handleAllLikes }) => {
+const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, handleAllLikes, className = '' }) => {
 
 	const [valueComment, setValueComment] = useState('');
 	const dispatch = useDispatch();
@@ -34,61 +34,146 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 
 	return(
 		<>
-		<div className="post">
-			<div className="head">
-				<div className="user">
-					{!post.profile_image ? (
-						<AccountCircleIcon />
-					) : (
-						<img src={`${STORAGE_URL}users/${post.users_id}/${post.profile_image}`} alt="" />
-					)}
-					<span>{post.name}</span>
+		{className === 'singlePost' ? (
+			<div className="post">
+				<div className="body">
+					<img src={`${STORAGE_URL}posts/${post.file}`} alt={post.description} />
+
 				</div>
-				<div className="opcoes">
-					<MoreHorizIcon />
+				<div className="box">
+					<div className="head">
+						<div className="user">
+							{!post.profile_image ? (
+								<AccountCircleIcon />
+							) : (
+								<img src={`${STORAGE_URL}users/${post.users_id}/${post.profile_image}`} alt={post.username} />
+							)}
+							<span>{post.username}</span>
+						</div>
+					</div>
+
+					<div className="comments">
+						{post.comments && (
+							post.comments.map((comment) => (
+								<div className="item" key={comment.id}>
+									<div className="image">
+										{!comment.profile_image ? (
+											<AccountCircleIcon />
+										) : (
+											<img src={`${STORAGE_URL}users/${post.users_id}/${post.profile_image}`} alt={post.username} />
+										)}
+									</div>
+									<div className="content">
+										<span><strong>{comment.username}</strong> {comment.comment}</span>
+										<span className="hora">{moment(comment.created_at).fromNow()}</span>
+									</div>
+								</div>
+							))
+						)}
+					</div>
+
+					<div className="actions">
+						<div className="item">
+							{post.likeId === '' ? (
+								verifyLike(index) && post.isLiked === undefined ? (
+									<FavoriteIcon onClick={() => {handleDeslike(verifyLike(index), post.id)}}
+												  className='active teste1' />
+								) : (
+									<FavoriteIcon onClick={() => {handleLike(post.id)}} />
+								)
+							) : (
+								<FavoriteIcon onClick={() => {handleDeslike(post.likeId, post.id)}} className='active teste2' />
+							)}
+						</div>
+						<div className="item">
+							<ModeCommentIcon />
+						</div>
+					</div>
+
+					<div className="likes">
+						<span>Curtido por
+							{post.qt_likes > 0 ? (
+								<strong onClick={() => handleAllLikes(index)} className="pointer">
+									{post.qt_likes}
+									{post.qt_likes === 1 ? ' pessoa' : ' pessoas'}
+								</strong>
+							) : (
+								<strong>
+									{post.qt_likes}
+									{post.qt_likes === 1 ? ' pessoa' : ' pessoas'}
+								</strong>
+							)}
+				</span>
+					</div>
+
+					<div className="time">
+						<span>{moment(post.created_at).fromNow()}</span>
+					</div>
+
+					<form >
+						<input type="text" placeholder="Adicione um comentário..." />
+						<input type="submit" value="Publicar" disabled="disabled" />
+
+					</form>
+
 				</div>
 			</div>
-			<div className="body">
-				{post.likeId === '' ? (
-					verifyLike(index) && post.isLiked === undefined ? (
-						<>
-							<img onDoubleClick={() => {handleDeslike(verifyLike(index), post.id)}} src={`${STORAGE_URL}posts/${post.file}`} alt=""/>
+		) : (
+			<div className="post">
+				<div className="head">
+					<div className="user">
+						{!post.profile_image ? (
+							<AccountCircleIcon />
+						) : (
+							<img src={`${STORAGE_URL}users/${post.users_id}/${post.profile_image}`} alt={post.username} />
+						)}
+						<span>{post.name}</span>
+					</div>
+					<div className="opcoes">
+						<MoreHorizIcon />
+					</div>
+				</div>
+				<div className="body">
+					{post.likeId === '' ? (
+						verifyLike(index) && post.isLiked === undefined ? (
+							<>
+							<img onDoubleClick={() => {handleDeslike(verifyLike(index), post.id)}} src={`${STORAGE_URL}posts/${post.file}`} alt={post.description} />
 							<div className="heart">
 								<img src={HeartIcon} alt="like" />
 							</div>
-						</>
+							</>
+						) : (
+							<img onDoubleClick={() => {handleLike(post.id)}} src={`${STORAGE_URL}posts/${post.file}`} alt={post.description} />
+						)
 					) : (
-						<img onDoubleClick={() => {handleLike(post.id)}} src={`${STORAGE_URL}posts/${post.file}`} alt=""/>
-					)
-				) : (
-					<>
-						<img onDoubleClick={() => {handleDeslike(post.likeId, post.id)}} src={`${STORAGE_URL}posts/${post.file}`} alt=""/>
+						<>
+						<img onDoubleClick={() => {handleDeslike(post.likeId, post.id)}} src={`${STORAGE_URL}posts/${post.file}`} alt={post.description} />
 						<div className="heart">
 							<img src={HeartIcon} alt="like" />
 						</div>
-					</>
-				)}
-			</div>
-			<div className="actions">
-				<div className="item">
-					{post.likeId === '' ? (
-						verifyLike(index) && post.isLiked === undefined ? (
-							<FavoriteIcon onClick={() => {handleDeslike(verifyLike(index), post.id)}}
-										  className='active teste1' />
-						) : (
-							<FavoriteIcon onClick={() => {handleLike(post.id)}} />
-						)
-					) : (
-						<FavoriteIcon onClick={() => {handleDeslike(post.likeId, post.id)}} className='active teste2' />
+						</>
 					)}
 				</div>
-				<div className="item">
-					<Link to={`/p/${post.id}`}>
-						<ModeCommentIcon />
-					</Link>
+				<div className="actions">
+					<div className="item">
+						{post.likeId === '' ? (
+							verifyLike(index) && post.isLiked === undefined ? (
+								<FavoriteIcon onClick={() => {handleDeslike(verifyLike(index), post.id)}}
+											  className='active teste1' />
+							) : (
+								<FavoriteIcon onClick={() => {handleLike(post.id)}} />
+							)
+						) : (
+							<FavoriteIcon onClick={() => {handleDeslike(post.likeId, post.id)}} className='active teste2' />
+						)}
+					</div>
+					<div className="item">
+						<Link to={`/p/${post.id}`}>
+							<ModeCommentIcon />
+						</Link>
+					</div>
 				</div>
-			</div>
-			<div className="likes">
+				<div className="likes">
 				<span>Curtido por
 					{post.qt_likes > 0 ? (
 						<strong onClick={() => handleAllLikes(index)} className="pointer">
@@ -102,28 +187,30 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 						</strong>
 					)}
 				</span>
-			</div>
-			<div className="comments">
-				<span><strong>{post.username} </strong> {post.description}</span>
-				{post.qt_comments > 2 ? (
-					<span className="all">Ver todos os {post.qt_comments} comentários</span>
-				) : (
-					<div className="margin"> </div>
-				)}
+				</div>
+				<div className="comments">
+					<span><strong>{post.username} </strong> {post.description}</span>
+					{post.qt_comments > 2 ? (
+						<span className="all">Ver todos os {post.qt_comments} comentários</span>
+					) : (
+						<div className="margin"> </div>
+					)}
 
-				{post.comments.map((comment) => (
-					<span key={comment.id}><strong>{comment.username} </strong> {comment.comment}</span>
-				))}
-			</div>
-			<div className="time">
-				<span>{moment(post.created_at).fromNow()}</span>
-			</div>
-			<form onSubmit={handleSubmitComment}>
-				<input type="text" value={valueComment} onChange={handleChangeInput}  placeholder="Adicione um comentário..." />
-				<input type="submit" value="Publicar" disabled={!valueComment} />
+					{post.comments.map((comment) => (
+						<span key={comment.id}><strong>{comment.username} </strong> {comment.comment}</span>
+					))}
+				</div>
+				<div className="time">
+					<span>{moment(post.created_at).fromNow()}</span>
+				</div>
+				<form onSubmit={handleSubmitComment}>
+					<input type="text" value={valueComment} onChange={handleChangeInput}  placeholder="Adicione um comentário..." />
+					<input type="submit" value="Publicar" disabled={!valueComment} />
 
-			</form>
-		</div>
+				</form>
+			</div>
+		)}
+
 		</>
 	)
 };
