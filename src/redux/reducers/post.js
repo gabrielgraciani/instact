@@ -183,6 +183,34 @@ export default function postReducer(
 				singlePostData: payload.singlePostData
 			};
 
+		case actions.POST_SEND_LIKE_SINGLE:
+			return {
+				...initialState,
+				...state,
+				isSaving: true,
+			};
+
+		case actions.POST_SEND_LIKE_SINGLE_SUCCESS:
+			return {
+				...initialState,
+				...state,
+				isSaving: false,
+			};
+
+		case actions.POST_SEND_DESLIKE_SINGLE:
+			return {
+				...initialState,
+				...state,
+				isSaving: true,
+			};
+
+		case actions.POST_SEND_DESLIKE_SINGLE_SUCCESS:
+			return {
+				...initialState,
+				...state,
+				isSaving: false,
+			};
+
 		default:
 			return state;
 	}

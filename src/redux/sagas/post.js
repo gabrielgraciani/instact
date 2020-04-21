@@ -262,8 +262,62 @@ function* postFetchSingleWorker(data) {
 
 		postData.comments = commentsData;
 		postData.likes = likesData;
+		postData.likeId = '';
 
 		yield put(actions.postFetchSingleSuccess(postData));
+
+
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
+function* postSendLikeSingleWorker(data) {
+	try {
+
+		const { singlePostData } = yield select(store => store.post);
+
+		console.log('data', data.payload);
+
+		const likeData = data.payload;
+		const { success, like_id, like_data } = yield call(Post.registerLike, likeData);
+
+		if (success === true ) {
+			singlePostData.isLiked = true;
+			singlePostData.likeId = like_id;
+			singlePostData.qt_likes = singlePostData.qt_likes + 1;
+			singlePostData.likes.push(like_data);
+
+			yield put(actions.postSendLikeSingleSuccess());
+		}
+
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
+function* postSendDeslikeSingleWorker(data) {
+	try {
+
+		const { like_id } = data.payload;
+
+		const { singlePostData } = yield select(store => store.post);
+
+		const { likes } = singlePostData;
+		const j = findIndex(likes, { id: like_id });
+
+
+		const like_data = data.payload;
+		const success = yield call(Post.removeLike, like_data);
+
+		if (success) {
+			singlePostData.isLiked = false;
+			singlePostData.likeId = '';
+			singlePostData.qt_likes = singlePostData.qt_likes - 1;
+			likes.splice(j, 1);
+
+			yield put(actions.postSendDeslikeSingleSuccess());
+		}
 
 
 	} catch (error) {
@@ -311,6 +365,14 @@ function* postFetchSingleWatcher() {
 	yield takeLatest(actions.POST_FETCH_SINGLE, postFetchSingleWorker);
 }
 
+function* postSendLikeSingleWatcher() {
+	yield takeLatest(actions.POST_SEND_LIKE_SINGLE, postSendLikeSingleWorker);
+}
+
+function* postSendDeslikeSingleWatcher() {
+	yield takeLatest(actions.POST_SEND_DESLIKE_SINGLE, postSendDeslikeSingleWorker);
+}
+
 function* postWatcher() {
 	yield all([
 		postSendCadastroWatcher(),
@@ -323,6 +385,8 @@ function* postWatcher() {
 		postSendFollowWatcher(),
 		postSendUnfollowWatcher(),
 		postFetchSingleWatcher(),
+		postSendLikeSingleWatcher(),
+		postSendDeslikeSingleWatcher(),
 	]);
 }
 

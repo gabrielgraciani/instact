@@ -75,14 +75,14 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 					<div className="actions">
 						<div className="item">
 							{post.likeId === '' ? (
-								verifyLike(index) && post.isLiked === undefined ? (
-									<FavoriteIcon onClick={() => {handleDeslike(verifyLike(index), post.id)}}
-												  className='active teste1' />
+								verifyLike() && post.isLiked === undefined ? (
+									<FavoriteIcon onClick={() => {handleDeslike(verifyLike())}}
+												  className='active' />
 								) : (
 									<FavoriteIcon onClick={() => {handleLike(post.id)}} />
 								)
 							) : (
-								<FavoriteIcon onClick={() => {handleDeslike(post.likeId, post.id)}} className='active teste2' />
+								<FavoriteIcon onClick={() => {handleDeslike(post.likeId)}} className='active' />
 							)}
 						</div>
 						<div className="item">

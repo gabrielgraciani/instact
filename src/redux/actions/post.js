@@ -19,6 +19,10 @@ export const POST_SEND_UNFOLLOW = 'POST_SEND_UNFOLLOW';
 export const POST_SEND_UNFOLLOW_SUCCESS = 'POST_SEND_UNFOLLOW_SUCCESS';
 export const POST_FETCH_SINGLE = 'POST_FETCH_SINGLE';
 export const POST_FETCH_SINGLE_SUCCESS = 'POST_FETCH_SINGLE_SUCCESS';
+export const POST_SEND_LIKE_SINGLE = 'POST_SEND_LIKE_SINGLE';
+export const POST_SEND_LIKE_SINGLE_SUCCESS = 'POST_SEND_LIKE_SINGLE_SUCCESS';
+export const POST_SEND_DESLIKE_SINGLE = 'POST_SEND_DESLIKE_SINGLE';
+export const POST_SEND_DESLIKE_SINGLE_SUCCESS = 'POST_SEND_DESLIKE_SINGLE_SUCCESS';
 
 export const postSendCadastro = (payload) => ({
 	type: POST_SEND_CADASTRO,
@@ -138,4 +142,23 @@ export const postFetchSingleSuccess = (singlePostData) => ({
 	payload: {
 		singlePostData
 	}
+});
+
+
+export const postSendLikeSingle = (payload) => ({
+	type: POST_SEND_LIKE_SINGLE,
+	payload
+});
+
+export const postSendLikeSingleSuccess = () => ({
+	type: POST_SEND_LIKE_SINGLE_SUCCESS
+});
+
+export const postSendDeslikeSingle = (payload) => ({
+	type: POST_SEND_DESLIKE_SINGLE,
+	payload
+});
+
+export const postSendDeslikeSingleSuccess = () => ({
+	type: POST_SEND_DESLIKE_SINGLE_SUCCESS
 });
