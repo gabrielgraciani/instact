@@ -252,6 +252,25 @@ function* postSendUnfollowWorker(data) {
 	}
 }
 
+function* postFetchSingleWorker(data) {
+	try {
+
+		const id = data.payload;
+		const {data: postData} = yield call(Post.findPost, id);
+		const {data: commentsData} = yield call(Post.findComments, id);
+		const {data: likesData} = yield call(Post.findLikes, id);
+
+		postData.comments = commentsData;
+		postData.likes = likesData;
+
+		yield put(actions.postFetchSingleSuccess(postData));
+
+
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
 function* postSendCadastroWatcher() {
 	yield takeLatest(actions.POST_SEND_CADASTRO, postSendCadastroWorker);
 }
@@ -288,6 +307,10 @@ function* postSendUnfollowWatcher() {
 	yield takeLatest(actions.POST_SEND_UNFOLLOW, postSendUnfollowWorker);
 }
 
+function* postFetchSingleWatcher() {
+	yield takeLatest(actions.POST_FETCH_SINGLE, postFetchSingleWorker);
+}
+
 function* postWatcher() {
 	yield all([
 		postSendCadastroWatcher(),
@@ -299,6 +322,7 @@ function* postWatcher() {
 		postSendCommentWatcher(),
 		postSendFollowWatcher(),
 		postSendUnfollowWatcher(),
+		postFetchSingleWatcher(),
 	]);
 }
 

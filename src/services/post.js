@@ -159,4 +159,17 @@ export default class post{
 			return err.response.data.message || 'Ocorreu um erro inesperado. Tente novamente mais tarde';
 		}
 	};
+
+	static findPost = async (id) => {
+		return await api.get(`/posts/${id}`);
+	};
+
+	static findComments = async (id) => {
+		return await api.get(`/comments/${id}`);
+	};
+
+	static findLikes = async (id) => {
+		return await api.get(`/likes/${id}`);
+	};
+
 }

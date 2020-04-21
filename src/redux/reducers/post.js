@@ -15,6 +15,7 @@ export const initialState = {
 	isUnfollowing: false,
 	end: false,
 	isLoading: false,
+	singlePostData: [],
 };
 
 
@@ -165,6 +166,21 @@ export default function postReducer(
 				...initialState,
 				...state,
 				isUnfollowing: false
+			};
+
+		case actions.POST_FETCH_SINGLE:
+			return {
+				...initialState,
+				...state,
+				isLoading: true,
+			};
+
+		case actions.POST_FETCH_SINGLE_SUCCESS:
+			return {
+				...initialState,
+				...state,
+				isLoading: false,
+				singlePostData: payload.singlePostData
 			};
 
 		default:

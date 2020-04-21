@@ -17,6 +17,8 @@ export const POST_SEND_FOLLOW = 'POST_SEND_FOLLOW';
 export const POST_SEND_FOLLOW_SUCCESS = 'POST_SEND_FOLLOW_SUCCESS';
 export const POST_SEND_UNFOLLOW = 'POST_SEND_UNFOLLOW';
 export const POST_SEND_UNFOLLOW_SUCCESS = 'POST_SEND_UNFOLLOW_SUCCESS';
+export const POST_FETCH_SINGLE = 'POST_FETCH_SINGLE';
+export const POST_FETCH_SINGLE_SUCCESS = 'POST_FETCH_SINGLE_SUCCESS';
 
 export const postSendCadastro = (payload) => ({
 	type: POST_SEND_CADASTRO,
@@ -124,4 +126,16 @@ export const postSendUnfollow = (payload) => ({
 
 export const postSendUnfollowSuccess = () => ({
 	type: POST_SEND_UNFOLLOW_SUCCESS,
+});
+
+export const postFetchSingle = (payload) => ({
+	type: POST_FETCH_SINGLE,
+	payload
+});
+
+export const postFetchSingleSuccess = (singlePostData) => ({
+	type: POST_FETCH_SINGLE_SUCCESS,
+	payload: {
+		singlePostData
+	}
 });

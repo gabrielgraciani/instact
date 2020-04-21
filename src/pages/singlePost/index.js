@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { postFetchSingle } from "../../redux/actions/post";
 import PostTeste from 'assets/images/post_teste.jpg';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ModeCommentIcon from '@material-ui/icons/ModeComment';
@@ -6,8 +8,14 @@ import ModeCommentIcon from '@material-ui/icons/ModeComment';
 const SinglePost = ({ match }) => {
 
 	const { id } = match.params;
-	console.log('match', match);
-	console.log('id', id);
+
+	const dispatch = useDispatch();
+	const { singlePostData = [] } = useSelector(store => store.post);
+	console.log('single?', singlePostData);
+
+	useEffect(() => {
+		dispatch(postFetchSingle(id));
+	}, [dispatch, id]);
 
 	return (
 		<>
@@ -74,7 +82,7 @@ const SinglePost = ({ match }) => {
 							</div>
 
 							<form >
-								<input type="text" value="" placeholder="Adicione um comentário..." />
+								<input type="text" value="qwe" placeholder="Adicione um comentário..." />
 								<input type="submit" value="Publicar" disabled="disabled" />
 
 							</form>
