@@ -22,7 +22,6 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 
 	const handleSubmitComment = (e) => {
 		e.preventDefault();
-		console.log('oi', valueComment);
 		dispatch(postSendComment({
 			posts_id: post.id,
 			comment: valueComment,
@@ -196,8 +195,8 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 						<div className="margin"> </div>
 					)}
 
-					{post.comments.map((comment) => (
-						<span key={comment.id}><strong>{comment.username} </strong> {comment.comment}</span>
+					{post.comments.map((comment, index) => (
+						<span key={index}><strong>{comment.username} </strong> {comment.comment}</span>
 					))}
 				</div>
 				<div className="time">
