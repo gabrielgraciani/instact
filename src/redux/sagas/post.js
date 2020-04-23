@@ -26,10 +26,10 @@ function* postFetchWorker(data) {
 	try {
 		const { id, page } = data.payload;
 
-		const postData = yield call(Post.getPosts, page);
-		const allLikes = yield call(Post.getAllLikes);
-		const allComments = yield call(Post.getAllComments);
-		const allFollows = yield call(Post.getAllFollows, id);
+		const { data: postData } = yield call(Post.getPosts, page);
+		const { data: allLikes } = yield call(Post.getAllLikes);
+		const { data: allComments } = yield call(Post.getAllComments);
+		const { data: allFollows } = yield call(Post.getAllFollows, id);
 
 		postData.map((item) => {
 			const teste = [];
@@ -67,10 +67,10 @@ function* postFetchMoreWorker(data) {
 	try {
 		const { id, page } = data.payload;
 
-		const postData = yield call(Post.getPosts, page);
-		const allLikes = yield call(Post.getAllLikes);
-		const allComments = yield call(Post.getAllComments);
-		const allFollows = yield call(Post.getAllFollows, id);
+		const { data: postData } = yield call(Post.getPosts, page);
+		const { data: allLikes } = yield call(Post.getAllLikes);
+		const { data: allComments } = yield call(Post.getAllComments);
+		const { data: allFollows } = yield call(Post.getAllFollows, id);
 
 		postData.map((item) => {
 			const teste = [];
@@ -112,7 +112,7 @@ function* postFetchFromUserWorker(data) {
 
 		const id  = data.payload;
 
-		const userPosts = yield call(Post.getPostsFromUser, id);
+		const { data: userPosts } = yield call(Post.getPostsFromUser, id);
 
 		yield put(actions.postFetchFromUserSuccess(userPosts));
 
@@ -131,7 +131,8 @@ function* postSendLikeWorker(data) {
 		const updatedList = [...postData];
 
 		const likeData = data.payload;
-		const { success, like_id, like_data } = yield call(Post.registerLike, likeData);
+		const { data: dataLike } = yield call(Post.registerLike, likeData);
+		const { success, like_id, like_data } = dataLike;
 
 		if (success === true ) {
 			if (i !== -1) {
@@ -163,7 +164,8 @@ function* postSendDeslikeWorker(data) {
 
 
 		const like_data = data.payload;
-		const success = yield call(Post.removeLike, like_data);
+		const { data: deslikeData} = yield call(Post.removeLike, like_data);
+		const { success } = deslikeData;
 
 		if (success) {
 			if (i !== -1) {
@@ -192,7 +194,8 @@ function* postSendCommentWorker(data) {
 		const updatedList = [...postData];
 
 		const commentData = data.payload;
-		const { success, comment } = yield call(Post.registerComment, commentData);
+		const { data: dataApi } = yield call(Post.registerComment, commentData);
+		const { success, comment } = dataApi;
 
 		if (success === true) {
 
@@ -217,7 +220,8 @@ function* postSendFollowWorker(data) {
 		const { allFollowsUserLogged } = yield select(store => store.post);
 
 		const followData = data.payload;
-		const { success, follow_data } = yield call(Post.registerFollow, followData);
+		const { data: dataApi } = yield call(Post.registerFollow, followData);
+		const { success, follow_data } = dataApi;
 
 		if (success === true) {
 			allFollowsUserLogged.push(follow_data);
@@ -240,7 +244,8 @@ function* postSendUnfollowWorker(data) {
 		const i = findIndex(allFollowsUserLogged, { sent_users_id, received_users_id });
 
 		const unfollowData = data.payload;
-		const success = yield call(Post.registerUnfollow, unfollowData);
+		const { data: dataApi } = yield call(Post.registerUnfollow, unfollowData);
+		const { success } = dataApi;
 
 		if(success === true){
 			allFollowsUserLogged.splice(i, 1);
@@ -277,10 +282,9 @@ function* postSendLikeSingleWorker(data) {
 
 		const { singlePostData } = yield select(store => store.post);
 
-		console.log('data', data.payload);
-
 		const likeData = data.payload;
-		const { success, like_id, like_data } = yield call(Post.registerLike, likeData);
+		const { data: dataLike } = yield call(Post.registerLike, likeData);
+		const { success, like_id, like_data } = dataLike;
 
 		if (success === true ) {
 			singlePostData.isLiked = true;
@@ -308,7 +312,8 @@ function* postSendDeslikeSingleWorker(data) {
 
 
 		const like_data = data.payload;
-		const success = yield call(Post.removeLike, like_data);
+		const { data: deslikeData} = yield call(Post.removeLike, like_data);
+		const { success } = deslikeData;
 
 		if (success) {
 			singlePostData.isLiked = false;
