@@ -131,8 +131,8 @@ function* postSendLikeWorker(data) {
 		const updatedList = [...postData];
 
 		const likeData = data.payload;
-		const { data: dataLike } = yield call(Post.registerLike, likeData);
-		const { success, like_id, like_data } = dataLike;
+		const { data: dataApi } = yield call(Post.registerLike, likeData);
+		const { success, like_id, like_data } = dataApi;
 
 		if (success === true ) {
 			if (i !== -1) {
@@ -164,8 +164,8 @@ function* postSendDeslikeWorker(data) {
 
 
 		const like_data = data.payload;
-		const { data: deslikeData} = yield call(Post.removeLike, like_data);
-		const { success } = deslikeData;
+		const { data: dataApi} = yield call(Post.removeLike, like_data);
+		const { success } = dataApi;
 
 		if (success) {
 			if (i !== -1) {
@@ -283,8 +283,8 @@ function* postSendLikeSingleWorker(data) {
 		const { singlePostData } = yield select(store => store.post);
 
 		const likeData = data.payload;
-		const { data: dataLike } = yield call(Post.registerLike, likeData);
-		const { success, like_id, like_data } = dataLike;
+		const { data: dataApi } = yield call(Post.registerLike, likeData);
+		const { success, like_id, like_data } = dataApi;
 
 		if (success === true ) {
 			singlePostData.isLiked = true;
@@ -312,8 +312,8 @@ function* postSendDeslikeSingleWorker(data) {
 
 
 		const like_data = data.payload;
-		const { data: deslikeData} = yield call(Post.removeLike, like_data);
-		const { success } = deslikeData;
+		const { data: dataApi} = yield call(Post.removeLike, like_data);
+		const { success } = dataApi;
 
 		if (success) {
 			singlePostData.isLiked = false;

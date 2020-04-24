@@ -6,7 +6,7 @@ import User from '../../services/user';
 function* userFetchWorker(data) {
 	try {
 		const id = data.payload;
-		const userData = yield call(User.getUser, id);
+		const { data: userData } = yield call(User.getUser, id);
 
 		yield put(actions.userFetchSuccess(userData));
 
@@ -19,11 +19,12 @@ function* userUpdateWorker(data){
 	try{
 		const userData = data.payload;
 
-		const response = yield call(User.updateUser, userData);
+		const { data: dataApi } = yield call(User.updateUser, userData);
+		const { message } = dataApi;
 
-		yield put(actions.userUpdateSuccess(response));
+		yield put(actions.userUpdateSuccess(message));
 
-		if(response === 'User successfully updated'){
+		if(message === 'User successfully updated'){
 			yield put(actions.userAtt(userData));
 		}
 
@@ -39,11 +40,10 @@ function* userUpdatePasswordWorker(data){
 	try{
 		const userData = data.payload;
 
-		console.log('userData', userData);
+		const { data: dataApi } = yield call(User.updatePasswordUser, userData);
+		const { message } = dataApi;
 
-		const response = yield call(User.updatePasswordUser, userData);
-
-		yield put(actions.userUpdatePasswordSuccess(response));
+		yield put(actions.userUpdatePasswordSuccess(message));
 
 		yield delay(3000);
 		yield put(actions.userUpdatePasswordSuccess(false));
@@ -58,8 +58,8 @@ function* userSendProfileImageWorker(data){
 
 		const userData2 = data.payload;
 
-		const { message, profile_image } = yield call(User.sendProfileImage, userData2);
-
+		const { data: dataApi } = yield call(User.sendProfileImage, userData2);
+		const { message, profile_image } = dataApi;
 
 		const { userData } = yield select(store => store.user);
 		userData.profile_image = profile_image;

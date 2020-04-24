@@ -33,7 +33,6 @@ export default class post{
 
 	static registerLike = async ( data ) => {
 		const { posts_id, users_id } = data;
-
 		return await api.post('/likes', {posts_id}, {
 			headers: {
 				'Authorization': users_id,
@@ -43,7 +42,6 @@ export default class post{
 
 	static removeLike = async ( data ) => {
 		const { like_id, users_id } = data;
-
 		return await api.delete(`/likes/${like_id}`, {
 			headers: {
 				'Authorization': users_id,
@@ -53,7 +51,6 @@ export default class post{
 
 	static registerComment = async ( data ) => {
 		const { posts_id, comment, users_id } = data;
-
 		return await api.post('/comments', {posts_id, comment}, {
 			headers: {
 				'Authorization': users_id,
@@ -63,13 +60,11 @@ export default class post{
 
 	static registerFollow = async (data) => {
 		const { sent_users_id, received_users_id } = data;
-
 		return await api.post(`/follows/${sent_users_id}&${received_users_id}`);
 	};
 
 	static registerUnfollow = async (data) => {
 		const { sent_users_id, received_users_id } = data;
-
 		return await api.delete(`/follows/${sent_users_id}&${received_users_id}`);
 	};
 
