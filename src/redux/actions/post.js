@@ -23,6 +23,8 @@ export const POST_SEND_LIKE_SINGLE = 'POST_SEND_LIKE_SINGLE';
 export const POST_SEND_LIKE_SINGLE_SUCCESS = 'POST_SEND_LIKE_SINGLE_SUCCESS';
 export const POST_SEND_DESLIKE_SINGLE = 'POST_SEND_DESLIKE_SINGLE';
 export const POST_SEND_DESLIKE_SINGLE_SUCCESS = 'POST_SEND_DESLIKE_SINGLE_SUCCESS';
+export const POST_SEND_COMMENT_SINGLE = 'POST_SEND_COMMENT_SINGLE';
+export const POST_SEND_COMMENT_SINGLE_SUCCESS = 'POST_SEND_COMMENT_SINGLE_SUCCESS';
 
 export const postSendCadastro = (payload) => ({
 	type: POST_SEND_CADASTRO,
@@ -161,4 +163,14 @@ export const postSendDeslikeSingle = (payload) => ({
 
 export const postSendDeslikeSingleSuccess = () => ({
 	type: POST_SEND_DESLIKE_SINGLE_SUCCESS
+});
+
+export const postSendCommentSingle = (payload) => ({
+	type: POST_SEND_COMMENT_SINGLE,
+	payload
+});
+
+export const postSendCommentSingleSuccess = (payload) => ({
+	type: POST_SEND_COMMENT_SINGLE_SUCCESS,
+	payload
 });

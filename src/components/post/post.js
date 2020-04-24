@@ -1,10 +1,10 @@
-import React, { useState }  from 'react';
+import React, { useState, useRef }  from 'react';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ModeCommentIcon from '@material-ui/icons/ModeComment';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useDispatch } from "react-redux";
-import { postSendComment } from "../../redux/actions/post";
+import { postSendComment, postSendCommentSingle } from "../../redux/actions/post";
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import HeartIcon from 'assets/images/heart.png';
@@ -15,6 +15,7 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 
 	const [valueComment, setValueComment] = useState('');
 	const dispatch = useDispatch();
+	const inputRef = useRef(null);
 
 	const handleChangeInput = (e) => {
 		setValueComment(e.target.value);
@@ -22,13 +23,28 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 
 	const handleSubmitComment = (e) => {
 		e.preventDefault();
+		console.log('xd', post.id, valueComment, usersId);
 		dispatch(postSendComment({
 			posts_id: post.id,
 			comment: valueComment,
 			users_id: usersId
 		}));
-
 		setValueComment('');
+	};
+
+	const handleSubmitCommentSingle = (e) => {
+		e.preventDefault();
+		console.log('xd', post.id, valueComment, usersId);
+		dispatch(postSendCommentSingle({
+			posts_id: post.id,
+			comment: valueComment,
+			users_id: usersId
+		}));
+		setValueComment('');
+	};
+
+	const focusInput = () => {
+		inputRef.current.focus();
 	};
 
 	return(
@@ -85,7 +101,7 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 							)}
 						</div>
 						<div className="item">
-							<ModeCommentIcon />
+							<ModeCommentIcon onClick={focusInput} />
 						</div>
 					</div>
 
@@ -109,10 +125,9 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 						<span>{moment(post.created_at).fromNow()}</span>
 					</div>
 
-					<form >
-						<input type="text" placeholder="Adicione um comentário..." />
-						<input type="submit" value="Publicar" disabled="disabled" />
-
+					<form onSubmit={handleSubmitCommentSingle}>
+						<input type="text" ref={inputRef} value={valueComment} onChange={handleChangeInput}  placeholder="Adicione um comentário..." />
+						<input type="submit" value="Publicar" disabled={!valueComment} />
 					</form>
 
 				</div>
@@ -190,7 +205,9 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 				<div className="comments">
 					<span><strong>{post.username} </strong> {post.description}</span>
 					{post.qt_comments > 2 ? (
-						<span className="all">Ver todos os {post.qt_comments} comentários</span>
+						<Link to={`/p/${post.id}`}>
+							<span className="all">Ver todos os {post.qt_comments} comentários</span>
+						</Link>
 					) : (
 						<div className="margin"> </div>
 					)}
@@ -205,7 +222,6 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 				<form onSubmit={handleSubmitComment}>
 					<input type="text" value={valueComment} onChange={handleChangeInput}  placeholder="Adicione um comentário..." />
 					<input type="submit" value="Publicar" disabled={!valueComment} />
-
 				</form>
 			</div>
 		)}

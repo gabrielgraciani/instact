@@ -211,6 +211,18 @@ export default function postReducer(
 				isSaving: false,
 			};
 
+		case actions.POST_SEND_COMMENT_SINGLE:
+			return {
+				...initialState,
+				...state,
+			};
+
+		case actions.POST_SEND_COMMENT_SINGLE_SUCCESS:
+			return {
+				...initialState,
+				...state,
+			};
+
 		default:
 			return state;
 	}

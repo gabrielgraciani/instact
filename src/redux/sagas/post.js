@@ -186,7 +186,6 @@ function* postSendDeslikeWorker(data) {
 
 function* postSendCommentWorker(data) {
 	try {
-
 		const { posts_id } = data.payload;
 
 		const { postData } = yield select(store => store.post);
@@ -207,8 +206,6 @@ function* postSendCommentWorker(data) {
 			yield put(actions.postSendCommentSuccess());
 
 		}
-
-
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);
 	}
@@ -330,6 +327,24 @@ function* postSendDeslikeSingleWorker(data) {
 	}
 }
 
+function* postSendCommentSingleWorker(data) {
+	try {
+		const { singlePostData } = yield select(store => store.post);
+
+		const commentData = data.payload;
+		const { data: dataApi } = yield call(Post.registerComment, commentData);
+		const { success, comment } = dataApi;
+
+		if (success === true) {
+			singlePostData.qt_comments = singlePostData.qt_comments + 1;
+			singlePostData.comments.push(comment);
+			yield put(actions.postSendCommentSuccess());
+		}
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
 function* postSendCadastroWatcher() {
 	yield takeLatest(actions.POST_SEND_CADASTRO, postSendCadastroWorker);
 }
@@ -378,6 +393,10 @@ function* postSendDeslikeSingleWatcher() {
 	yield takeLatest(actions.POST_SEND_DESLIKE_SINGLE, postSendDeslikeSingleWorker);
 }
 
+function* postSendCommentSingleWatcher() {
+	yield takeLatest(actions.POST_SEND_COMMENT_SINGLE, postSendCommentSingleWorker);
+}
+
 function* postWatcher() {
 	yield all([
 		postSendCadastroWatcher(),
@@ -392,6 +411,7 @@ function* postWatcher() {
 		postFetchSingleWatcher(),
 		postSendLikeSingleWatcher(),
 		postSendDeslikeSingleWatcher(),
+		postSendCommentSingleWatcher(),
 	]);
 }
 

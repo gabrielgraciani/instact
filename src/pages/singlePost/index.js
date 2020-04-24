@@ -11,7 +11,6 @@ const SinglePost = ({ match }) => {
 
 	const dispatch = useDispatch();
 	const { singlePostData = [] } = useSelector(store => store.post);
-	console.log('single?', singlePostData);
 
 	const verifyLike = () => {
 		const check = singlePostData.likes.find(like => like.users_id.toString() === id);
@@ -53,6 +52,7 @@ const SinglePost = ({ match }) => {
 						handleLike={handleLike}
 						verifyLike={verifyLike}
 						handleDeslike={handleDeslike}
+						usersId={id}
 					/>
 
 				</div>
