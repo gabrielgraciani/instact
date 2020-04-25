@@ -8,7 +8,8 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import HomeIcon from '@material-ui/icons/Home';
 import { Link } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { userFetch } from "../../redux/actions/user";
 import FormPost from 'components/createPost/formPost';
 import { STORAGE_URL } from 'configs/constants';
 
@@ -17,6 +18,8 @@ function Header({location}){
 	const [hidden, setHidden] = useState(true);
 	const { userData = [], isSavingImage } = useSelector(store => store.user);
 	const [activeAdd, setActiveAdd] = useState(false);
+	const dispatch = useDispatch();
+	const id = localStorage.getItem('id_user_instact');
 
 	useEffect(() => {
 		if(location.pathname === LOGIN){
@@ -30,6 +33,10 @@ function Header({location}){
 	const handleChangeAdd = () => {
 		setActiveAdd(!activeAdd);
 	};
+
+	useEffect(() => {
+		dispatch(userFetch(id));
+	}, [dispatch, id]);
 
 	return(
 		<>
@@ -76,7 +83,7 @@ function Header({location}){
 
 			<div id="wrap_create_post" className={activeAdd ? 'active' : ''}>
 			{activeAdd && (
-				<FormPost handleChangeAdd={handleChangeAdd} />
+				<FormPost handleChangeAdd={handleChangeAdd} userData={userData} />
 			)}
 			</div>
 			</>

@@ -6,9 +6,10 @@ import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import { useDispatch, useSelector } from "react-redux";
 import { postSendCadastro } from "../../redux/actions/post";
 import Dialog from 'components/dialog/dialog';
+import { STORAGE_URL } from 'configs/constants';
 
 
-const FormPost = ({ handleChangeAdd }) => {
+const FormPost = ({ handleChangeAdd, userData }) => {
 
 	const [errorImageSize, setErrorImageSize] = useState(false);
 	const [imagePreview, setImagePreview] = useState('');
@@ -92,8 +93,11 @@ const FormPost = ({ handleChangeAdd }) => {
 					</div>
 					<div className="body">
 						<div className="imagem">
-							{/*<img src="" alt="" />*/}
-							<AccountCircleIcon />
+							{!userData.profile_image ? (
+								<AccountCircleIcon />
+							) : (
+								<img src={`${STORAGE_URL}users/${userData.id}/${userData.profile_image}`} alt="" />
+							)}
 						</div>
 						<form>
 							<input type="text" placeholder="Escreva uma legenda..." name="description" value={description} onChange={handleChangeDescription} />

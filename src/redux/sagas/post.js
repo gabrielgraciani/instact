@@ -7,10 +7,11 @@ import Post from '../../services/post';
 function* postSendCadastroWorker(data) {
 	try {
 		const data2 = data.payload;
-		const { postAdd } = yield call(Post.registerPost, data2);
+		const { data: dataApi } = yield call(Post.registerPost, data2);
+		const { post } = dataApi;
 
 		yield put(actions.postSendCadastroSuccess(false));
-		yield put(actions.postUpdateList(postAdd));
+		yield put(actions.postUpdateList(post));
 
 		yield delay(1000);
 		yield put(actions.postSendCadastroSuccess(true));
