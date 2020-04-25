@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { postSendLike, postSendDeslike, postSendFollow, postSendUnfollow } from "../../redux/actions/post";
 import Post from 'components/post/post';
-import Dialog from 'components/dialog/dialog';
-import { STORAGE_URL } from 'configs/constants';
-import FollowButton from 'components/followButton/followButton';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import CloseIcon from "@material-ui/icons/Close";
+
+import DialogPost from 'components/post/dialogPost';
 
 const ContentPost = () => {
 
@@ -75,49 +72,20 @@ const ContentPost = () => {
 			/>
 		))}
 
-		<div id="wrap_all_likes" className={allLikes ? 'active' : ''}>
-			{allLikes && (
-				<Dialog handleClose={() => setAllLikes(false)}>
-					<div className="indent">
-						<div className="title">
-							<h4>Curtidas</h4>
-						</div>
-						<div className="close">
-							<CloseIcon onClick={handleAllLikes} />
-						</div>
-						<div className="body">
-							{postData[indexPost].likes.map((item) => (
-								<div className="item" key={item.id}>
-									<div className="image">
-										{item.profile_image === null ? (
-											<AccountCircleIcon />
-										) : (
-											<img src={`${STORAGE_URL}users/${item.users_id}/${item.profile_image}`} alt=""/>
-										)}
-									</div>
-									<div className="user">
-										<span><strong>{item.username}</strong></span>
-										<span>{item.name}</span>
-									</div>
-									{item.users_id.toString() !== id && (
-										<FollowButton
-											handleSendFollow={handleSendFollow}
-											users_id={item.users_id}
-											allFollowsUserLogged={allFollowsUserLogged}
-											profile_image={item.profile_image}
-											username={item.username}
-											handleSendUnfollow={handleSendUnfollow}
-											isFollowing={isFollowing}
-											isUnfollowing={isUnfollowing}
-										/>
-									)}
-								</div>
-							))}
-						</div>
-					</div>
-				</Dialog>
-			)}
-		</div>
+		<DialogPost
+			allLikes={allLikes}
+			setAllLikes={setAllLikes}
+			handleAllLikes={handleAllLikes}
+			postData={postData}
+			indexPost={indexPost}
+			handleSendFollow={handleSendFollow}
+			allFollowsUserLogged={allFollowsUserLogged}
+			handleSendUnfollow={handleSendUnfollow}
+			isFollowing={isFollowing}
+			isUnfollowing={isUnfollowing}
+			id={id}
+		/>
+
 		</>
 	)
 };

@@ -12,7 +12,7 @@ import { STORAGE_URL } from 'configs/constants';
 import { Link } from 'react-router-dom';
 import { Events, scroller } from 'react-scroll'
 
-const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, handleAllLikes, className = '' }) => {
+const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, handleAllLikes, className = '', scroll = '' }) => {
 
 	const [valueComment, setValueComment] = useState('');
 	const [boxHeight, setBoxHeight] = useState(200);
@@ -20,6 +20,8 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 	const dispatch = useDispatch();
 	const inputRef = useRef(null);
 	const bodyRef = useRef(null);
+
+	let scrollToWithContainer = () => {};
 
 	const handleChangeInput = (e) => {
 		setValueComment(e.target.value);
@@ -50,20 +52,23 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 		inputRef.current.focus();
 	};
 
-	const scrollToWithContainer = () => {
-		new Promise((resolve) => {
-			Events.scrollEvent.register('end', () => {
-				resolve();
-				Events.scrollEvent.remove('end');
+	if(scroll !== ''){
+		scrollToWithContainer = () => {
+			new Promise((resolve) => {
+				Events.scrollEvent.register('end', () => {
+					resolve();
+					Events.scrollEvent.remove('end');
+				});
+				scroller.scrollTo('scroll-container-comments', {
+					duration: 800,
+					delay: 0,
+					smooth: 'easeInOutQuart',
+					containerId: 'scroll-comments'
+				})
 			});
-			scroller.scrollTo('scroll-container-comments', {
-				duration: 800,
-				delay: 0,
-				smooth: 'easeInOutQuart',
-				containerId: 'scroll-comments'
-			})
-		});
-	};
+		};
+	}
+
 
 	useEffect(() => {
 		if(bodyRef.current !== null) {

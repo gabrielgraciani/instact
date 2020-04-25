@@ -55,6 +55,7 @@ const SinglePost = ({ match }) => {
 						verifyLike={verifyLike}
 						handleDeslike={handleDeslike}
 						usersId={id}
+						scroll="true"
 					/>
 
 				</div>
