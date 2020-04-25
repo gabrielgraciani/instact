@@ -338,7 +338,7 @@ function* postSendCommentSingleWorker(data) {
 		if (success === true) {
 			singlePostData.qt_comments = singlePostData.qt_comments + 1;
 			singlePostData.comments.push(comment);
-			yield put(actions.postSendCommentSuccess());
+			yield put(actions.postSendCommentSingleSuccess());
 		}
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);

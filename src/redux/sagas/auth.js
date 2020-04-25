@@ -33,6 +33,7 @@ function* authSendLoginWorker(data){
 
 			localStorage.setItem('id_user_instact', response.id);
 			localStorage.setItem('name_user_instact', response.name);
+			localStorage.setItem('username_user_instact', response.username);
 		}
 		else{
 			yield put(actions.authError(response));
