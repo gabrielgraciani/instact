@@ -54,6 +54,7 @@ export default function postReducer(
 				...initialState,
 				...state,
 				isLoading: true,
+				singlePostData: []
 			};
 
 		case actions.POST_FETCH_SUCCESS:
@@ -173,6 +174,7 @@ export default function postReducer(
 				...initialState,
 				...state,
 				isLoading: true,
+				singlePostData: []
 			};
 
 		case actions.POST_FETCH_SINGLE_SUCCESS:

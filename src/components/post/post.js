@@ -71,9 +71,11 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 
 
 	useEffect(() => {
-		if(bodyRef.current !== null) {
-			setBoxHeight(bodyRef.current.getBoundingClientRect().height || 0);
-		}
+		setTimeout(() => {
+			if(bodyRef.current !== null) {
+				setBoxHeight(bodyRef.current.getBoundingClientRect().height - 228 || 0);
+			}
+		}, 100);
 	}, []);
 
 	useEffect(() => {
@@ -84,11 +86,11 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 		<>
 		{className === 'singlePost' ? (
 			<div className="post">
-				<div className="body" ref={bodyRef}>
-					<img src={`${STORAGE_URL}posts/${post.file}`} alt={post.description} />
+				<div className="body">
+					<img src={`${STORAGE_URL}posts/${post.file}`} alt={post.description} ref={bodyRef} />
 
 				</div>
-				<div className="box" height={boxHeight}>
+				<div className="box">
 					<div className="head">
 						<div className="user">
 							{!post.profile_image ? (
@@ -100,7 +102,7 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 						</div>
 					</div>
 
-					<div className="comments" id="scroll-comments">
+					<div className="comments" id="scroll-comments" style={{height: boxHeight}}>
 						{post.comments && (
 							post.comments.map((comment) => (
 								<div className="item" key={comment.id}>
