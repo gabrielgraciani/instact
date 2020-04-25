@@ -15,9 +15,9 @@ export default class post{
 		});
 	};
 
-	static getPostsFromUser = async (id, page, limit) => {
-		return await api.get(`/all-posts-from-user/${id}`, {
-			params: { page, limit },
+	static getPostsFromUser = async ({ users_id, page, limit, posts_id }) => {
+		return await api.get(`/all-posts-from-user/${users_id}`, {
+			params: { page, limit, posts_id },
 		});
 	};
 

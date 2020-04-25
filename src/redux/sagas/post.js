@@ -110,9 +110,7 @@ function* postFetchMoreWorker(data) {
 function* postFetchFromUserWorker(data) {
 	try {
 
-		const id  = data.payload;
-
-		const { data: userPosts } = yield call(Post.getPostsFromUser, id);
+		const { data: userPosts } = yield call(Post.getPostsFromUser, data.payload);
 
 		yield put(actions.postFetchFromUserSuccess(userPosts));
 

@@ -8,7 +8,7 @@ import {userFetch} from "../../redux/actions/user";
 import {postFetchFromUser} from "../../redux/actions/post";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Config from 'components/profile/config';
-import Post from 'components/profile/post';
+import PostProfile from 'components/profile/postProfile';
 import { Link } from 'react-router-dom';
 import { EDIT } from '../../routes';
 import { STORAGE_URL } from 'configs/constants';
@@ -29,6 +29,8 @@ function Profile(){
 	useEffect(() => {
 		dispatch(userFetch(id));
 		dispatch(postFetchFromUser(id));
+		dispatch(postFetchFromUser({users_id: id, page: 1, limit: 9, posts_id: '' }));
+
 
 	}, [id, dispatch]);
 
@@ -104,14 +106,15 @@ function Profile(){
 
 				<div id="wrap_posts">
 					<div className="indent">
-						<Post userPosts={userPosts} />
+						{userPosts.map((post) => (
+							<PostProfile post={post} key={post.id} />
+						))}
 					</div>
 				</div>
 
 				<div id="wrap_config" className={active ? 'active' : '' }>
 					{active && (
 						<Config />
-
 					)}
 				</div>
 			</>
