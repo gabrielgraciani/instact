@@ -1,4 +1,4 @@
-import React, { useState, useRef }  from 'react';
+import React, { useState, useRef, useEffect }  from 'react';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ModeCommentIcon from '@material-ui/icons/ModeComment';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -14,8 +14,10 @@ import { Link } from 'react-router-dom';
 const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, handleAllLikes, className = '' }) => {
 
 	const [valueComment, setValueComment] = useState('');
+	const [boxHeight, setBoxHeight] = useState(200);
 	const dispatch = useDispatch();
 	const inputRef = useRef(null);
+	const bodyRef = useRef(null);
 
 	const handleChangeInput = (e) => {
 		setValueComment(e.target.value);
@@ -23,7 +25,6 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 
 	const handleSubmitComment = (e) => {
 		e.preventDefault();
-		console.log('xd', post.id, valueComment, usersId);
 		dispatch(postSendComment({
 			posts_id: post.id,
 			comment: valueComment,
@@ -34,7 +35,6 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 
 	const handleSubmitCommentSingle = (e) => {
 		e.preventDefault();
-		console.log('xd', post.id, valueComment, usersId);
 		dispatch(postSendCommentSingle({
 			posts_id: post.id,
 			comment: valueComment,
@@ -47,15 +47,21 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 		inputRef.current.focus();
 	};
 
+	useEffect(() => {
+		if(bodyRef.current !== null) {
+			setBoxHeight(bodyRef.current.getBoundingClientRect().height || 0);
+		}
+	}, []);
+
 	return(
 		<>
 		{className === 'singlePost' ? (
 			<div className="post">
-				<div className="body">
+				<div className="body" ref={bodyRef}>
 					<img src={`${STORAGE_URL}posts/${post.file}`} alt={post.description} />
 
 				</div>
-				<div className="box">
+				<div className="box" height={boxHeight}>
 					<div className="head">
 						<div className="user">
 							{!post.profile_image ? (
