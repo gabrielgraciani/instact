@@ -76,7 +76,7 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 				setBoxHeight(bodyRef.current.getBoundingClientRect().height - 228 || 0);
 			}
 		}, 100);
-	}, []);
+	}, [post]);
 
 	useEffect(() => {
 		scrollToWithContainer();
