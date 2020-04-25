@@ -1,23 +1,33 @@
 import React from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import {  postSendFollow, postSendUnfollow } from "../../redux/actions/post";
 import { STORAGE_URL } from 'configs/constants';
 import FollowButton from 'components/followButton/followButton';
 import Dialog from 'components/dialog/dialog';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CloseIcon from "@material-ui/icons/Close";
 
-const DialogPost = ({
-				allLikes,
-				setAllLikes,
-				handleAllLikes,
-				postData,
-				indexPost,
-				handleSendFollow,
-				allFollowsUserLogged,
-				handleSendUnfollow,
-				isFollowing,
-				isUnfollowing,
-				id
-}) => {
+
+const DialogPost = ({ allLikes, setAllLikes, handleAllLikes, postData, indexPost, id }) => {
+
+	const dispatch = useDispatch();
+	const { isFollowing, isUnfollowing, allFollowsUserLogged = [] } = useSelector(store => store.post);
+
+
+	const handleSendFollow = (users_id) => {
+		dispatch(postSendFollow({
+			sent_users_id: users_id,
+			received_users_id: id
+		}));
+	};
+
+	const handleSendUnfollow = (users_id) => {
+		dispatch(postSendUnfollow({
+			sent_users_id: users_id,
+			received_users_id: parseInt(id)
+		}));
+	};
+
 	return (
 		<div id="wrap_all_likes" className={allLikes ? 'active' : ''}>
 			{allLikes && (
