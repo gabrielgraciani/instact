@@ -10,11 +10,13 @@ import 'moment/locale/pt-br';
 import HeartIcon from 'assets/images/heart.png';
 import { STORAGE_URL } from 'configs/constants';
 import { Link } from 'react-router-dom';
+import { Events, scroller } from 'react-scroll'
 
 const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, handleAllLikes, className = '' }) => {
 
 	const [valueComment, setValueComment] = useState('');
 	const [boxHeight, setBoxHeight] = useState(200);
+	const [scrollBottom, setScrollBottom] = useState(0);
 	const dispatch = useDispatch();
 	const inputRef = useRef(null);
 	const bodyRef = useRef(null);
@@ -41,10 +43,26 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 			users_id: usersId
 		}));
 		setValueComment('');
+		setScrollBottom(scrollBottom + 1);
 	};
 
 	const focusInput = () => {
 		inputRef.current.focus();
+	};
+
+	const scrollToWithContainer = () => {
+		new Promise((resolve) => {
+			Events.scrollEvent.register('end', () => {
+				resolve();
+				Events.scrollEvent.remove('end');
+			});
+			scroller.scrollTo('scroll-container-comments', {
+				duration: 800,
+				delay: 0,
+				smooth: 'easeInOutQuart',
+				containerId: 'scroll-comments'
+			})
+		});
 	};
 
 	useEffect(() => {
@@ -52,6 +70,11 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 			setBoxHeight(bodyRef.current.getBoundingClientRect().height || 0);
 		}
 	}, []);
+
+	useEffect(() => {
+		console.log('oioioi');
+		scrollToWithContainer();
+	}, [scrollBottom]);
 
 	return(
 		<>
@@ -73,7 +96,7 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 						</div>
 					</div>
 
-					<div className="comments">
+					<div className="comments" id="scroll-comments">
 						{post.comments && (
 							post.comments.map((comment) => (
 								<div className="item" key={comment.id}>
@@ -91,6 +114,7 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 								</div>
 							))
 						)}
+						<div name="scroll-container-comments"> </div>
 					</div>
 
 					<div className="actions">
