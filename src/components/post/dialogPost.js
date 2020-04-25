@@ -40,33 +40,63 @@ const DialogPost = ({ allLikes, setAllLikes, handleAllLikes, postData, indexPost
 							<CloseIcon onClick={handleAllLikes} />
 						</div>
 						<div className="body">
-							{postData[indexPost].likes.map((item) => (
-								<div className="item" key={item.id}>
-									<div className="image">
-										{item.profile_image === null ? (
-											<AccountCircleIcon />
-										) : (
-											<img src={`${STORAGE_URL}users/${item.users_id}/${item.profile_image}`} alt=""/>
+							{indexPost !== '' ? (
+								postData[indexPost].likes.map((item) => (
+									<div className="item" key={item.id}>
+										<div className="image">
+											{item.profile_image === null ? (
+												<AccountCircleIcon />
+											) : (
+												<img src={`${STORAGE_URL}users/${item.users_id}/${item.profile_image}`} alt=""/>
+											)}
+										</div>
+										<div className="user">
+											<span><strong>{item.username}</strong></span>
+											<span>{item.name}</span>
+										</div>
+										{item.users_id.toString() !== id && (
+											<FollowButton
+												handleSendFollow={handleSendFollow}
+												users_id={item.users_id}
+												allFollowsUserLogged={allFollowsUserLogged}
+												profile_image={item.profile_image}
+												username={item.username}
+												handleSendUnfollow={handleSendUnfollow}
+												isFollowing={isFollowing}
+												isUnfollowing={isUnfollowing}
+											/>
 										)}
 									</div>
-									<div className="user">
-										<span><strong>{item.username}</strong></span>
-										<span>{item.name}</span>
+								))
+							) : (
+								postData.likes.map((item) => (
+									<div className="item" key={item.id}>
+										<div className="image">
+											{item.profile_image === null ? (
+												<AccountCircleIcon />
+											) : (
+												<img src={`${STORAGE_URL}users/${item.users_id}/${item.profile_image}`} alt=""/>
+											)}
+										</div>
+										<div className="user">
+											<span><strong>{item.username}</strong></span>
+											<span>{item.name}</span>
+										</div>
+										{item.users_id.toString() !== id && (
+											<FollowButton
+												handleSendFollow={handleSendFollow}
+												users_id={item.users_id}
+												allFollowsUserLogged={allFollowsUserLogged}
+												profile_image={item.profile_image}
+												username={item.username}
+												handleSendUnfollow={handleSendUnfollow}
+												isFollowing={isFollowing}
+												isUnfollowing={isUnfollowing}
+											/>
+										)}
 									</div>
-									{item.users_id.toString() !== id && (
-										<FollowButton
-											handleSendFollow={handleSendFollow}
-											users_id={item.users_id}
-											allFollowsUserLogged={allFollowsUserLogged}
-											profile_image={item.profile_image}
-											username={item.username}
-											handleSendUnfollow={handleSendUnfollow}
-											isFollowing={isFollowing}
-											isUnfollowing={isUnfollowing}
-										/>
-									)}
-								</div>
-							))}
+								))
+							)}
 						</div>
 					</div>
 				</Dialog>

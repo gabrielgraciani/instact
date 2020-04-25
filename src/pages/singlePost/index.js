@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { postFetchSingle, postSendLikeSingle, postSendDeslikeSingle, postFetchFromUser } from "../../redux/actions/post";
+import { postFetchSingle, postSendLikeSingle, postSendDeslikeSingle, postFetchFromUser, postFetch } from "../../redux/actions/post";
 import Post from 'components/post/post';
 import PostProfile from 'components/profile/postProfile';
+import DialogPost from 'components/post/dialogPost';
 
 const SinglePost = ({ match }) => {
 
 	const { posts_id } = match.params;
 	const id = localStorage.getItem('id_user_instact');
 	const username = localStorage.getItem('username_user_instact');
+	const [allLikes, setAllLikes] = useState(false);
+
 
 	const dispatch = useDispatch();
 	const { singlePostData = [] } = useSelector(store => store.post);
@@ -37,8 +40,16 @@ const SinglePost = ({ match }) => {
 		}));
 	};
 
+	const handleAllLikes = () => {
+		setAllLikes(!allLikes);
+	};
+
 	useEffect(() => {
 		window.scrollTo(0, 0);
+		dispatch(postFetch({
+			id : parseInt(id),
+			page: 1
+		}));
 		dispatch(postFetchSingle(posts_id));
 		dispatch(postFetchFromUser({users_id: id, page: 1, limit: 6, posts_id}));
 	}, [dispatch, posts_id, id]);
@@ -56,6 +67,7 @@ const SinglePost = ({ match }) => {
 						handleDeslike={handleDeslike}
 						usersId={id}
 						scroll="true"
+						handleAllLikes={handleAllLikes}
 					/>
 
 				</div>
@@ -72,6 +84,15 @@ const SinglePost = ({ match }) => {
 				))}
 			</div>
 		</div>
+
+		<DialogPost
+			allLikes={allLikes}
+			setAllLikes={setAllLikes}
+			handleAllLikes={handleAllLikes}
+			postData={singlePostData}
+			indexPost=''
+			id={id}
+		/>
 		</>
 	)
 };

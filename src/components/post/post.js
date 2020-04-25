@@ -77,7 +77,6 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 	}, []);
 
 	useEffect(() => {
-		console.log('oioioi');
 		scrollToWithContainer();
 	}, [scrollBottom]);
 
@@ -143,7 +142,7 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 					<div className="likes">
 						<span>Curtido por
 							{post.qt_likes > 0 ? (
-								<strong onClick={() => handleAllLikes(index)} className="pointer">
+								<strong onClick={handleAllLikes} className="pointer">
 									{post.qt_likes}
 									{post.qt_likes === 1 ? ' pessoa' : ' pessoas'}
 								</strong>
