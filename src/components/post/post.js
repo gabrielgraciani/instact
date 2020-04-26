@@ -8,15 +8,17 @@ import { postSendComment, postSendCommentSingle } from "../../redux/actions/post
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import HeartIcon from 'assets/images/heart.png';
-import { STORAGE_URL } from 'configs/constants';
+import { STORAGE_URL, SITE_URL } from 'configs/constants';
 import { Link } from 'react-router-dom';
 import { Events, scroller } from 'react-scroll'
+import Dialog from 'components/dialog/dialog';
 
 const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, handleAllLikes, className = '', scroll = '' }) => {
 
 	const [valueComment, setValueComment] = useState('');
 	const [boxHeight, setBoxHeight] = useState(200);
 	const [scrollBottom, setScrollBottom] = useState(0);
+	const [openConfig, setOpenConfig] = useState(false);
 	const dispatch = useDispatch();
 	const inputRef = useRef(null);
 	const bodyRef = useRef(null);
@@ -69,6 +71,9 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 		};
 	}
 
+	const handleChangeConfig = () => {
+		setOpenConfig(!openConfig);
+	};
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -99,6 +104,9 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 								<img src={`${STORAGE_URL}users/${post.users_id}/${post.profile_image}`} alt={post.username} />
 							)}
 							<span>{post.username}</span>
+						</div>
+						<div className="opcoes" onClick={handleChangeConfig}>
+							<MoreHorizIcon />
 						</div>
 					</div>
 
@@ -179,7 +187,7 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 						)}
 						<span>{post.name}</span>
 					</div>
-					<div className="opcoes">
+					<div className="opcoes" onClick={handleChangeConfig}>
 						<MoreHorizIcon />
 					</div>
 				</div>
@@ -261,6 +269,24 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 				</form>
 			</div>
 		)}
+
+		<div id="wrap_config" className={openConfig ? 'active' : '' }>
+			{openConfig && (
+				<div className="indent">
+					<Dialog handleClose={handleChangeConfig}>
+						<Link to={`/p/${post.id}`} className="item">
+							Ir para a publicação
+						</Link>
+						<button type="button" className="item" onClick={() => {navigator.clipboard.writeText(`${SITE_URL}p/${post.id}`); setOpenConfig(false);}}>
+							Copiar link
+						</button>
+						<button type="button" className="item" onClick={handleChangeConfig}>
+							Cancelar
+						</button>
+					</Dialog>
+				</div>
+			)}
+		</div>
 
 		</>
 	)
