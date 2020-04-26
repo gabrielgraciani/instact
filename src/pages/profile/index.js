@@ -75,13 +75,13 @@ function Profile(){
 
 								<div className="row">
 									<div className="item">
-										<span><strong>11</strong> publicacoes</span>
+										<span><strong>{userData.qt_posts}</strong> publicacoes</span>
 									</div>
 									<div className="item">
-										<span><strong>11</strong> seguidores</span>
+										<span><strong>{userData.qt_followers}</strong> seguidores</span>
 									</div>
 									<div className="item">
-										<span><strong>11</strong> seguindo</span>
+										<span><strong>{userData.qt_following}</strong> seguindo</span>
 									</div>
 								</div>
 
