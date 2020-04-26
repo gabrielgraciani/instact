@@ -16,7 +16,7 @@ const Home = () => {
 
 	const dispatch = useDispatch();
 	const { userData = [] } = useSelector(store => store.user);
-	const { allFollowsUserLogged = [], isFollowing, isUnfollowing, end, isLoading } = useSelector(store => store.post);
+	const { allFollowsUserLogged = [], isFollowing, isUnfollowing, end, isLoading, postData = [] } = useSelector(store => store.post);
 	const { sugestions = [] } = useSelector(store => store.global);
 	const [page, setPage] = useState(1);
 
@@ -133,6 +133,14 @@ const Home = () => {
 					<div className="indent">
 						<div className="no-posts">
 							<span>Não há mais Publicações, aumente sua lista de seguidores!!</span>
+						</div>
+					</div>
+				)}
+
+				{postData.length === 0 && (
+					<div className="indent">
+						<div className="no-posts">
+							<span>Não há Publicações, aumente sua lista de seguidores!!</span>
 						</div>
 					</div>
 				)}
