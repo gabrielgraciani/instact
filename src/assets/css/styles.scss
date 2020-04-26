@@ -444,7 +444,8 @@ p{font-size:21px;}
 	}
 }
 
-.no-posts{width:100%; text-align:center; padding:20px 0 40px 0;
+.no-posts{width:100%; text-align:center; padding:0 0 40px 0;
+	&.profile{padding:20px 0 40px 0;}
 	span{font-size:15px; color:$gray_dark; font-weight:bold;}
 }
 

@@ -30,8 +30,6 @@ function Profile(){
 	useEffect(() => {
 		dispatch(userFetch(id));
 		dispatch(postFetchFromUser({users_id: id, page: 1, limit: 9 }));
-
-
 	}, [id, dispatch]);
 
 	useEffect(() => {
@@ -136,7 +134,7 @@ function Profile(){
 
 				{endUserPosts && (
 					<div className="indent">
-						<div className="no-posts">
+						<div className="no-posts profile">
 							<span>Não há mais publicações abaixo!!</span>
 						</div>
 					</div>
