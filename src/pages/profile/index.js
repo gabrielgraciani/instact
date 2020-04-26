@@ -107,7 +107,7 @@ function Profile(){
 				<div id="wrap_posts">
 					<div className="indent">
 						{userPosts.map((post) => (
-							<PostProfile post={post} key={post.id} />
+							<PostProfile post={post} key={post.id} link={false} />
 						))}
 					</div>
 				</div>
