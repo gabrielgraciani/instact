@@ -75,7 +75,7 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 			if(bodyRef.current !== null) {
 				setBoxHeight(bodyRef.current.getBoundingClientRect().height - 228 || 0);
 			}
-		}, 100);
+		}, 10);
 	}, [post]);
 
 	useEffect(() => {
