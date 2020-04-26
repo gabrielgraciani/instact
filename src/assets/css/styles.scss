@@ -200,6 +200,7 @@ p{font-size:21px;}
 }
 
 #wrap_posts{width:100%; position:relative; margin:10px 0;
+	.empty{text-align:center;}
 	.indent{display:grid; grid-template-columns: repeat(auto-fill, 31.3%);	grid-gap: 30px 3%;
 		a{width:100%; display:flex; position:relative; cursor:pointer; user-select:none;}
 		.post_profile{width:100%; display:flex; position:relative; cursor:pointer; user-select:none;

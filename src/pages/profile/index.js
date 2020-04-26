@@ -105,6 +105,11 @@ function Profile(){
 				</div>
 
 				<div id="wrap_posts">
+					<div className="empty">
+						{userPosts.length === 0 && (
+							<span>Você não possui nenhuma publicação.</span>
+						)}
+					</div>
 					<div className="indent">
 						{userPosts.map((post) => (
 							<PostProfile post={post} key={post.id} link={false} />

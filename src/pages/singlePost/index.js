@@ -38,6 +38,11 @@ const SinglePost = ({ match }) => {
 			<div className="indent title">
 				<h4>Mais publicações de <strong>{username}</strong></h4>
 			</div>
+			<div className="empty">
+				{userPosts.length === 0 && (
+					<span>Este usuário não possui mais nenhuma publicação.</span>
+				)}
+			</div>
 			<div className="indent">
 				{userPosts.map((post) => (
 					<PostProfile post={post} key={post.id} />
