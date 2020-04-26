@@ -7,6 +7,8 @@ export const POST_FETCH_MORE = 'POST_FETCH_MORE';
 export const POST_FETCH_MORE_SUCCESS = 'POST_FETCH_MORE_SUCCESS';
 export const POST_FETCH_FROM_USER = 'POST_FETCH_FROM_USER';
 export const POST_FETCH_FROM_USER_SUCCESS = 'POST_FETCH_FROM_USER_SUCCESS';
+export const POST_FETCH_FROM_USER_MORE = 'POST_FETCH_FROM_USER_MORE';
+export const POST_FETCH_FROM_USER_MORE_SUCCESS = 'POST_FETCH_FROM_USER_MORE_SUCCESS';
 export const POST_SEND_LIKE = 'POST_SEND_LIKE';
 export const POST_SEND_LIKE_SUCCESS = 'POST_SEND_LIKE_SUCCESS';
 export const POST_SEND_DESLIKE = 'POST_SEND_DESLIKE';
@@ -82,6 +84,19 @@ export const postFetchFromUserSuccess = (userPosts) => ({
 	type: POST_FETCH_FROM_USER_SUCCESS,
 	payload: {
 		userPosts
+	}
+});
+
+export const postFetchFromUserMore = (payload) => ({
+	type: POST_FETCH_FROM_USER_MORE,
+	payload
+});
+
+export const postFetchFromUserMoreSuccess = (userPosts, endUserPosts) => ({
+	type: POST_FETCH_FROM_USER_MORE_SUCCESS,
+	payload: {
+		userPosts,
+		endUserPosts
 	}
 });
 

@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import GridOnIcon from '@material-ui/icons/GridOn';
-import {useDispatch, useSelector} from "react-redux";
-import {classActiveSend} from "../../redux/actions/classActive";
-import {userFetch} from "../../redux/actions/user";
-import {postFetchFromUser} from "../../redux/actions/post";
+import { useDispatch, useSelector } from "react-redux";
+import { classActiveSend } from "../../redux/actions/classActive";
+import { userFetch } from "../../redux/actions/user";
+import { postFetchFromUser, postFetchFromUserMore } from "../../redux/actions/post";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Config from 'components/profile/config';
 import PostProfile from 'components/profile/postProfile';
@@ -18,7 +18,8 @@ function Profile(){
 	const dispatch = useDispatch();
 	const { active } = useSelector(store => store.classActive);
 	const { loading = true, userData = [] } = useSelector(store => store.user);
-	const { userPosts = [] } = useSelector(store => store.post);
+	const { userPosts = [], endUserPosts } = useSelector(store => store.post);
+	const [page, setPage] = useState(1);
 
 	const handleChange = () => {
 		dispatch(classActiveSend());
@@ -28,8 +29,7 @@ function Profile(){
 
 	useEffect(() => {
 		dispatch(userFetch(id));
-		dispatch(postFetchFromUser(id));
-		dispatch(postFetchFromUser({users_id: id, page: 1, limit: 9, posts_id: '' }));
+		dispatch(postFetchFromUser({users_id: id, page: 1, limit: 9 }));
 
 
 	}, [id, dispatch]);
@@ -37,6 +37,23 @@ function Profile(){
 	useEffect(() => {
 		document.title = userData.name || 'Instact - Instagram clone';
 	}, [userData]);
+
+	const handleScroll = useCallback(() => {
+		if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
+		setPage(page + 1);
+		if(!endUserPosts) {
+			dispatch(postFetchFromUserMore({
+				users_id: id,
+				page: page + 1,
+				limit: 9
+			}));
+		}
+	}, [page, dispatch, endUserPosts, id]);
+
+	useEffect(() => {
+		window.addEventListener('scroll', handleScroll);
+		return () => window.removeEventListener('scroll', handleScroll);
+	}, [handleScroll]);
 
 	return(
 		<>
@@ -116,6 +133,14 @@ function Profile(){
 						))}
 					</div>
 				</div>
+
+				{endUserPosts && (
+					<div className="indent">
+						<div className="no-posts">
+							<span>Não há mais publicações abaixo!!</span>
+						</div>
+					</div>
+				)}
 
 				<div id="wrap_config" className={active ? 'active' : '' }>
 					{active && (

@@ -16,6 +16,7 @@ export const initialState = {
 	end: false,
 	isLoading: false,
 	singlePostData: [],
+	endUserPosts: false,
 };
 
 
@@ -98,6 +99,23 @@ export default function postReducer(
 				...state,
 				loading: false,
 				userPosts: payload.userPosts
+			};
+
+		case actions.POST_FETCH_FROM_USER_MORE:
+			return {
+				...initialState,
+				...state,
+				loading: true,
+			};
+
+		case actions.POST_FETCH_FROM_USER_MORE_SUCCESS:
+			return {
+				...initialState,
+				...state,
+				loading: false,
+				userPosts: [...state.userPosts,
+					...payload.userPosts],
+				endUserPosts: payload.endUserPosts
 			};
 
 		case actions.POST_SEND_LIKE:

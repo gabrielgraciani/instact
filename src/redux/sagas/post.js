@@ -120,6 +120,21 @@ function* postFetchFromUserWorker(data) {
 	}
 }
 
+function* postFetchFromUserMoreWorker(data) {
+	try {
+
+		const { data: userPosts } = yield call(Post.getPostsFromUser, data.payload);
+
+		let endUserPosts = false;
+		if(userPosts.length === 0 ) endUserPosts = true;
+
+		yield put(actions.postFetchFromUserMoreSuccess(userPosts, endUserPosts));
+
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
 function* postSendLikeWorker(data) {
 	try {
 
@@ -360,6 +375,10 @@ function* postFetchFromUserWatcher() {
 	yield takeLatest(actions.POST_FETCH_FROM_USER, postFetchFromUserWorker);
 }
 
+function* postFetchFromUserMoreWatcher() {
+	yield takeLatest(actions.POST_FETCH_FROM_USER_MORE, postFetchFromUserMoreWorker);
+}
+
 function* postSendLikeWatcher() {
 	yield takeLatest(actions.POST_SEND_LIKE, postSendLikeWorker);
 }
@@ -402,6 +421,7 @@ function* postWatcher() {
 		postFetchWatcher(),
 		postFetchMoreWatcher(),
 		postFetchFromUserWatcher(),
+		postFetchFromUserMoreWatcher(),
 		postSendLikeWatcher(),
 		postSendDeslikeWatcher(),
 		postSendCommentWatcher(),
