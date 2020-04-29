@@ -170,6 +170,9 @@ function Edit(){
 			{response === 'Error updating user' && (
 				<span>Erro ao atualizar usuário.</span>
 			)}
+			{response === 'Username already used' && (
+				<span>Username já utilizado.</span>
+			)}
 		</div>
 		</>
 	);
