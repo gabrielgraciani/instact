@@ -62,8 +62,7 @@ function Header({location}){
 
 						<AddCircleIcon onClick={handleChangeAdd} className={activeAdd ? 'active' : ''} />
 
-						<Link to={PROFILE}>
-
+						<Link to={`/profile/${userData.username}`}>
 							{isSavingImage ? (
 								<CircularProgress className="loading" />
 							) : (

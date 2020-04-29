@@ -98,12 +98,16 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 				<div className="box">
 					<div className="head">
 						<div className="user">
-							{!post.profile_image ? (
-								<AccountCircleIcon />
-							) : (
-								<img src={`${STORAGE_URL}users/${post.users_id}/${post.profile_image}`} alt={post.username} />
-							)}
-							<span>{post.username}</span>
+							<Link to={`/profile/${post.username}`}>
+								{!post.profile_image ? (
+									<AccountCircleIcon />
+								) : (
+									<img src={`${STORAGE_URL}users/${post.users_id}/${post.profile_image}`} alt={post.username} />
+								)}
+							</Link>
+							<Link to={`/profile/${post.username}`}>
+								<span>{post.username}</span>
+							</Link>
 						</div>
 						<div className="opcoes" onClick={handleChangeConfig}>
 							<MoreHorizIcon />
@@ -115,14 +119,16 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 							post.comments.map((comment) => (
 								<div className="item" key={comment.id}>
 									<div className="image">
-										{!comment.profile_image ? (
-											<AccountCircleIcon />
-										) : (
-											<img src={`${STORAGE_URL}users/${post.users_id}/${post.profile_image}`} alt={post.username} />
-										)}
+										<Link to={`/profile/${comment.username}`}>
+											{!comment.profile_image ? (
+												<AccountCircleIcon />
+											) : (
+												<img src={`${STORAGE_URL}users/${comment.users_id}/${comment.profile_image}`} alt={comment.username} />
+											)}
+										</Link>
 									</div>
 									<div className="content">
-										<span><strong>{comment.username}</strong> {comment.comment}</span>
+										<span><Link to={`/profile/${post.username}`}><strong>{comment.username}</strong></Link> {comment.comment}</span>
 										<span className="hora">{moment(comment.created_at).fromNow()}</span>
 									</div>
 								</div>
@@ -187,7 +193,9 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 							<img src={`${STORAGE_URL}users/${post.users_id}/${post.profile_image}`} alt={post.username} />
 						)}
 						</Link>
-						<span>{post.name}</span>
+						<Link to={`/profile/${post.username}`}>
+							<span>{post.name}</span>
+						</Link>
 					</div>
 					<div className="opcoes" onClick={handleChangeConfig}>
 						<MoreHorizIcon />
@@ -249,7 +257,13 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 				</span>
 				</div>
 				<div className="comments">
-					<span><strong>{post.username} </strong> {post.description}</span>
+					<span>
+						<Link to={`/profile/${post.username}`}>
+							<strong>{post.username} </strong>
+						</Link>
+
+						{post.description}
+					</span>
 					{post.qt_comments > 2 ? (
 						<Link to={`/p/${post.id}`}>
 							<span className="all">Ver todos os {post.qt_comments} comentários</span>
@@ -259,7 +273,13 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 					)}
 
 					{post.comments.map((comment, index) => (
-						<span key={index}><strong>{comment.username} </strong> {comment.comment}</span>
+						<span key={index}>
+							<Link to={`/profile/${post.username}`}>
+								<strong>{comment.username} </strong>
+							</Link>
+
+							{comment.comment}
+						</span>
 					))}
 				</div>
 				<div className="time">

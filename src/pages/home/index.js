@@ -5,7 +5,6 @@ import { postFetch, postFetchMore, postSendFollow, postSendUnfollow } from "../.
 import { globalFetchSugestions } from "../../redux/actions/global";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Link } from 'react-router-dom';
-import { PROFILE } from '../../routes';
 import FooterLateral from 'components/footer/footerLateral';
 import { STORAGE_URL } from 'configs/constants';
 import FollowButton from 'components/followButton/followButton';
@@ -72,7 +71,7 @@ const Home = () => {
 
 					<div className="fixed">
 						<div className="user">
-							<Link to={PROFILE} className="imagem">
+							<Link to={`/profile/${userData.username}`} className="imagem">
 								{!userData.profile_image ? (
 									<AccountCircleIcon />
 								) : (
@@ -80,7 +79,7 @@ const Home = () => {
 								)}
 							</Link>
 							<div className="text">
-								<Link to={PROFILE}><span><strong>{userData.username}</strong></span></Link>
+								<Link to={`/profile/${userData.username}`}><span><strong>{userData.username}</strong></span></Link>
 								<span className="small">{userData.name}</span>
 							</div>
 						</div>
@@ -92,18 +91,23 @@ const Home = () => {
 								{sugestions.map((item) => (
 								<div className="item" key={item.id}>
 									<div className="imagem">
-										{!item.profile_image ? (
-											<AccountCircleIcon />
-										) : (
-											<img src={`${STORAGE_URL}users/${item.id}/${item.profile_image}`} alt="" />
-										)}
+										<Link to={`/profile/${item.username}`}>
+											{!item.profile_image ? (
+												<AccountCircleIcon />
+											) : (
+												<img src={`${STORAGE_URL}users/${item.id}/${item.profile_image}`} alt="" />
+											)}
+										</Link>
 									</div>
 									<div className="text">
-										<span><strong>{item.username}</strong></span>
+										<span>
+											<Link to={`/profile/${item.username}`}>
+												<strong>{item.username}</strong>
+											</Link>
+										</span>
 										<span className="small">{item.name}</span>
 									</div>
 									<div className="follow">
-										{/*<button className="following">Seguindo</button>*/}
 										<FollowButton
 											handleSendFollow={handleSendFollow}
 											users_id={item.id}
@@ -117,6 +121,13 @@ const Home = () => {
 									</div>
 								</div>
 								))}
+								{sugestions.length === 0 && (
+									<div className="item">
+										<div className="text">
+											<span>Não há sugestões, você está seguindo todo mundo!!</span>
+										</div>
+									</div>
+								)}
 							</div>
 						</div>
 						<FooterLateral />

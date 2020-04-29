@@ -6,7 +6,7 @@ import FollowButton from 'components/followButton/followButton';
 import Dialog from 'components/dialog/dialog';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CloseIcon from "@material-ui/icons/Close";
-
+import { Link } from 'react-router-dom';
 
 const DialogPost = ({ allLikes, setAllLikes, handleAllLikes, postData, indexPost, id }) => {
 
@@ -43,15 +43,21 @@ const DialogPost = ({ allLikes, setAllLikes, handleAllLikes, postData, indexPost
 							{indexPost !== '' ? (
 								postData[indexPost].likes.map((item) => (
 									<div className="item" key={item.id}>
-										<div className="image">
-											{item.profile_image === null ? (
-												<AccountCircleIcon />
-											) : (
-												<img src={`${STORAGE_URL}users/${item.users_id}/${item.profile_image}`} alt=""/>
-											)}
-										</div>
+										<Link to={`/profile/${item.username}`}>
+											<div className="image">
+												{item.profile_image === null ? (
+													<AccountCircleIcon />
+												) : (
+													<img src={`${STORAGE_URL}users/${item.users_id}/${item.profile_image}`} alt=""/>
+												)}
+											</div>
+										</Link>
 										<div className="user">
-											<span><strong>{item.username}</strong></span>
+											<span>
+												<Link to={`/profile/${item.username}`}>
+													<strong>{item.username}</strong>
+												</Link>
+											</span>
 											<span>{item.name}</span>
 										</div>
 										{item.users_id.toString() !== id && (
@@ -72,14 +78,20 @@ const DialogPost = ({ allLikes, setAllLikes, handleAllLikes, postData, indexPost
 								postData.likes.map((item) => (
 									<div className="item" key={item.id}>
 										<div className="image">
+											<Link to={`/profile/${item.username}`}>
 											{item.profile_image === null ? (
 												<AccountCircleIcon />
 											) : (
 												<img src={`${STORAGE_URL}users/${item.users_id}/${item.profile_image}`} alt=""/>
 											)}
+											</Link>
 										</div>
 										<div className="user">
-											<span><strong>{item.username}</strong></span>
+											<span>
+												<Link to={`/profile/${item.username}`}>
+													<strong>{item.username}</strong>
+												</Link>
+											</span>
 											<span>{item.name}</span>
 										</div>
 										{item.users_id.toString() !== id && (

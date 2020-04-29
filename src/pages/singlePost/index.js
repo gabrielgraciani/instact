@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { postFetchFromUser, postFetch } from "../../redux/actions/post";
+import { postFetchFromUser, postFetch, postFetchSingle } from "../../redux/actions/post";
 import PostProfile from 'components/profile/postProfile';
 import SinglePostComp from 'components/post/singlePost';
 
@@ -12,7 +12,11 @@ const SinglePost = ({ match }) => {
 
 	const dispatch = useDispatch();
 	const { userPosts = [] } = useSelector(store => store.post);
+	const { singlePostData = [] } = useSelector(store => store.post);
 
+	useEffect(() => {
+		dispatch(postFetchFromUser({users_id: singlePostData.users_id, page: 1, limit: 6, posts_id}));
+	}, [singlePostData, dispatch, posts_id]);
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -20,7 +24,7 @@ const SinglePost = ({ match }) => {
 			id : parseInt(id),
 			page: 1
 		}));
-		dispatch(postFetchFromUser({users_id: id, page: 1, limit: 6, posts_id}));
+		dispatch(postFetchSingle(posts_id));
 	}, [dispatch, posts_id, id]);
 
 	return (
@@ -28,7 +32,7 @@ const SinglePost = ({ match }) => {
 		<div id="wrap_principal">
 			<div className="indent">
 				<div className="posts single">
-					<SinglePostComp posts_id={posts_id} />
+					<SinglePostComp posts_id={posts_id} singlePostData={singlePostData} />
 
 				</div>
 			</div>
