@@ -15,6 +15,7 @@ export const initialState = {
 	response: false,
 	isSavingImage: false,
 	image: '',
+	userByUsernameData: []
 };
 
 
@@ -36,6 +37,21 @@ export default function authReducer(
 				...state,
 				loading: false,
 				userData: payload.userData
+			};
+
+		case actions.USER_FETCH_BY_USERNAME:
+			return {
+				...initialState,
+				...state,
+				loading: true,
+			};
+
+		case actions.USER_FETCH_BY_USERNAME_SUCCESS:
+			return {
+				...initialState,
+				...state,
+				loading: false,
+				userByUsernameData: payload.userByUsernameData
 			};
 
 		case actions.USER_UPDATE:

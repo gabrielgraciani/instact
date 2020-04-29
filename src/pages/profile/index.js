@@ -4,7 +4,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import { useDispatch, useSelector } from "react-redux";
 import { classActiveSend } from "../../redux/actions/classActive";
-import { userFetch } from "../../redux/actions/user";
+import { userFetch, userFetchByUsername } from "../../redux/actions/user";
 import { postFetchFromUser, postFetchFromUserMore } from "../../redux/actions/post";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Config from 'components/profile/config';
@@ -13,11 +13,13 @@ import { Link } from 'react-router-dom';
 import { EDIT } from '../../routes';
 import { STORAGE_URL } from 'configs/constants';
 
-function Profile(){
+function Profile({ match }){
+
+	const { username } = match.params;
 
 	const dispatch = useDispatch();
 	const { active } = useSelector(store => store.classActive);
-	const { loading = true, userData = [] } = useSelector(store => store.user);
+	const { loading = true, userData = [], userByUsernameData = [] } = useSelector(store => store.user);
 	const { userPosts = [], endUserPosts } = useSelector(store => store.post);
 	const [page, setPage] = useState(1);
 
@@ -29,12 +31,16 @@ function Profile(){
 
 	useEffect(() => {
 		dispatch(userFetch(id));
-		dispatch(postFetchFromUser({users_id: id, page: 1, limit: 9 }));
 	}, [id, dispatch]);
 
 	useEffect(() => {
-		document.title = userData.name || 'Instact - Instagram clone';
-	}, [userData]);
+		dispatch(userFetchByUsername(username));
+		dispatch(postFetchFromUser({users_id: userByUsernameData.id, page: 1, limit: 9 }));
+	}, [userByUsernameData.id, username, dispatch]);
+
+	useEffect(() => {
+		document.title = userByUsernameData.name || 'Instact - Instagram clone';
+	}, [userByUsernameData]);
 
 	const handleScroll = useCallback(() => {
 		if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
@@ -65,9 +71,9 @@ function Profile(){
 					<div className="indent">
 						<div className="head">
 							<div className="img">
-								{userData.profile_image ? (
-									<img src={`${STORAGE_URL}users/${userData.id}/${userData.profile_image}`}
-										 alt={userData.name}
+								{userByUsernameData.profile_image ? (
+									<img src={`${STORAGE_URL}users/${userByUsernameData.id}/${userByUsernameData.profile_image}`}
+										 alt={userByUsernameData.name}
 									/>
 								) : (
 									<AccountCircleIcon />
@@ -76,33 +82,37 @@ function Profile(){
 							<div className="content">
 								<div className="row">
 									<div className="user">
-										<h4>{userData.username}</h4>
+										<h4>{userByUsernameData.username}</h4>
 									</div>
-									<Link to={EDIT}>
-										<div className="edit">
-											Editar perfil
-										</div>
-									</Link>
-									<div className="config" onClick={handleChange}>
-										<SettingsIcon />
-									</div>
+									{userData.id === userByUsernameData.id && (
+										<>
+											<Link to={EDIT}>
+												<div className="edit">
+													Editar perfil
+												</div>
+											</Link>
+											<div className="config" onClick={handleChange}>
+												<SettingsIcon />
+											</div>
+										</>
+									)}
 								</div>
 
 								<div className="row">
 									<div className="item">
-										<span><strong>{userData.qt_posts}</strong> publicacoes</span>
+										<span><strong>{userByUsernameData.qt_posts}</strong> publicacoes</span>
 									</div>
 									<div className="item">
-										<span><strong>{userData.qt_followers}</strong> seguidores</span>
+										<span><strong>{userByUsernameData.qt_followers}</strong> seguidores</span>
 									</div>
 									<div className="item">
-										<span><strong>{userData.qt_following}</strong> seguindo</span>
+										<span><strong>{userByUsernameData.qt_following}</strong> seguindo</span>
 									</div>
 								</div>
 
 								<div className="row">
 									<div className="nome">
-										<span><strong>{userData.name}</strong></span>
+										<span><strong>{userByUsernameData.name}</strong></span>
 									</div>
 								</div>
 							</div>

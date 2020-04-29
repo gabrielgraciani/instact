@@ -15,6 +15,18 @@ function* userFetchWorker(data) {
 	}
 }
 
+function* userFetchByUsernameWorker(data) {
+	try {
+		const username = data.payload;
+		const { data: userByUsernameData } = yield call(User.getUserByUsername, username);
+
+		yield put(actions.userFetchByUsernameSuccess(userByUsernameData));
+
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
 function* userUpdateWorker(data){
 	try{
 		const userData = data.payload;
@@ -78,6 +90,10 @@ function* userFetchWatcher() {
 	yield takeLatest(actions.USER_FETCH, userFetchWorker);
 }
 
+function* userFetchByUsernameWatcher() {
+	yield takeLatest(actions.USER_FETCH_BY_USERNAME, userFetchByUsernameWorker);
+}
+
 function* userUpdateWatcher(){
 	yield takeLatest(actions.USER_UPDATE, userUpdateWorker);
 }
@@ -93,6 +109,7 @@ function* userSendProfileImageWatcher(){
 function* authWatcher() {
 	yield all([
 		userFetchWatcher(),
+		userFetchByUsernameWatcher(),
 		userUpdateWatcher(),
 		userUpdatePasswordWatcher(),
 		userSendProfileImageWatcher(),

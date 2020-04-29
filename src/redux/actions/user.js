@@ -1,5 +1,7 @@
 export const USER_FETCH = 'USER_FETCH';
 export const USER_FETCH_SUCCESS = 'USER_FETCH_SUCCESS';
+export const USER_FETCH_BY_USERNAME = 'USER_FETCH_BY_USERNAME';
+export const USER_FETCH_BY_USERNAME_SUCCESS = 'USER_FETCH_BY_USERNAME_SUCCESS';
 export const USER_UPDATE = 'USER_UPDATE';
 export const USER_UPDATE_SUCCESS = 'USER_UPDATE_SUCCESS';
 export const USER_ATT = 'USER_ATT';
@@ -18,6 +20,19 @@ export const userFetchSuccess = (userData) => ({
 	type: USER_FETCH_SUCCESS,
 	payload: {
 		userData
+	}
+});
+
+
+export const userFetchByUsername = (payload) => ({
+	type: USER_FETCH_BY_USERNAME,
+	payload
+});
+
+export const userFetchByUsernameSuccess = (userByUsernameData) => ({
+	type: USER_FETCH_BY_USERNAME_SUCCESS,
+	payload: {
+		userByUsernameData
 	}
 });
 

@@ -113,7 +113,10 @@ function* postFetchFromUserWorker(data) {
 
 		const { data: userPosts } = yield call(Post.getPostsFromUser, data.payload);
 
-		yield put(actions.postFetchFromUserSuccess(userPosts));
+		let endUserPosts = false;
+		if(userPosts.length <= 6) endUserPosts = true;
+
+		yield put(actions.postFetchFromUserSuccess(userPosts, endUserPosts));
 
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);

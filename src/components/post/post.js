@@ -180,11 +180,13 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 			<div className="post">
 				<div className="head">
 					<div className="user">
+						<Link to={`/profile/${post.username}`}>
 						{!post.profile_image ? (
 							<AccountCircleIcon />
 						) : (
 							<img src={`${STORAGE_URL}users/${post.users_id}/${post.profile_image}`} alt={post.username} />
 						)}
+						</Link>
 						<span>{post.name}</span>
 					</div>
 					<div className="opcoes" onClick={handleChangeConfig}>

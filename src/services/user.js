@@ -6,6 +6,10 @@ export default class user{
 		return await api.get(`/users/${id}`);
 	};
 
+	static getUserByUsername = async (username) => {
+		return await api.get(`/users-by-username/${username}`);
+	};
+
 	static updateUser = async (data) => {
 		const { id, name, username, email } = data;
 		let { biography, telephone } = data;
