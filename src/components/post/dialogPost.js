@@ -13,7 +13,6 @@ const DialogPost = ({ allLikes, setAllLikes, handleAllLikes, postData, indexPost
 	const dispatch = useDispatch();
 	const { isFollowing, isUnfollowing, allFollowsUserLogged = [] } = useSelector(store => store.post);
 
-
 	const handleSendFollow = (users_id) => {
 		dispatch(postSendFollow({
 			sent_users_id: users_id,

@@ -5,13 +5,14 @@ import GridOnIcon from '@material-ui/icons/GridOn';
 import { useDispatch, useSelector } from "react-redux";
 import { classActiveSend } from "../../redux/actions/classActive";
 import { userFetch, userFetchByUsername } from "../../redux/actions/user";
-import { postFetchFromUser, postFetchFromUserMore } from "../../redux/actions/post";
+import { postFetch, postFetchFromUser, postFetchFromUserMore, postSendFollow, postSendUnfollow } from "../../redux/actions/post";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Config from 'components/profile/config';
 import PostProfile from 'components/profile/postProfile';
 import { Link } from 'react-router-dom';
 import { EDIT } from '../../routes';
 import { STORAGE_URL } from 'configs/constants';
+import FollowButton from 'components/followButton/followButton';
 
 function Profile({ match }){
 
@@ -20,7 +21,8 @@ function Profile({ match }){
 	const dispatch = useDispatch();
 	const { active } = useSelector(store => store.classActive);
 	const { loading = true, userData = [], userByUsernameData = [] } = useSelector(store => store.user);
-	const { userPosts = [], endUserPosts } = useSelector(store => store.post);
+	const { userPosts = [], endUserPosts, isFollowing, isUnfollowing, allFollowsUserLogged = [] } = useSelector(store => store.post);
+
 	const [page, setPage] = useState(1);
 
 	const handleChange = () => {
@@ -31,6 +33,10 @@ function Profile({ match }){
 
 	useEffect(() => {
 		dispatch(userFetch(id));
+		dispatch(postFetch({
+			id : parseInt(id),
+			page: 1
+		}));
 	}, [id, dispatch]);
 
 	useEffect(() => {
@@ -53,6 +59,20 @@ function Profile({ match }){
 			}));
 		}
 	}, [page, dispatch, endUserPosts, id]);
+
+	const handleSendFollow = (users_id) => {
+		dispatch(postSendFollow({
+			sent_users_id: users_id,
+			received_users_id: id
+		}));
+	};
+
+	const handleSendUnfollow = (users_id) => {
+		dispatch(postSendUnfollow({
+			sent_users_id: users_id,
+			received_users_id: parseInt(id)
+		}));
+	};
 
 	useEffect(() => {
 		window.addEventListener('scroll', handleScroll);
@@ -84,7 +104,7 @@ function Profile({ match }){
 									<div className="user">
 										<h4>{userByUsernameData.username}</h4>
 									</div>
-									{userData.id === userByUsernameData.id && (
+									{userData.id === userByUsernameData.id ? (
 										<>
 											<Link to={EDIT}>
 												<div className="edit">
@@ -95,6 +115,19 @@ function Profile({ match }){
 												<SettingsIcon />
 											</div>
 										</>
+									) : (
+										<div>
+											<FollowButton
+												handleSendFollow={handleSendFollow}
+												users_id={userByUsernameData.id}
+												allFollowsUserLogged={allFollowsUserLogged}
+												profile_image={userByUsernameData.profile_image}
+												username={userByUsernameData.username}
+												handleSendUnfollow={handleSendUnfollow}
+												isFollowing={isFollowing}
+												isUnfollowing={isUnfollowing}
+											/>
+										</div>
 									)}
 								</div>
 
