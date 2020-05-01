@@ -18,8 +18,17 @@ function Header({location}){
 	const [hidden, setHidden] = useState(true);
 	const { userData = [], isSavingImage } = useSelector(store => store.user);
 	const [activeAdd, setActiveAdd] = useState(false);
+	const [valueSearch, setValueSearch] = useState('');
 	const dispatch = useDispatch();
 	const id = localStorage.getItem('id_user_instact');
+
+	const handleChangeAdd = () => {
+		setActiveAdd(!activeAdd);
+	};
+
+	const handleSearch = (e) => {
+		setValueSearch(e.target.value);
+	};
 
 	useEffect(() => {
 		if(location.pathname === LOGIN){
@@ -29,10 +38,6 @@ function Header({location}){
 			setHidden(false);
 		}
 	}, [location]);
-
-	const handleChangeAdd = () => {
-		setActiveAdd(!activeAdd);
-	};
 
 	useEffect(() => {
 		dispatch(userFetch(id));
@@ -52,8 +57,32 @@ function Header({location}){
 
 					<div className="search">
 						<SearchIcon />
-						<input type="text" placeholder="Pesquisar" />
+						<input type="text" value={valueSearch} onChange={(e) => handleSearch(e)} placeholder="Pesquisar" />
 						<CancelIcon />
+						{valueSearch !== '' && (
+							<div id="wrap_search">
+								<div className="indent">
+									<div className="item-busca">
+										<div className="image">
+											<img src="" alt=""/>
+										</div>
+										<div className="dados">
+											<span><strong>qwewqe</strong></span>
+											<span>qwewq qwewq</span>
+										</div>
+									</div>
+									<div className="item-busca">
+										<div className="image">
+											<img src="" alt=""/>
+										</div>
+										<div className="dados">
+											<span><strong>qwewqe</strong></span>
+											<span>qwewq qwewq</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						)}
 					</div>
 					<div className="menu">
 						<Link to={HOME}>
