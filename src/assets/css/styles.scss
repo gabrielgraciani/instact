@@ -65,6 +65,7 @@ p{font-size:21px;}
 			input{border:0; outline:0; font-size:14px; color:#999; margin-left:5px; flex-grow:1;}
 			::-webkit-input-placeholder {color: #999; font-size:14px;}
 			svg{color:$gray_medium; width:17px;}
+			svg:last-child{color:$gray_medium; width:17px; cursor:pointer;}
 		}
 		.menu{flex-grow:1; display:flex; justify-content:flex-end; align-items:center;
 			svg{cursor:pointer; margin:0 7px; color:transparent; stroke: $gray_dark; width:28px; height: 28px;}
@@ -502,8 +503,8 @@ p{font-size:21px;}
 
 #wrap_search{position:absolute; bottom:-183px; left:-15px; background:$white; border:1px solid #dbdbdb; width:241px;
 	.indent{position:relative; display:flex; flex-direction:column; padding:0; width:100%; max-height:360px; max-width:100%; overflow-y:scroll;
-		.item-busca{width:100%; display:flex; padding:8px 14px; align-items:center; border-bottom:1px solid #dbdbdb;
-			.image{margin:0 5px 0 0;
+		.item-busca{cursor:pointer;width:100%; display:flex; min-height:54px; padding:8px 14px; align-items:center; border-bottom:1px solid #dbdbdb;
+			.image{margin:0 5px 0 0; user-select:none;
 				img{width:32px; height:32px; border-radius:50%;}
 				svg{width:32px; height:32px; border-radius:50%;}
 			}

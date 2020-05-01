@@ -10,6 +10,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { userFetch } from "../../redux/actions/user";
+import { globalFetchSearch } from "../../redux/actions/global";
 import FormPost from 'components/createPost/formPost';
 import { STORAGE_URL } from 'configs/constants';
 
@@ -17,8 +18,10 @@ function Header({location}){
 
 	const [hidden, setHidden] = useState(true);
 	const { userData = [], isSavingImage } = useSelector(store => store.user);
+	const { searchData = [], loading } = useSelector(store => store.global);
 	const [activeAdd, setActiveAdd] = useState(false);
 	const [valueSearch, setValueSearch] = useState('');
+	const [searchOpen, setSearchOpen] = useState(false);
 	const dispatch = useDispatch();
 	const id = localStorage.getItem('id_user_instact');
 
@@ -28,6 +31,19 @@ function Header({location}){
 
 	const handleSearch = (e) => {
 		setValueSearch(e.target.value);
+		if(e.target.value !== ''){
+			dispatch(globalFetchSearch({
+				id,
+				search: e.target.value
+			}));
+			setSearchOpen(true);
+		}
+
+	};
+
+	const handleClose = () => {
+		setValueSearch('');
+		setSearchOpen(false);
 	};
 
 	useEffect(() => {
@@ -58,28 +74,38 @@ function Header({location}){
 					<div className="search">
 						<SearchIcon />
 						<input type="text" value={valueSearch} onChange={(e) => handleSearch(e)} placeholder="Pesquisar" />
-						<CancelIcon />
-						{valueSearch !== '' && (
-							<div id="wrap_search">
+						{loading ? (
+							<CircularProgress size={17} />
+						) : (
+							<CancelIcon onClick={handleClose} />
+						)}
+						{valueSearch !== '' && searchOpen && (
+							<div id="wrap_search" style={{bottom: `-${(searchData.length === 0 ? 1 : searchData.length) * 55 + 17}px`}}>
 								<div className="indent">
-									<div className="item-busca">
-										<div className="image">
-											<img src="" alt=""/>
+									{searchData.length === 0 ? (
+										<div className="item-busca">
+											<div className="dados">
+												<span>Nenhum resultado encontrado.</span>
+											</div>
 										</div>
-										<div className="dados">
-											<span><strong>qwewqe</strong></span>
-											<span>qwewq qwewq</span>
-										</div>
-									</div>
-									<div className="item-busca">
-										<div className="image">
-											<img src="" alt=""/>
-										</div>
-										<div className="dados">
-											<span><strong>qwewqe</strong></span>
-											<span>qwewq qwewq</span>
-										</div>
-									</div>
+									) : (
+										searchData.map((item) => (
+											<Link to={`/profile/${item.username}`} className="item-busca" onClick={handleClose} key={item.id}>
+												<div className="image">
+													{item.profile_image ? (
+														<img src={`${STORAGE_URL}users/${item.id}/${item.profile_image}`} alt={item.name} />
+
+													) : (
+														<AccountCircleIcon />
+													)}
+												</div>
+												<div className="dados">
+													<span><strong>{item.username}</strong></span>
+													<span>{item.name}</span>
+												</div>
+											</Link>
+										))
+									)}
 								</div>
 							</div>
 						)}
