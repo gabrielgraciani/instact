@@ -83,11 +83,11 @@ const FormPost = ({ handleChangeAdd, userData }) => {
 						<div className="title">
 							<h4>Nova publicação</h4>
 						</div>
-						<div className="share" onClick={handleSubmit}>
+						<div className="share">
 							{isSaving ? (
 								<span>Salvando...</span>
 							) : (
-								<span>Compartilhar</span>
+								<span onClick={handleSubmit}>Compartilhar</span>
 							)}
 						</div>
 					</div>

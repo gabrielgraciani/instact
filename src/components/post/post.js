@@ -13,7 +13,19 @@ import { Link } from 'react-router-dom';
 import { Events, scroller } from 'react-scroll'
 import Dialog from 'components/dialog/dialog';
 
-const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, handleAllLikes, className = '', scroll = '' }) => {
+const Post = ({
+	  handleLike,
+	  handleDeslike,
+	  verifyLike,
+	  index,
+	  post,
+	  usersId,
+	  handleAllLikes,
+	  className = '',
+	  scroll = '',
+	  canRemove,
+	  handleDeletePost = () => {}
+}) => {
 
 	const [valueComment, setValueComment] = useState('');
 	const [boxHeight, setBoxHeight] = useState(200);
@@ -302,6 +314,11 @@ const Post = ({ handleLike, handleDeslike, verifyLike, index, post, usersId, han
 						<button type="button" className="item" onClick={() => {navigator.clipboard.writeText(`${SITE_URL}p/${post.id}`); setOpenConfig(false);}}>
 							Copiar link
 						</button>
+						{canRemove && (
+							<button type="button" className="item" onClick={() => handleDeletePost(post.id)}>
+								Apagar publicação
+							</button>
+						)}
 						<button type="button" className="item" onClick={handleChangeConfig}>
 							Cancelar
 						</button>

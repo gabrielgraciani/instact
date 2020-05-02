@@ -7,7 +7,7 @@ import Dialog from 'components/dialog/dialog';
 import SinglePostComp from 'components/post/singlePost';
 import CloseIcon from "@material-ui/icons/Close";
 
-const PostProfile = ({ post, link = true }) => {
+const PostProfile = ({ post, link = true, canRemove }) => {
 
 	const [hover, setHover] = useState(false);
 	const [activeDialog, setActiveDialog] = useState(false);
@@ -69,7 +69,7 @@ const PostProfile = ({ post, link = true }) => {
 							<div className="indent">
 								<Dialog handleClose={handleCloseDialog}>
 									<div className="posts single teste">
-										<SinglePostComp posts_id={postsId} />
+										<SinglePostComp posts_id={postsId} canRemove={canRemove} />
 									</div>
 								</Dialog>
 							</div>

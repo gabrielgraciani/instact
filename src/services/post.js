@@ -82,4 +82,13 @@ export default class post{
 		return await api.get(`/likes/${id}`);
 	};
 
+	static removePost = async ( data ) => {
+		const { posts_id, users_id } = data;
+		return await api.delete(`/posts/${posts_id}`, {
+			headers: {
+				'Authorization': users_id,
+			}
+		});
+	};
+
 }

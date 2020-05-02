@@ -27,6 +27,8 @@ export const POST_SEND_DESLIKE_SINGLE = 'POST_SEND_DESLIKE_SINGLE';
 export const POST_SEND_DESLIKE_SINGLE_SUCCESS = 'POST_SEND_DESLIKE_SINGLE_SUCCESS';
 export const POST_SEND_COMMENT_SINGLE = 'POST_SEND_COMMENT_SINGLE';
 export const POST_SEND_COMMENT_SINGLE_SUCCESS = 'POST_SEND_COMMENT_SINGLE_SUCCESS';
+export const POST_DELETE = 'POST_DELETE';
+export const POST_DELETE_SUCCESS = 'POST_DELETE_SUCCESS';
 
 export const postSendCadastro = (payload) => ({
 	type: POST_SEND_CADASTRO,
@@ -188,4 +190,16 @@ export const postSendCommentSingle = (payload) => ({
 export const postSendCommentSingleSuccess = (payload) => ({
 	type: POST_SEND_COMMENT_SINGLE_SUCCESS,
 	payload
+});
+
+export const postDelete = (payload) => ({
+	type: POST_DELETE,
+	payload
+});
+
+export const postDeleteSuccess = (userPosts) => ({
+	type: POST_DELETE_SUCCESS,
+	payload: {
+		userPosts
+	}
 });

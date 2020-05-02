@@ -243,6 +243,21 @@ export default function postReducer(
 				...state,
 			};
 
+		case actions.POST_DELETE:
+			return {
+				...initialState,
+				...state,
+			};
+
+		case actions.POST_DELETE_SUCCESS:
+			return {
+				...initialState,
+				...state,
+				userPosts: [
+					...payload.userPosts
+				]
+			};
+
 		default:
 			return state;
 	}

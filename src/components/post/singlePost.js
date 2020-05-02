@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { postFetchSingle, postSendLikeSingle, postSendDeslikeSingle, postFetch } from "../../redux/actions/post";
+import { postFetchSingle, postSendLikeSingle, postSendDeslikeSingle, postFetch, postDelete } from "../../redux/actions/post";
 import Post from 'components/post/post';
 import DialogPost from 'components/post/dialogPost';
 
-const SinglePost = ({ posts_id }) => {
+const SinglePost = ({ posts_id, canRemove }) => {
 
 	const id = localStorage.getItem('id_user_instact');
 	const [allLikes, setAllLikes] = useState(false);
@@ -40,6 +40,13 @@ const SinglePost = ({ posts_id }) => {
 		setAllLikes(!allLikes);
 	};
 
+	const handleDeletePost = (posts_id) => {
+		dispatch(postDelete({
+			posts_id: posts_id,
+			users_id: id
+		}));
+	};
+
 	useEffect(() => {
 		window.scrollTo(0, 0);
 		dispatch(postFetch({
@@ -60,6 +67,8 @@ const SinglePost = ({ posts_id }) => {
 				usersId={id}
 				scroll="true"
 				handleAllLikes={handleAllLikes}
+				canRemove={canRemove}
+				handleDeletePost={handleDeletePost}
 			/>
 
 			<DialogPost

@@ -1,5 +1,5 @@
 import { takeLatest, all, put, call, delay, select } from 'redux-saga/effects';
-import { findIndex } from 'lodash';
+import { findIndex, filter } from 'lodash';
 
 import * as actions from '../actions/post';
 import Post from '../../services/post';
@@ -362,6 +362,21 @@ function* postSendCommentSingleWorker(data) {
 	}
 }
 
+function* postDeleteWorker(data) {
+	try {
+		const { posts_id } = data.payload;
+		const { status } = yield call(Post.removePost, data.payload);
+
+		if(status === 200){
+			const { userPosts } = yield select(store => store.post);
+			const updatedList = filter([...userPosts], posts => posts.id !== posts_id);
+			yield put(actions.postDeleteSuccess(updatedList));
+		}
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
 function* postSendCadastroWatcher() {
 	yield takeLatest(actions.POST_SEND_CADASTRO, postSendCadastroWorker);
 }
@@ -418,6 +433,10 @@ function* postSendCommentSingleWatcher() {
 	yield takeLatest(actions.POST_SEND_COMMENT_SINGLE, postSendCommentSingleWorker);
 }
 
+function* postDeleteWatcher() {
+	yield takeLatest(actions.POST_DELETE, postDeleteWorker);
+}
+
 function* postWatcher() {
 	yield all([
 		postSendCadastroWatcher(),
@@ -434,6 +453,7 @@ function* postWatcher() {
 		postSendLikeSingleWatcher(),
 		postSendDeslikeSingleWatcher(),
 		postSendCommentSingleWatcher(),
+		postDeleteWatcher(),
 	]);
 }
 

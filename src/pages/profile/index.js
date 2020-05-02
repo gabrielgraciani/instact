@@ -170,7 +170,7 @@ function Profile({ match }){
 					</div>
 					<div className="indent">
 						{userPosts.map((post) => (
-							<PostProfile post={post} key={post.id} link={false} />
+							<PostProfile post={post} key={post.id} link={false} canRemove={userData.id === userByUsernameData.id} />
 						))}
 					</div>
 				</div>
