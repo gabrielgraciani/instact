@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { LOGIN, HOME, PROFILE } from '../../routes';
+import { LOGIN, HOME, PROFILE, DIRECT } from '../../routes';
 import LogoSmall from 'assets/images/logo-small.png';
 import SearchIcon from '@material-ui/icons/Search';
 import CancelIcon from '@material-ui/icons/Cancel';
+import SendIcon from '@material-ui/icons/Send';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -116,6 +117,10 @@ function Header({location}){
 						</Link>
 
 						<AddCircleIcon onClick={handleChangeAdd} className={activeAdd ? 'active' : ''} />
+
+						<Link to={DIRECT}>
+							<SendIcon className={location.pathname === DIRECT ? 'active' : ''} />
+						</Link>
 
 						<Link to={`/profile/${userData.username}`}>
 							{isSavingImage ? (

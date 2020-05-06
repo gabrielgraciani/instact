@@ -417,6 +417,9 @@ p{font-size:21px;}
 								&.red{color:#ed4956; font-weight:bold;}
 							}
 							.size{width:20px !important; height:20px !important;}
+							.loading{width:20px; height:20px; padding:0;
+								svg{width:20px; height:20px;}
+							}
 						}
 					}
 				}
