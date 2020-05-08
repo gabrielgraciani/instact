@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import CreateIcon from '@material-ui/icons/Create';
 import PostTeste from 'assets/images/post_teste.jpg';
 import DirectImage from 'assets/images/direct.png';
-import PhotoAlbumIcon from '@material-ui/icons/PhotoAlbum';
 import Dialog from 'components/dialog/dialog';
 import CloseIcon from "@material-ui/icons/Close";
 import Checked from 'assets/images/checked.png';
+import AllConversas from 'components/direct/allConversas';
+import Chat from 'components/direct/chat';
 
 const Direct = () => {
 
 	const [chatActive, setChatActive] = useState(false);
-	const [value, setValue] = useState('');
+	const [message, setMessage] = useState('');
 	const [activeDialog, setActiveDialog] = useState(false);
 	const [choose, setChoose] = useState(null);
 
@@ -35,6 +36,10 @@ const Direct = () => {
 		setChoose(null);
 	};
 
+	const handleChangeMessage = (e) => {
+		setMessage(e.target.value);
+	};
+
 	useEffect(() => {
 		document.title = 'Caixa de Entrada • Direct';
 	}, []);
@@ -49,60 +54,12 @@ const Direct = () => {
 						<CreateIcon onClick={handleOpenDialog} />
 					</div>
 
-					<div className="conversas">
-						<div className="conversa item-default" onClick={handleChangeChat}>
-							<div className="image">
-								<img src={PostTeste} alt="AS" />
-							</div>
-							<div className="dados">
-								<span className="username">username</span>
-								<span>Online há 1h</span>
-							</div>
-						</div>
-						<div className="conversa item-default">
-							<div className="image">
-								<img src={PostTeste} alt="AS" />
-							</div>
-							<div className="dados">
-								<span className="username">username</span>
-								<span>Online há 1h</span>
-							</div>
-						</div>
-					</div>
+					<AllConversas handleChangeChat={handleChangeChat} />
 				</div>
 
 				<div className="box-chat">
 					{chatActive ? (
-						<>
-							<div className="item-default">
-								<div className="image">
-									<img src={PostTeste} alt="AS" />
-								</div>
-								<div className="dados">
-									<span className="username">username</span>
-									<span>Online há 1h</span>
-								</div>
-							</div>
-
-							<div className="chat">
-								<div className="message self">
-									<span>minha mensagem</span>
-								</div>
-								<div className="message other">
-									<span>Mensagem de outro</span>
-								</div>
-							</div>
-
-							<form action="">
-								<textarea placeholder="Mensagem..." onChange={(e) => setValue(e.target.value)} />
-								{value === '' ? (
-									<PhotoAlbumIcon />
-								) : (
-									<input type="submit" value="Enviar" />
-								)}
-							</form>
-
-						</>
+						<Chat message={message} handleChangeMessage={handleChangeMessage} />
 					) : (
 						<div className="no-message">
 							<img src={DirectImage} alt="Direct"/>
@@ -111,7 +68,6 @@ const Direct = () => {
 							<button type="button" onClick={handleOpenDialog}>Enviar mensagem</button>
 						</div>
 					)}
-
 				</div>
 			</div>
 		</div>
