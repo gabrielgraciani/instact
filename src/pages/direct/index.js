@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { chatFetchConversas, chatCreateConversa } from "../../redux/actions/chat";
+import { chatFetchConversas, chatCreateConversa, chatFetchMessages } from "../../redux/actions/chat";
 import { globalFetchSearch } from "../../redux/actions/global";
 import { userFetch } from "../../redux/actions/user";
 import CreateIcon from '@material-ui/icons/Create';
@@ -21,17 +21,19 @@ const Direct = () => {
 	const [search, setSearch] = useState('');
 	const [activeDialog, setActiveDialog] = useState(false);
 	const [choose, setChoose] = useState(null);
+	const [select, setSelect] = useState([]);
 	const dispatch = useDispatch();
 
-	const { listConversas = [] } = useSelector(store => store.chat);
-	console.log('list', listConversas);
+	const { listConversas = [], listMessages = [] } = useSelector(store => store.chat);
 	const { searchData = [], loading } = useSelector(store => store.global);
 	const { userData = [] } = useSelector(store => store.user);
 
 	const id = localStorage.getItem('id_user_instact');
 
-	const handleChangeChat = () => {
+	const handleChangeChat = (item) => {
 		setChatActive(true);
+		dispatch(chatFetchMessages(item.id));
+		setSelect(item);
 	};
 
 	const handleOpenDialog = () => {
@@ -105,7 +107,7 @@ const Direct = () => {
 
 				<div className="box-chat">
 					{chatActive ? (
-						<Chat message={message} handleChangeMessage={handleChangeMessage} />
+						<Chat message={message} listMessages={listMessages} select={select} id={parseInt(id)} handleChangeMessage={handleChangeMessage} />
 					) : (
 						<div className="no-message">
 							<img src={DirectImage} alt="Direct"/>

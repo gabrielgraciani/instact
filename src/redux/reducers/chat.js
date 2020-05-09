@@ -2,7 +2,8 @@ import * as actions from '../actions/chat';
 
 export const initialState = {
 	isLoading: false,
-	listConversas: []
+	listConversas: [],
+	listMessages: []
 };
 
 
@@ -41,6 +42,21 @@ export default function chatReducer(
 				isLoading: false,
 				listConversas: [...state.listConversas,
 					payload.listConversas],
+			};
+
+		case actions.CHAT_FETCH_MESSAGES:
+			return {
+				...initialState,
+				...state,
+				isLoading: true,
+			};
+
+		case actions.CHAT_FETCH_MESSAGES_SUCCESS:
+			return {
+				...initialState,
+				...state,
+				isLoading: false,
+				listMessages: payload.listMessages
 			};
 
 		default:

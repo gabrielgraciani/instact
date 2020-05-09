@@ -7,7 +7,7 @@ const AllConversas = ({ handleChangeChat, list, id }) => {
 		<div className="conversas">
 			{list.map((item) => (
 				id === item.users_id1 ? (
-					<div key={item.id} className="conversa item-default" onClick={handleChangeChat}>
+					<div key={item.id} className="conversa item-default" onClick={() => handleChangeChat(item)}>
 						<div className="image">
 							{item.profile_image2 ? (
 								<img src={`${STORAGE_URL}users/${item.users_id2}/${item.profile_image2}`}
@@ -19,11 +19,11 @@ const AllConversas = ({ handleChangeChat, list, id }) => {
 						</div>
 						<div className="dados">
 							<span className="username">{item.username2}</span>
-							<span>Online há 1h</span>
+							<span>{item.nome2}</span>
 						</div>
 					</div>
 				) : (
-					<div key={item.id} className="conversa item-default" onClick={handleChangeChat}>
+					<div key={item.id} className="conversa item-default" onClick={() => handleChangeChat(item)}>
 						<div className="image">
 							{item.profile_image1 ? (
 								<img src={`${STORAGE_URL}users/${item.users_id1}/${item.profile_image1}`}
@@ -35,7 +35,7 @@ const AllConversas = ({ handleChangeChat, list, id }) => {
 						</div>
 						<div className="dados">
 							<span className="username">{item.username1}</span>
-							<span>Online há 1h</span>
+							<span>{item.nome1}</span>
 						</div>
 					</div>
 				)
