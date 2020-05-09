@@ -6,6 +6,7 @@ import Chat from '../../services/chat';
 function* chatFetchConversasWorker(data) {
 	try {
 		const { data: dataApi } = yield call(Chat.getConversas, data.payload);
+		console.log('xd', dataApi);
 
 		yield put(actions.chatFetchConversasSuccess(dataApi));
 
@@ -17,9 +18,10 @@ function* chatFetchConversasWorker(data) {
 function* chatCreateConversaWorker(data) {
 	try {
 
-		console.log('oi', data.payload);
-		//yield put(actions.chatFetchConversasSuccess(dataApi));
+		const { data: dataApi } = yield call(Chat.createConversa, data.payload);
+		console.log('data', dataApi);
 
+		yield put(actions.chatCreateConversaSuccess(dataApi.conversa));
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);
 	}
