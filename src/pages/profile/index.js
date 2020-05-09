@@ -165,7 +165,11 @@ function Profile({ match }){
 				<div id="wrap_posts">
 					<div className="empty">
 						{userPosts.length === 0 && (
-							<span>Você não possui nenhuma publicação.</span>
+							userData.id === userByUsernameData.id ? (
+								<span>Você não possui nenhuma publicação.</span>
+							) : (
+								<span>O usuário {userByUsernameData.username} não possui nenhuma publicação</span>
+							)
 						)}
 					</div>
 					<div className="indent">

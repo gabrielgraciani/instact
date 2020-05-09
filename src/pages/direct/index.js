@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { chatFetchConversas } from "../../redux/actions/chat";
+import { globalFetchSearch } from "../../redux/actions/global";
 import CreateIcon from '@material-ui/icons/Create';
-import PostTeste from 'assets/images/post_teste.jpg';
 import DirectImage from 'assets/images/direct.png';
 import Dialog from 'components/dialog/dialog';
 import CloseIcon from "@material-ui/icons/Close";
 import Checked from 'assets/images/checked.png';
 import AllConversas from 'components/direct/allConversas';
 import Chat from 'components/direct/chat';
+import { STORAGE_URL } from 'configs/constants';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const Direct = () => {
 
 	const [chatActive, setChatActive] = useState(false);
 	const [message, setMessage] = useState('');
+	const [search, setSearch] = useState('');
 	const [activeDialog, setActiveDialog] = useState(false);
 	const [choose, setChoose] = useState(null);
+	const dispatch = useDispatch();
+
+	const { listConversas = [] } = useSelector(store => store.chat);
+	const { searchData = [], loading } = useSelector(store => store.global);
+
+	const id = localStorage.getItem('id_user_instact');
 
 	const handleChangeChat = () => {
 		setChatActive(true);
@@ -26,6 +37,7 @@ const Direct = () => {
 	const handleCloseDialog = () => {
 		setActiveDialog(false);
 		setChoose(null);
+		setSearch('');
 	};
 
 	const handleChoose = (item) => {
@@ -40,9 +52,23 @@ const Direct = () => {
 		setMessage(e.target.value);
 	};
 
+	const handleChangeSearch = (e) => {
+		setSearch(e.target.value);
+		if(e.target.value !== ''){
+			dispatch(globalFetchSearch({
+				id,
+				search: e.target.value
+			}));
+		}
+	};
+
 	useEffect(() => {
 		document.title = 'Caixa de Entrada • Direct';
 	}, []);
+
+	useEffect(() => {
+		dispatch(chatFetchConversas(id));
+	}, [dispatch, id]);
 
 	return (
 		<>
@@ -54,7 +80,7 @@ const Direct = () => {
 						<CreateIcon onClick={handleOpenDialog} />
 					</div>
 
-					<AllConversas handleChangeChat={handleChangeChat} />
+					<AllConversas list={listConversas} id={parseInt(id)} handleChangeChat={handleChangeChat} />
 				</div>
 
 				<div className="box-chat">
@@ -81,23 +107,48 @@ const Direct = () => {
 						<button type="button" disabled={choose ? '' : 'disabled'}>Avançar</button>
 					</div>
 					<div className="body">
-						<h4>Para:</h4>
+						<div className="search">
+							<h4>Para:</h4>
+							<input type="text" placeholder="Pesquisar..." value={search} onChange={handleChangeSearch} />
+						</div>
 						<div className="people">
-							<div className="item-default" onClick={choose ? () => handleClearChoose() : () => handleChoose(1)}>
-								<div className="image">
-									<img src={PostTeste} alt="AS" />
+							{loading && (
+								<div className="load">
+									<CircularProgress size={30} />
 								</div>
-								<div className="dados">
-									<span className="username">username</span>
-									<span>Online há 1h</span>
+							)}
+							{search === '' && (
+								<div className="item-default">
+									<div className="dados">
+										<span>Digite acima para realizar uma pesquisa</span>
+									</div>
 								</div>
+							)}
+							{search !== '' && searchData.length === 0 && (
+								<div className="item-default">
+									<div className="dados">
+										<span>Não há resultados para esta pesquisa</span>
+									</div>
+								</div>
+							)}
+							{searchData.map((item) => (
+								<div className="item-default" onClick={choose ? () => handleClearChoose() : () => handleChoose(1)}>
+									<div className="image">
+										<img src={`${STORAGE_URL}users/${item.id}/${item.profile_image}`} alt={item.username} />
+									</div>
+									<div className="dados">
+										<span className="username">{item.username}</span>
+										<span>Online há 1h</span>
+									</div>
 
-								<div className="box">
-									{choose && (
-										<img src={Checked} alt="selecionado" />
-									)}
+									<div className="box">
+										{choose && (
+											<img src={Checked} alt="selecionado" />
+										)}
+									</div>
 								</div>
-							</div>
+							))}
+
 						</div>
 
 					</div>

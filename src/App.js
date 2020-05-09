@@ -6,6 +6,7 @@ import Header from 'components/header';
 import Footer from 'components/footer';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useSelector } from "react-redux";
+import io from 'socket.io-client';
 
 const Home = lazy(() => import('pages/home'));
 const Login = lazy(() => import('pages/login'));
@@ -14,6 +15,9 @@ const Edit = lazy(() => import('pages/edit'));
 const SinglePost = lazy(() => import('pages/singlePost'));
 const Direct = lazy(() => import('pages/direct'));
 
+
+const socket = io('http://localhost:3333');
+socket.on('connect', () => console.log('[IO] Connect => A new connection has been established'));
 
 function App({ location }){
 
