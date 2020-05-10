@@ -33,7 +33,7 @@ function* chatFetchMessagesWorker(data) {
 function* chatSendMessageWorker(data) {
 	try {
 		const { data: dataApi } = yield call(Chat.sendMessage, data.payload);
-		yield put(actions.chatSendMessageSuccess(dataApi.obj));
+		yield put(actions.chatSendMessageSuccess(dataApi.obj, dataApi.conversas));
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);
 	}

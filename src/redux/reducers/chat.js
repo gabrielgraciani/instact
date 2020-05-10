@@ -72,7 +72,8 @@ export default function chatReducer(
 				...state,
 				isLoading: false,
 				listMessages: [...state.listMessages,
-					payload.listMessages]
+					payload.listMessages],
+				listConversas: payload.listConversas
 			};
 
 		default:

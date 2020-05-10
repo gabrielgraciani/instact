@@ -48,9 +48,10 @@ export const chatSendMessage = (payload) => ({
 	payload
 });
 
-export const chatSendMessageSuccess = (listMessages) => ({
+export const chatSendMessageSuccess = (listMessages, listConversas) => ({
 	type: CHAT_SEND_MESSAGE_SUCCESS,
 	payload: {
-		listMessages
+		listMessages,
+		listConversas
 	}
 });
