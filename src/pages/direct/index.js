@@ -10,9 +10,10 @@ import CloseIcon from "@material-ui/icons/Close";
 import Checked from 'assets/images/checked.png';
 import AllConversas from 'components/direct/allConversas';
 import Chat from 'components/direct/chat';
-import { STORAGE_URL } from 'configs/constants';
+import { STORAGE_URL, socket } from 'configs/constants';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { v4 as uuid } from 'uuid'
 
 const Direct = () => {
 
@@ -22,16 +23,18 @@ const Direct = () => {
 	const [activeDialog, setActiveDialog] = useState(false);
 	const [choose, setChoose] = useState(null);
 	const [select, setSelect] = useState([]);
+	const [listWebsocket, setListWebsocket] = useState([]);
+	const [aux, setAux] = useState([]);
 	const dispatch = useDispatch();
 
 	const { listConversas = [], listMessages = [] } = useSelector(store => store.chat);
 	const { searchData = [], loading } = useSelector(store => store.global);
 	const { userData = [] } = useSelector(store => store.user);
-
 	const id = localStorage.getItem('id_user_instact');
 
 	const handleChangeChat = (item) => {
 		setChatActive(true);
+		setAux([]);
 		dispatch(chatFetchMessages(item.id));
 		setSelect(item);
 		setMessage('');
@@ -84,14 +87,20 @@ const Direct = () => {
 		handleCloseDialog();
 	};
 
+	const myId = uuid();
 	const handleSendMessage = (e) => {
 		e.preventDefault();
-		console.log('oi');
 		dispatch(chatSendMessage({
 			users_id: id,
 			message,
 			conversas_id: select.id
 		}));
+		socket.emit('chat.message', {
+			id: myId,
+			message,
+			users_id: parseInt(id),
+			conversas_id: parseInt(select.id)
+		});
 		setMessage('');
 	};
 
@@ -103,6 +112,28 @@ const Direct = () => {
 		dispatch(chatFetchConversas(id));
 		dispatch(userFetch(id));
 	}, [dispatch, id]);
+
+	useEffect(() => {
+		setAux(listMessages);
+	}, [listMessages]);
+
+	useEffect(() => {
+		if(aux.length === 0){
+			setListWebsocket(listMessages);
+		}
+	}, [listMessages, aux]);
+
+	useEffect(() => {
+		if(select){
+			const handleNewMessage = newMessage => {
+				if(newMessage.conversas_id === select.id){
+					setListWebsocket([...listWebsocket, newMessage]);
+				}
+			};
+			socket.on('chat.message', handleNewMessage)
+			return () => socket.off('chat.message', handleNewMessage);
+		}
+	}, [listWebsocket, select]);
 
 	return (
 		<>
@@ -121,7 +152,7 @@ const Direct = () => {
 					{chatActive ? (
 						<Chat
 							message={message}
-							listMessages={listMessages}
+							listMessages={listWebsocket}
 							select={select}
 							id={parseInt(id)}
 							handleChangeMessage={handleChangeMessage}
