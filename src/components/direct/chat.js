@@ -1,8 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { STORAGE_URL } from 'configs/constants';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { Events, scroller } from 'react-scroll'
 
 const Chat = ({ handleChangeMessage, message, select, listMessages, id, handleSendMessage }) => {
+
+	const scrollToWithContainer = () => {
+		new Promise((resolve) => {
+			Events.scrollEvent.register('end', () => {
+				resolve();
+				Events.scrollEvent.remove('end');
+			});
+			scroller.scrollTo('scroll-container-comments', {
+				duration: 0,
+				delay: 0,
+				smooth: 'easeInOutQuart',
+				containerId: 'scroll-comments'
+			})
+		});
+	};
+
+	useEffect(() => {
+		scrollToWithContainer();
+	}, [listMessages]);
+
 	return (
 		<>
 			<div className="item-default">
@@ -42,12 +63,13 @@ const Chat = ({ handleChangeMessage, message, select, listMessages, id, handleSe
 
 			</div>
 
-			<div className="chat">
+			<div className="chat"  id="scroll-comments">
 				{listMessages.map((item) => (
 					<div key={item.id} className={`message ${id === parseInt(item.users_id) ? 'self' : 'other'}`}>
 						{item.message}
 					</div>
 				))}
+				<div name="scroll-container-comments"> </div>
 			</div>
 
 			<form action="" onSubmit={handleSendMessage}>
