@@ -1,4 +1,5 @@
-import { takeLatest, all, put, call } from 'redux-saga/effects';
+import { takeLatest, all, put, call, select } from 'redux-saga/effects';
+import { findIndex } from 'lodash';
 
 import * as actions from '../actions/chat';
 import Chat from '../../services/chat';
@@ -14,8 +15,20 @@ function* chatFetchConversasWorker(data) {
 
 function* chatCreateConversaWorker(data) {
 	try {
-		const { data: dataApi } = yield call(Chat.createConversa, data.payload);
-		yield put(actions.chatCreateConversaSuccess(dataApi.conversa));
+
+		const { users_id2, users_id1 } = data.payload;
+		const { listConversas } = yield select(store => store.chat);
+		const i = findIndex(listConversas, { users_id2 });
+
+		if(i !== -1){
+			const { data: dataApi } = yield call(Chat.updateConversa, listConversas[i].id, users_id1);
+			yield put(actions.chatUpdateConversaSuccess(dataApi));
+		}
+		else{
+			const { data: dataApi } = yield call(Chat.createConversa, data.payload);
+			yield put(actions.chatCreateConversaSuccess(dataApi.conversa));
+		}
+
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);
 	}

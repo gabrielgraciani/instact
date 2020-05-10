@@ -35,13 +35,20 @@ export default function chatReducer(
 			};
 
 		case actions.CHAT_CREATE_CONVERSA_SUCCESS:
-			console.log('...', ...state.listConversas);
 			return {
 				...initialState,
 				...state,
 				isLoading: false,
 				listConversas: [...state.listConversas,
 					payload.listConversas],
+			};
+
+		case actions.CHAT_UPDATE_CONVERSA_SUCCESS:
+			return {
+				...initialState,
+				...state,
+				isLoading: false,
+				listConversas: payload.listConversas,
 			};
 
 		case actions.CHAT_FETCH_MESSAGES:

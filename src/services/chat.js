@@ -9,6 +9,10 @@ export default class auth{
 		return await api.post('/conversas', data);
 	};
 
+	static updateConversa = async (conversas_id, users_id) => {
+		return await api.put(`/conversas/${conversas_id}`, {users_id});
+	};
+
 	static getMessages = async (id) => {
 		return await api.get(`/mensagens/${id}`);
 	};

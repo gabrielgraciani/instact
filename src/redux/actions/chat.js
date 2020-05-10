@@ -2,6 +2,7 @@ export const CHAT_FETCH_CONVERSAS = 'CHAT_FETCH_CONVERSAS';
 export const CHAT_FETCH_CONVERSAS_SUCCESS = 'CHAT_FETCH_CONVERSAS_SUCCESS';
 export const CHAT_CREATE_CONVERSA= 'CHAT_CREATE_CONVERSA';
 export const CHAT_CREATE_CONVERSA_SUCCESS= 'CHAT_CREATE_CONVERSA_SUCCESS';
+export const CHAT_UPDATE_CONVERSA_SUCCESS= 'CHAT_UPDATE_CONVERSA_SUCCESS';
 export const CHAT_FETCH_MESSAGES = 'CHAT_FETCH_MESSAGES';
 export const CHAT_FETCH_MESSAGES_SUCCESS = 'CHAT_FETCH_MESSAGES_SUCCESS';
 export const CHAT_SEND_MESSAGE = 'CHAT_SEND_MESSAGE';
@@ -26,6 +27,13 @@ export const chatCreateConversa = (payload) => ({
 
 export const chatCreateConversaSuccess = (listConversas) => ({
 	type: CHAT_CREATE_CONVERSA_SUCCESS,
+	payload: {
+		listConversas
+	}
+});
+
+export const chatUpdateConversaSuccess = (listConversas) => ({
+	type: CHAT_UPDATE_CONVERSA_SUCCESS,
 	payload: {
 		listConversas
 	}
