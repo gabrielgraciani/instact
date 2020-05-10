@@ -1,10 +1,8 @@
 import React from 'react';
-import PostTeste from 'assets/images/post_teste.jpg';
-import PhotoAlbumIcon from '@material-ui/icons/PhotoAlbum';
 import { STORAGE_URL } from 'configs/constants';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-const Chat = ({ handleChangeMessage, message, select, listMessages, id }) => {
+const Chat = ({ handleChangeMessage, message, select, listMessages, id, handleSendMessage }) => {
 	return (
 		<>
 			<div className="item-default">
@@ -46,19 +44,15 @@ const Chat = ({ handleChangeMessage, message, select, listMessages, id }) => {
 
 			<div className="chat">
 				{listMessages.map((item) => (
-					<div key={item.id} className={`message ${id === item.users_id ? 'self' : 'other'}`}>
+					<div key={item.id} className={`message ${id === parseInt(item.users_id) ? 'self' : 'other'}`}>
 						{item.message}
 					</div>
 				))}
 			</div>
 
-			<form action="">
-				<textarea placeholder="Mensagem..." onChange={(e) => handleChangeMessage(e)} />
-				{message === '' ? (
-					<PhotoAlbumIcon />
-				) : (
-					<input type="submit" value="Enviar" />
-				)}
+			<form action="" onSubmit={handleSendMessage}>
+				<textarea placeholder="Mensagem..." value={message} onChange={(e) => handleChangeMessage(e)} />
+					<input type="submit" disabled={message === '' ? 'disabled' : ''} value="Enviar" />
 			</form>
 		</>
 	)

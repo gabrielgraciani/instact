@@ -30,6 +30,15 @@ function* chatFetchMessagesWorker(data) {
 	}
 }
 
+function* chatSendMessageWorker(data) {
+	try {
+		const { data: dataApi } = yield call(Chat.sendMessage, data.payload);
+		yield put(actions.chatSendMessageSuccess(dataApi.obj));
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
 function* chatFetchConversasWatcher() {
 	yield takeLatest(actions.CHAT_FETCH_CONVERSAS, chatFetchConversasWorker);
 }
@@ -42,11 +51,16 @@ function* chatFetchMessagesWatcher() {
 	yield takeLatest(actions.CHAT_FETCH_MESSAGES, chatFetchMessagesWorker);
 }
 
+function* chatSendMessageWatcher() {
+	yield takeLatest(actions.CHAT_SEND_MESSAGE, chatSendMessageWorker);
+}
+
 function* chatWatcher() {
 	yield all([
 		chatFetchConversasWatcher(),
 		chatCreateConversaWatcher(),
 		chatFetchMessagesWatcher(),
+		chatSendMessageWatcher(),
 	]);
 }
 

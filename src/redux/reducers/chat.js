@@ -59,6 +59,22 @@ export default function chatReducer(
 				listMessages: payload.listMessages
 			};
 
+		case actions.CHAT_SEND_MESSAGE:
+			return {
+				...initialState,
+				...state,
+				isLoading: true,
+			};
+
+		case actions.CHAT_SEND_MESSAGE_SUCCESS:
+			return {
+				...initialState,
+				...state,
+				isLoading: false,
+				listMessages: [...state.listMessages,
+					payload.listMessages]
+			};
+
 		default:
 			return state;
 	}

@@ -12,4 +12,12 @@ export default class auth{
 	static getMessages = async (id) => {
 		return await api.get(`/mensagens/${id}`);
 	};
+
+	static sendMessage = async (data) => {
+		return await api.post(`/mensagens/${data.conversas_id}`, { message: data.message }, {
+			headers: {
+				'Authorization': data.users_id,
+			}
+		});
+	};
 }

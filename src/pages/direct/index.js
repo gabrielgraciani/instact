@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { chatFetchConversas, chatCreateConversa, chatFetchMessages } from "../../redux/actions/chat";
+import { chatFetchConversas, chatCreateConversa, chatFetchMessages, chatSendMessage } from "../../redux/actions/chat";
 import { globalFetchSearch } from "../../redux/actions/global";
 import { userFetch } from "../../redux/actions/user";
 import CreateIcon from '@material-ui/icons/Create';
@@ -34,6 +34,7 @@ const Direct = () => {
 		setChatActive(true);
 		dispatch(chatFetchMessages(item.id));
 		setSelect(item);
+		setMessage('');
 	};
 
 	const handleOpenDialog = () => {
@@ -83,6 +84,17 @@ const Direct = () => {
 		handleCloseDialog();
 	};
 
+	const handleSendMessage = (e) => {
+		e.preventDefault();
+		console.log('oi');
+		dispatch(chatSendMessage({
+			users_id: id,
+			message,
+			conversas_id: select.id
+		}));
+		setMessage('');
+	};
+
 	useEffect(() => {
 		document.title = 'Caixa de Entrada • Direct';
 	}, []);
@@ -107,7 +119,14 @@ const Direct = () => {
 
 				<div className="box-chat">
 					{chatActive ? (
-						<Chat message={message} listMessages={listMessages} select={select} id={parseInt(id)} handleChangeMessage={handleChangeMessage} />
+						<Chat
+							message={message}
+							listMessages={listMessages}
+							select={select}
+							id={parseInt(id)}
+							handleChangeMessage={handleChangeMessage}
+							handleSendMessage={handleSendMessage}
+						/>
 					) : (
 						<div className="no-message">
 							<img src={DirectImage} alt="Direct"/>
