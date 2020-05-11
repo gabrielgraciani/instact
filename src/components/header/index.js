@@ -11,18 +11,19 @@ import HomeIcon from '@material-ui/icons/Home';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { userFetch } from "../../redux/actions/user";
-import { globalFetchSearch } from "../../redux/actions/global";
+import { globalFetchSearch, globalFetchNotifications } from "../../redux/actions/global";
 import FormPost from 'components/createPost/formPost';
 import { STORAGE_URL } from 'configs/constants';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import PostTeste from 'assets/images/post_teste.jpg';
 import Dialog from 'components/dialog/dialog';
+import * as moment from 'moment';
 
 function Header({location}){
 
 	const [hidden, setHidden] = useState(true);
 	const { userData = [], isSavingImage } = useSelector(store => store.user);
-	const { searchData = [], loading } = useSelector(store => store.global);
+	const { searchData = [], loading, notificationsData = [], isLoadingNotifications } = useSelector(store => store.global);
 	const [activeAdd, setActiveAdd] = useState(false);
 	const [valueSearch, setValueSearch] = useState('');
 	const [searchOpen, setSearchOpen] = useState(false);
@@ -37,6 +38,7 @@ function Header({location}){
 
 	const handleChangeNotifications = () => {
 		setActiveNotifications(true);
+		dispatch(globalFetchNotifications(id));
 	};
 
 	const handleCloseNotifications = () => {
@@ -141,22 +143,28 @@ function Header({location}){
 							<div id="wrap_notificacoes" className={activeNotifications ? 'active' : ''}>
 								<div className="indent">
 									<Dialog handleClose={handleCloseNotifications}>
-										<div className="item">
-											<div className="image">
-												<img src={PostTeste} alt="" />
+										{isLoadingNotifications ? (
+											<div className="loading">
+												<CircularProgress size={28} />
 											</div>
-											<div className="dados">
-												<span><strong>username</strong> comentario</span>
-											</div>
-										</div>
-										<div className="item">
-											<div className="image">
-												<img src={PostTeste} alt="" />
-											</div>
-											<div className="dados">
-												<span><strong>username</strong> comentario</span>
-											</div>
-										</div>
+										) : (
+											notificationsData.map((item) => (
+												<Link to={`/profile/${item.username}`} onClick={handleCloseNotifications} className="item">
+													<div className="image">
+														{item.profile_image ? (
+															<img src={`${STORAGE_URL}users/${item.users_id}/${item.profile_image}`} alt={item.name} />
+
+														) : (
+															<AccountCircleIcon />
+														)}
+													</div>
+													<div className="dados">
+														<span><strong>{item.username}</strong> começou a seguir você.</span>
+														<span className="time">{moment(item.created_at).fromNow()}</span>
+													</div>
+												</Link>
+											))
+										)}
 									</Dialog>
 								</div>
 							</div>

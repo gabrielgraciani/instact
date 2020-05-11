@@ -4,6 +4,8 @@ export const initialState = {
 	sugestions: [],
 	searchData: [],
 	loading: false,
+	notificationsData: [],
+	isLoadingNotifications: false
 };
 
 
@@ -39,6 +41,22 @@ export default function globalReducer(
 				...state,
 				searchData: payload.searchData,
 				loading: false
+			};
+
+		case actions.GLOBAL_FETCH_NOTIFICATIONS:
+			return {
+				...initialState,
+				...state,
+				notificationsData: [],
+				isLoadingNotifications: true,
+			};
+
+		case actions.GLOBAL_FETCH_NOTIFICATIONS_SUCCESS:
+			return {
+				...initialState,
+				...state,
+				notificationsData: payload.notificationsData,
+				isLoadingNotifications: false
 			};
 
 		default:

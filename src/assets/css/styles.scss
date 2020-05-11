@@ -665,13 +665,18 @@ p{font-size:21px;}
 #wrap_notificacoes{display:none; position:absolute; left:-450px;
 	&.active{display:block;}
 	.indent{border-radius:6px; width:500px; background:$white; box-shadow:0 0 5px #c0c0c0; display:flex; flex-direction:column;
+		.loading{width:100%; display:flex; align-items:center; justify-content:center;
+			svg{width:28px !important; height:28px !important; margin:0;}
+		}
 		.item{cursor:pointer; padding:0 16px; display:flex; align-items:center; width:100%;
 			.image{margin:0 15px 0 0;
 				img{width:34px; height:34px; border-radius:50%;}
 				svg{width:34px; height:34px; border-radius:50%;}
 			}
 			.dados{border-bottom:1px solid #dbdbdb; padding:12px 0 13px; flex-grow:1;
-				span{color:#262626; font-size:14px; font-weight:normal;}
+				span{color:#262626; font-size:14px; font-weight:normal;
+					&.time{font-size:12px; color:#8e8e8e; margin-left:5px;}
+				}
 			}
 			&:last-child{
 				.dados{border:0;}
