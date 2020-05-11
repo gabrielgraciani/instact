@@ -14,6 +14,9 @@ import { userFetch } from "../../redux/actions/user";
 import { globalFetchSearch } from "../../redux/actions/global";
 import FormPost from 'components/createPost/formPost';
 import { STORAGE_URL } from 'configs/constants';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import PostTeste from 'assets/images/post_teste.jpg';
+import Dialog from 'components/dialog/dialog';
 
 function Header({location}){
 
@@ -23,11 +26,21 @@ function Header({location}){
 	const [activeAdd, setActiveAdd] = useState(false);
 	const [valueSearch, setValueSearch] = useState('');
 	const [searchOpen, setSearchOpen] = useState(false);
+	const [activeNotifications, setActiveNotifications] = useState(false);
+
 	const dispatch = useDispatch();
 	const id = localStorage.getItem('id_user_instact');
 
 	const handleChangeAdd = () => {
 		setActiveAdd(!activeAdd);
+	};
+
+	const handleChangeNotifications = () => {
+		setActiveNotifications(true);
+	};
+
+	const handleCloseNotifications = () => {
+		setActiveNotifications(false);
 	};
 
 	const handleSearch = (e) => {
@@ -122,6 +135,33 @@ function Header({location}){
 							<SendIcon className={location.pathname === DIRECT ? 'active' : ''} />
 						</Link>
 
+						<div className="notificacao">
+							<FavoriteIcon onClick={handleChangeNotifications} className={activeNotifications ? 'active' : ''} />
+
+							<div id="wrap_notificacoes" className={activeNotifications ? 'active' : ''}>
+								<div className="indent">
+									<Dialog handleClose={handleCloseNotifications}>
+										<div className="item">
+											<div className="image">
+												<img src={PostTeste} alt="" />
+											</div>
+											<div className="dados">
+												<span><strong>username</strong> comentario</span>
+											</div>
+										</div>
+										<div className="item">
+											<div className="image">
+												<img src={PostTeste} alt="" />
+											</div>
+											<div className="dados">
+												<span><strong>username</strong> comentario</span>
+											</div>
+										</div>
+									</Dialog>
+								</div>
+							</div>
+						</div>
+
 						<Link to={`/profile/${userData.username}`}>
 							{isSavingImage ? (
 								<CircularProgress className="loading" />
@@ -145,6 +185,7 @@ function Header({location}){
 				<FormPost handleChangeAdd={handleChangeAdd} userData={userData} />
 			)}
 			</div>
+
 			</>
 		)}
 		</>
