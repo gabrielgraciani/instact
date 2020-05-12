@@ -1,5 +1,6 @@
 import { takeLatest, all, put, call, delay, select } from 'redux-saga/effects';
 import { findIndex, filter } from 'lodash';
+import { socket } from 'configs/constants';
 
 import * as actions from '../actions/post';
 import Post from '../../services/post';
@@ -230,6 +231,10 @@ function* postSendCommentWorker(data) {
 
 function* postSendFollowWorker(data) {
 	try {
+
+		socket.emit('notifications.follow', {
+			users_id: data.payload.sent_users_id,
+		});
 
 		const { allFollowsUserLogged } = yield select(store => store.post);
 

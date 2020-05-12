@@ -32,6 +32,15 @@ function* globalFetchNotificationsWorker(data) {
 	}
 }
 
+function* globalFetchNotificationsViewedWorker(data) {
+	try {
+		const { data: dataApi } = yield call(Global.getNotificationsViewed, data.payload);
+		yield put(actions.globalFetchNotificationsSuccess(dataApi));
+	} catch (error) {
+		console.log(`Erro ${error}, tente novamente mais tarde`);
+	}
+}
+
 function* globalFetchSugestionsWatcher() {
 	yield takeLatest(actions.GLOBAL_FETCH_SUGESTIONS, globalFetchSugestionsWorker);
 }
@@ -44,11 +53,16 @@ function* globalFetchNotificationsWatcher() {
 	yield takeLatest(actions.GLOBAL_FETCH_NOTIFICATIONS, globalFetchNotificationsWorker);
 }
 
+function* globalFetchNotificationsViewedWatcher() {
+	yield takeLatest(actions.GLOBAL_FETCH_NOTIFICATIONS_VIEWED, globalFetchNotificationsViewedWorker);
+}
+
 function* globalWatcher() {
 	yield all([
 		globalFetchSugestionsWatcher(),
 		globalFetchSearchWatcher(),
 		globalFetchNotificationsWatcher(),
+		globalFetchNotificationsViewedWatcher()
 	]);
 }
 

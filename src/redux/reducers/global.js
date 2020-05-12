@@ -59,6 +59,12 @@ export default function globalReducer(
 				isLoadingNotifications: false
 			};
 
+		case actions.GLOBAL_FETCH_NOTIFICATIONS_VIEWED:
+			return {
+				...initialState,
+				...state,
+			};
+
 		default:
 			return state;
 	}

@@ -11,11 +11,10 @@ import HomeIcon from '@material-ui/icons/Home';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { userFetch } from "../../redux/actions/user";
-import { globalFetchSearch, globalFetchNotifications } from "../../redux/actions/global";
+import { globalFetchSearch, globalFetchNotifications, globalFetchNotificationsViewed } from "../../redux/actions/global";
 import FormPost from 'components/createPost/formPost';
-import { STORAGE_URL } from 'configs/constants';
+import { STORAGE_URL, socket } from 'configs/constants';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import PostTeste from 'assets/images/post_teste.jpg';
 import Dialog from 'components/dialog/dialog';
 import * as moment from 'moment';
 
@@ -28,6 +27,7 @@ function Header({location}){
 	const [valueSearch, setValueSearch] = useState('');
 	const [searchOpen, setSearchOpen] = useState(false);
 	const [activeNotifications, setActiveNotifications] = useState(false);
+	const [notificationFollow, setNotificationFollow] = useState(0);
 
 	const dispatch = useDispatch();
 	const id = localStorage.getItem('id_user_instact');
@@ -38,7 +38,8 @@ function Header({location}){
 
 	const handleChangeNotifications = () => {
 		setActiveNotifications(true);
-		dispatch(globalFetchNotifications(id));
+		setNotificationFollow(0);
+		dispatch(globalFetchNotificationsViewed(id));
 	};
 
 	const handleCloseNotifications = () => {
@@ -73,7 +74,30 @@ function Header({location}){
 
 	useEffect(() => {
 		dispatch(userFetch(id));
+		dispatch(globalFetchNotifications(id));
 	}, [dispatch, id]);
+
+	useEffect(() => {
+		const handleNewNotification = newNotification => {
+			if(newNotification.users_id === parseInt(id)){
+				setNotificationFollow([notificationFollow + 1]);
+			}
+			console.log('new', newNotification);
+		};
+		socket.on('notifications.follow', handleNewNotification)
+		return () => socket.off('notifications.follow', handleNewNotification)
+	}, [notificationFollow, id]);
+
+	useEffect(() => {
+		let teste = 0;
+		notificationsData.map((item) => {
+			if(item.viewed !== 1){
+				teste++;
+			}
+			setNotificationFollow(teste);
+			return true;
+		})
+	}, [notificationsData]);
 
 	return(
 		<>
@@ -139,7 +163,11 @@ function Header({location}){
 
 						<div className="notificacao">
 							<FavoriteIcon onClick={handleChangeNotifications} className={activeNotifications ? 'active' : ''} />
-
+							{notificationFollow > 0 && (
+								<div className="number" onClick={handleChangeNotifications}>
+									{notificationFollow}
+								</div>
+							)}
 							<div id="wrap_notificacoes" className={activeNotifications ? 'active' : ''}>
 								<div className="indent">
 									<Dialog handleClose={handleCloseNotifications}>
@@ -149,7 +177,7 @@ function Header({location}){
 											</div>
 										) : (
 											notificationsData.map((item) => (
-												<Link to={`/profile/${item.username}`} onClick={handleCloseNotifications} className="item">
+												<Link to={`/profile/${item.username}`} onClick={handleCloseNotifications} className="item" key={item.id}>
 													<div className="image">
 														{item.profile_image ? (
 															<img src={`${STORAGE_URL}users/${item.users_id}/${item.profile_image}`} alt={item.name} />

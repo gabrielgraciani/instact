@@ -16,4 +16,8 @@ export default class global{
 	static getNotifications = async (id) => {
 		return await api.get(`/notifications/${id}`);
 	};
+
+	static getNotificationsViewed = async (id) => {
+		return await api.get(`/notifications-viewed/${id}`);
+	};
 }

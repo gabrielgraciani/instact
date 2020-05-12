@@ -4,6 +4,7 @@ export const GLOBAL_FETCH_SEARCH = 'GLOBAL_FETCH_SEARCH';
 export const GLOBAL_FETCH_SEARCH_SUCCESS = 'GLOBAL_FETCH_SEARCH_SUCCESS';
 export const GLOBAL_FETCH_NOTIFICATIONS = 'GLOBAL_FETCH_NOTIFICATIONS';
 export const GLOBAL_FETCH_NOTIFICATIONS_SUCCESS = 'GLOBAL_FETCH_NOTIFICATIONS_SUCCESS';
+export const GLOBAL_FETCH_NOTIFICATIONS_VIEWED = 'GLOBAL_FETCH_NOTIFICATIONS_VIEWED';
 
 export const globalFetchSugestions = (payload) => ({
 	type: GLOBAL_FETCH_SUGESTIONS,
@@ -39,4 +40,9 @@ export const globalFetchNotificationsSuccess = (notificationsData) => ({
 	payload: {
 		notificationsData
 	}
+});
+
+export const globalFetchNotificationsViewed = (payload) => ({
+	type: GLOBAL_FETCH_NOTIFICATIONS_VIEWED,
+	payload
 });

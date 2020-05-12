@@ -75,7 +75,9 @@ p{font-size:21px;}
 			svg.profile{border:1px solid $gray_dark; padding:2px; border-radius:50%;}
 			img{width:28px; height:28px; border-radius:50%; margin:0 7px;}
 			img.profile{border:1px solid $gray_dark; padding:2px; border-radius:50%;}
-			.notificacao{position:relative;}
+			.notificacao{position:relative;
+				.number{cursor:pointer; user-select:none; position:absolute; bottom:-5px; right:-2px; padding:3px; background:#ff0000; font-size:13px; color:$white; border-radius:50%; display:flex; align-items:center; justify-content:center; min-width:23px;}
+			}
 		}
 	}
 }
