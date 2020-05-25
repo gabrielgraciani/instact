@@ -691,6 +691,14 @@ p{font-size:21px;}
 	}
 }
 
+@media (max-width: 1024px) {
+	#wrap_principal{
+		.indent{width:100%; justify-content:center;
+			.fixed{display:none}
+		}
+	}
+}
+
 @media (max-width: 935px) {
 	#wrap_posts {
 		.indent { display: grid; grid-template-columns: repeat(auto-fill, 32.8%); grid-gap: 5px 5px;}
