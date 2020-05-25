@@ -118,7 +118,7 @@ const FormPost = ({ handleChangeAdd, userData }) => {
 									/>
 									<label className='file-box-label' htmlFor='profileImage'>
 										<ArchiveIcon />
-										<span>Realizar upload de arquivo</span>
+										<span>Upload de arquivo</span>
 									</label>
 								</div>
 							)}

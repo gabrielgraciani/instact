@@ -84,8 +84,8 @@ function Header({location}){
 			}
 			console.log('new', newNotification);
 		};
-		socket.on('notifications.follow', handleNewNotification)
-		return () => socket.off('notifications.follow', handleNewNotification)
+		socket.on('notifications.follow', handleNewNotification);
+		return () => socket.off('notifications.follow', handleNewNotification);
 	}, [notificationFollow, id]);
 
 	useEffect(() => {
@@ -158,7 +158,7 @@ function Header({location}){
 						<AddCircleIcon onClick={handleChangeAdd} className={activeAdd ? 'active' : ''} />
 
 						<Link to={DIRECT}>
-							<SendIcon className={location.pathname === DIRECT ? 'active' : ''} />
+							<SendIcon className={`${location.pathname === DIRECT ? 'active' : ''} direct`} />
 						</Link>
 
 						<div className="notificacao">
@@ -205,10 +205,10 @@ function Header({location}){
 								userData.profile_image ? (
 									<img src={`${STORAGE_URL}users/${userData.id}/${userData.profile_image}`}
 										 alt={userData.name}
-										 className={location.pathname === PROFILE ? 'profile active' : ''}
+										 className={`${location.pathname === PROFILE ? 'profile active' : ''} prof`}
 									/>
 								) : (
-									<AccountCircleIcon className={location.pathname === PROFILE ? 'profile active' : ''} />
+									<AccountCircleIcon className={`${location.pathname === PROFILE ? 'profile active' : ''} prof`} />
 								)
 							)}
 						</Link>
@@ -220,6 +220,74 @@ function Header({location}){
 			{activeAdd && (
 				<FormPost handleChangeAdd={handleChangeAdd} userData={userData} />
 			)}
+			</div>
+
+			<div id="wrap_header" className="mobile">
+				<div className="indent">
+					<div className="menu">
+						<Link to={HOME}>
+							<HomeIcon className={location.pathname === HOME ? 'active' : ''} />
+						</Link>
+
+						<AddCircleIcon onClick={handleChangeAdd} className={activeAdd ? 'active' : ''} />
+
+						<Link to={DIRECT}>
+							<SendIcon className={`${location.pathname === DIRECT ? 'active' : ''} direct`} />
+						</Link>
+
+						<div className="notificacao">
+							<FavoriteIcon onClick={handleChangeNotifications} className={activeNotifications ? 'active' : ''} />
+							{notificationFollow > 0 && (
+								<div className="number" onClick={handleChangeNotifications}>
+									{notificationFollow}
+								</div>
+							)}
+							<div id="wrap_notificacoes" className={activeNotifications ? 'active' : ''}>
+								<div className="indent">
+									<Dialog handleClose={handleCloseNotifications}>
+										{isLoadingNotifications ? (
+											<div className="loading">
+												<CircularProgress size={28} />
+											</div>
+										) : (
+											notificationsData.map((item) => (
+												<Link to={`/profile/${item.username}`} onClick={handleCloseNotifications} className="item" key={item.id}>
+													<div className="image">
+														{item.profile_image ? (
+															<img src={`${STORAGE_URL}users/${item.users_id}/${item.profile_image}`} alt={item.name} />
+
+														) : (
+															<AccountCircleIcon />
+														)}
+													</div>
+													<div className="dados">
+														<span><strong>{item.username}</strong> começou a seguir você.</span>
+														<span className="time">{moment(item.created_at).fromNow()}</span>
+													</div>
+												</Link>
+											))
+										)}
+									</Dialog>
+								</div>
+							</div>
+						</div>
+
+						<Link to={`/profile/${userData.username}`}>
+							{isSavingImage ? (
+								<CircularProgress className="loading" />
+							) : (
+								userData.profile_image ? (
+									<img src={`${STORAGE_URL}users/${userData.id}/${userData.profile_image}`}
+										 alt={userData.name}
+										 className={`${location.pathname === PROFILE ? 'profile active' : ''} prof`}
+									/>
+								) : (
+									<AccountCircleIcon className={`${location.pathname === PROFILE ? 'profile active' : ''} prof`} />
+								)
+							)}
+						</Link>
+					</div>
+				</div>
 			</div>
 
 			</>
