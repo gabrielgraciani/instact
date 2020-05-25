@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { STORAGE_URL } from 'configs/constants';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Events, scroller } from 'react-scroll'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
-const Chat = ({ handleChangeMessage, message, select, listMessages, id, handleSendMessage }) => {
+const Chat = ({ handleChangeMessage, message, select, listMessages, id, handleSendMessage, handleCloseChat }) => {
 
 	const scrollToWithContainer = () => {
 		new Promise((resolve) => {
@@ -27,6 +28,7 @@ const Chat = ({ handleChangeMessage, message, select, listMessages, id, handleSe
 	return (
 		<>
 			<div className="item-default">
+				<ArrowBackIosIcon onClick={handleCloseChat} />
 				{id === select.users_id1 ? (
 					<>
 						<div className="image">

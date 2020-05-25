@@ -45,6 +45,10 @@ const Direct = () => {
 		setActiveDialog(true);
 	};
 
+	const handleCloseChat = () => {
+		setChatActive(false);
+	};
+
 	const handleCloseDialog = () => {
 		setActiveDialog(false);
 		setChoose(null);
@@ -149,7 +153,7 @@ const Direct = () => {
 		<>
 		<div id="wrap_all_conversas">
 			<div className="indent">
-				<div className="direct">
+				<div className={`direct ${!chatActive ? 'active' : ''}`}>
 					<div className="head">
 						<h4>Direct</h4>
 						<CreateIcon onClick={handleOpenDialog} />
@@ -158,7 +162,7 @@ const Direct = () => {
 					<AllConversas list={listConversas} id={parseInt(id)} handleChangeChat={handleChangeChat} />
 				</div>
 
-				<div className="box-chat">
+				<div className={`box-chat ${chatActive ? 'active' : ''}`}>
 					{chatActive ? (
 						<Chat
 							message={message}
@@ -167,6 +171,7 @@ const Direct = () => {
 							id={parseInt(id)}
 							handleChangeMessage={handleChangeMessage}
 							handleSendMessage={handleSendMessage}
+							handleCloseChat={handleCloseChat}
 						/>
 					) : (
 						<div className="no-message">
