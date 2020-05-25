@@ -148,6 +148,11 @@ function Profile({ match }){
 										<span><strong>{userByUsernameData.name}</strong></span>
 									</div>
 								</div>
+								<div className="row">
+									<div className="nome">
+										<span><strong>{userByUsernameData.biography}</strong></span>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
