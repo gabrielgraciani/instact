@@ -718,6 +718,13 @@ p{font-size:21px;}
 	#wrap_notificacoes{left:0; top:55px; width:100%; position:fixed; height:calc(100vh - 110px); background:$white;
 		.indent{width:100%; max-width:100%; height:auto;}
 	}
+
+	#wrap_login .indent .col:not(.col2){display:none;}
+	#wrap_login .indent .col.col2{width:100%;}
+	#wrap_footer .indent{flex-direction:column;}
+	#wrap_footer .indent .menu{flex-wrap:wrap; margin:0 0 20px 0;}
+	#wrap_footer .indent .menu li{width:50%; margin:0; text-align:left;}
+	#wrap_footer .indent .copyright{margin-left:0;}
 }
 
 @media (max-width: 935px) {
