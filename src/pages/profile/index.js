@@ -79,6 +79,8 @@ function Profile({ match }){
 		return () => window.removeEventListener('scroll', handleScroll);
 	}, [handleScroll]);
 
+	console.log('userPosts', userPosts);
+
 	return(
 		<>
 		{loading ? (

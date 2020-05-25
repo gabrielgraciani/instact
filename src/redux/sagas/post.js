@@ -246,6 +246,9 @@ function* postSendFollowWorker(data) {
 			allFollowsUserLogged.push(follow_data);
 		}
 
+		const { userByUsernameData } = yield select(store => store.user);
+		userByUsernameData.qt_followers = userByUsernameData.qt_followers + 1;
+
 		yield put(actions.postSendFollowSuccess(allFollowsUserLogged));
 
 
@@ -266,10 +269,15 @@ function* postSendUnfollowWorker(data) {
 		const { data: dataApi } = yield call(Post.registerUnfollow, unfollowData);
 		const { success } = dataApi;
 
+		const { userByUsernameData } = yield select(store => store.user);
+		userByUsernameData.qt_followers = userByUsernameData.qt_followers - 1;
+
 		if(success === true){
 			allFollowsUserLogged.splice(i, 1);
 			yield put(actions.postSendUnfollowSuccess());
 		}
+
+
 
 	} catch (error) {
 		console.log(`Erro ${error}, tente novamente mais tarde`);
@@ -298,6 +306,9 @@ function* postFetchSingleWorker(data) {
 
 function* postSendLikeSingleWorker(data) {
 	try {
+		const { userPosts } = yield select(store => store.post);
+		const i = findIndex(userPosts, { id: data.payload.posts_id });
+		userPosts[i].qt_likes = userPosts[i].qt_likes + 1;
 
 		const { singlePostData } = yield select(store => store.post);
 
@@ -321,6 +332,9 @@ function* postSendLikeSingleWorker(data) {
 
 function* postSendDeslikeSingleWorker(data) {
 	try {
+		const { userPosts } = yield select(store => store.post);
+		const i = findIndex(userPosts, { id: data.payload.posts_id });
+		userPosts[i].qt_likes = userPosts[i].qt_likes - 1;
 
 		const { like_id } = data.payload;
 
@@ -351,6 +365,10 @@ function* postSendDeslikeSingleWorker(data) {
 
 function* postSendCommentSingleWorker(data) {
 	try {
+		const { userPosts } = yield select(store => store.post);
+		const i = findIndex(userPosts, { id: data.payload.posts_id });
+		userPosts[i].qt_comments = userPosts[i].qt_comments + 1;
+
 		const { singlePostData } = yield select(store => store.post);
 
 		const commentData = data.payload;
