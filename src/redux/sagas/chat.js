@@ -1,5 +1,6 @@
 import { takeLatest, all, put, call, select } from 'redux-saga/effects';
 import { findIndex } from 'lodash';
+import { socket } from 'configs/constants';
 
 import * as actions from '../actions/chat';
 import Chat from '../../services/chat';
@@ -15,6 +16,8 @@ function* chatFetchConversasWorker(data) {
 
 function* chatCreateConversaWorker(data) {
 	try {
+
+		socket.emit('notifications.newChat');
 
 		const { users_id2, users_id1 } = data.payload;
 		const { listConversas } = yield select(store => store.chat);

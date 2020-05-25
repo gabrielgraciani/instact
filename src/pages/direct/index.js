@@ -25,6 +25,7 @@ const Direct = () => {
 	const [select, setSelect] = useState([]);
 	const [listWebsocket, setListWebsocket] = useState([]);
 	const [aux, setAux] = useState([]);
+	const [auxChat, setAuxChat] = useState(0);
 	const dispatch = useDispatch();
 
 	const { listConversas = [], listMessages = [] } = useSelector(store => store.chat);
@@ -85,6 +86,7 @@ const Direct = () => {
 			profile_image2: choose.profile_image
 		}));
 		handleCloseDialog();
+		setAuxChat(auxChat + 1);
 	};
 
 	const myId = uuid();
@@ -130,10 +132,18 @@ const Direct = () => {
 					setListWebsocket([...listWebsocket, newMessage]);
 				}
 			};
-			socket.on('chat.message', handleNewMessage)
+			socket.on('chat.message', handleNewMessage);
 			return () => socket.off('chat.message', handleNewMessage);
 		}
 	}, [listWebsocket, select]);
+
+	useEffect(() => {
+		const handleNewChat = () => {
+			dispatch(chatFetchConversas(id));
+		};
+		socket.on('notifications.newChat', handleNewChat);
+		return () => socket.off('notifications.newChat', handleNewChat);
+	}, [auxChat, id, dispatch]);
 
 	return (
 		<>
@@ -204,7 +214,7 @@ const Direct = () => {
 								</div>
 							)}
 							{search !== '' && searchData.map((item) => (
-								<div key={item.id} className="item-default" onClick={choose ? () => handleClearChoose() : () => handleChoose(item)}>
+								<div key={item.id} className="item-default" onClick={choose ? () => {handleClearChoose(); handleChoose(item);} : () => handleChoose(item)}>
 									<div className="image">
 										{item.profile_image ? (
 											<img src={`${STORAGE_URL}users/${item.id}/${item.profile_image}`} alt={item.username} />
@@ -219,7 +229,9 @@ const Direct = () => {
 
 									<div className="box">
 										{choose && (
-											<img src={Checked} alt="selecionado" />
+											choose.id === item.id && (
+												<img src={Checked} alt="selecionado" />
+											)
 										)}
 									</div>
 								</div>
