@@ -18,6 +18,7 @@ const Home = () => {
 	const { allFollowsUserLogged = [], isFollowing, isUnfollowing, end, isLoading, postData = [] } = useSelector(store => store.post);
 	const { sugestions = [] } = useSelector(store => store.global);
 	const [page, setPage] = useState(1);
+	const [width, setWidth] = useState(0);
 
 	const id = localStorage.getItem('id_user_instact');
 
@@ -61,6 +62,16 @@ const Home = () => {
 		return () => window.removeEventListener('scroll', handleScroll);
 	}, [handleScroll]);
 
+	useEffect(() => {
+		const getWSize = () => {
+			setWidth(document.children[0].clientWidth);
+		};
+
+		getWSize();
+		window.addEventListener('resize', getWSize);
+		return () => window.removeEventListener('resize', getWSize);
+	}, []);
+
 	return(
 		<>
 			<div id="wrap_principal">
@@ -69,7 +80,7 @@ const Home = () => {
 						<ContentPost />
 					</div>
 
-					<div className="fixed">
+					<div className="fixed" style={{left: `${width * .5 + 180}px`}}>
 						<div className="user">
 							<Link to={`/profile/${userData.username}`} className="imagem">
 								{!userData.profile_image ? (
