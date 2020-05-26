@@ -146,23 +146,26 @@ const Home = () => {
 				</div>
 
 				{isLoading && (
-					<div className="loading">
-						<CircularProgress />
+					<div className="indent">
+						<div className="loading">
+							<CircularProgress />
+						</div>
 					</div>
+
 				)}
 
 				{end && (
 					<div className="indent">
 						<div className="no-posts">
-							<span>Não há mais Publicações, aumente sua lista de seguidores!!</span>
+							<span>Não há mais Publicações</span>
 						</div>
 					</div>
 				)}
 
-				{postData.length === 0 && (
+				{!isLoading && postData.length === 0 && (
 					<div className="indent">
 						<div className="no-posts">
-							<span>Não há Publicações, aumente sua lista de seguidores!!</span>
+							<span>Não há Publicações</span>
 						</div>
 					</div>
 				)}
